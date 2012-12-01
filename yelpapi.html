@@ -22,7 +22,7 @@
 
             (function () {
    
-                var yelpApi = new YelpApi(onSearchSuccess, onBusinessSuccess, onApiError);
+                var yelpApi = new YelpApi(onApiError);
 
                 $(function() {
                     
@@ -31,7 +31,7 @@
                     var location = "New York City";
                     var query = "japanese restaurant downtown";
 
-                    yelpApi.search(location, query);
+                    yelpApi.search(onSearchSuccess, location, query);
 
                 });
 
@@ -45,7 +45,7 @@
                     $('#searchResultsContainer').mustache('searchResults', data, {method:'html'});
 
                     // get more info about first result (exmample reviews, etc)
-                    yelpApi.business(data.businesses[0].id);
+                    yelpApi.business(onBusinessSuccess, data.businesses[0].id);
                 };
 
                 function onBusinessSuccess(data) {

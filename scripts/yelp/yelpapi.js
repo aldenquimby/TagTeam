@@ -1,5 +1,5 @@
 
-function YelpApi(onSearchSuccess, onBusinessSuccess, onApiError) {
+function YelpApi(onApiError) {
 
     // private members
 
@@ -63,7 +63,7 @@ function YelpApi(onSearchSuccess, onBusinessSuccess, onApiError) {
 
     // public methods
 
-    this.search = function(location, term, limit, offset, sort, category_filter, radius_filter) {
+    this.search = function(successCallback, location, term, limit, offset, sort, category_filter, radius_filter) {
         var url = 'http://api.yelp.com/v2/search?location=' + encodeURIComponent(location);
 
         if (term) {
@@ -85,13 +85,13 @@ function YelpApi(onSearchSuccess, onBusinessSuccess, onApiError) {
             url += "&radius_filter=" + encodeURIComponent(radius_filter);
         }
 
-        apiRequest(url, onSearchSuccess);
+        apiRequest(url, successCallback);
     };
 
-    this.business = function(businessId) {
+    this.business = function(successCallback, businessId) {
         var url = 'http://api.yelp.com/v2/business/' + businessId;
 
-        apiRequest(url, onBusinessSuccess);
+        apiRequest(url, successCallback);
     };
 
 }
