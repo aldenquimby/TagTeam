@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Tag Team</title>
+
+        <!-- stylesheets -->
+        <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap-responsive.min.css" />
+
+        <!-- scripts -->
+        <script type="text/javascript" src="scripts/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="scripts/mustache.js"></script>
+        <script type="text/javascript" src="scripts/jquery-Mustache.js"></script>
+        <script type="text/javascript" src="scripts/moment.js"></script>
+        <script type="text/javascript" src="scripts/bootstrap.min.js"></script>
+        <script type="text/javascript" src="scripts/yelp/oauth.js"></script>
+        <script type="text/javascript" src="scripts/yelp/sha1.js"></script>
+        <script type="text/javascript" src="scripts/yelp/yelpapi.js"></script>
+        <script type="text/javascript">
+
+            (function () {
+   
+                var yelpApi = new YelpApi(onSearchSuccess, onBusinessSuccess, onApiError);
+
+                $(function() {
+                    
+                    $.Mustache.addFromDom();
+    
+                    var location = "New York City";
+                    var query = "japanese restaurant downtown";
+
+                    yelpApi.search(location, query);
+
+                });
+
+                function onSearchSuccess(data) {
+                    if (data.total == 0) {
+                        // handle no results here
+                        return;
+                    }
+
+                    // show search results
+                    $('#searchResultsContainer').mustache('searchResults', data, {method:'html'});
+
+                    // get more info about first result (exmample reviews, etc)
+                    yelpApi.business(data.businesses[0].id);
+                };
+
+                function onBusinessSuccess(data) {
+                    $('#businessContainer').mustache('business', data, {method:'html'});
+                }
+
+                function onApiError() {
+                    $('#alertContainer').mustache('alert', {
+                        type:'error', 
+                        message: 'Looks like the Yelp API might be down, please try again later.'
+                    }, { method:'html' });
+                };
+
+            })();
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1>Tag Team
+                    <br />
+                    <small>4 guys, 1 site.</small>
+                </h1>
+            </div>
+            <div id="alertContainer" style="display:none;"></div>
+            <div class="row">
+                <div class="span6">
+                    <h3>Search Results</h3>
+                    <div class="row" id="searchResultsContainer"></div>
+                </div>
+                <div class="span6">
+                    <h3>Business Result</h3>
+                    <div class="row" id="businessContainer"></div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+
+<!-- mustache templates -->
+
+<script id="alert" type="text/html">
+    <div class="alert alert-{{type}} fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Oops!</strong> {{message}}
+    </div>
+</script>
+
+<script id="searchResults" type="text/html">
+    {{#businesses}}
+    <div class="searchResult" style="padding-top:20px;">
+        <h3>{{name}}</h3>
+        <h4>{{location.cross_streets}}, {{location.city}}</h4>
+        <p>
+            <img src="{{image_url}}" alt="" />
+        </p>
+        <p>
+            # reviews: {{review_count}}
+        </p>
+        <p>
+            Rating: {{rating}}
+            <img src="{{rating_img_url}}" alt="" />
+        </p>
+        <p>
+            Example Review Snippet:
+            <img src="{{snippet_img_url}}" alt="" />
+            {{snippet_text}}
+        </p>
+        <p>
+            View this business on 
+            <a href="{{url}}">
+                <img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png" alt="" />
+            </a>
+        </p>
+    </div>
+    {{/businesses}}
+</script>
+
+<script id="business" type="text/html">
+    <div class="business">
+        <h3>{{name}}</h3>
+        <h4>{{location.cross_streets}}, {{location.city}}</h4>
+        <p>
+            <img src="{{image_url}}" alt="" />
+        </p>
+        <p>
+            # reviews: {{review_count}}
+        </p>
+        <p>
+            Rating: {{rating}}
+            <img src="{{rating_img_url}}" alt="" />
+        </p>
+        <p>
+            Example Review Snippet:
+            <img src="{{snippet_img_url}}" alt="" />
+            {{snippet_text}}
+        </p>
+        <p>
+            View this business on 
+            <a href="{{url}}">
+                <img src="http://s3-media1.ak.yelpcdn.com/assets/2/www/img/14f29ad24935/map/miniMapLogo.png" alt="" />
+            </a>
+        </p>
+    </div>
+</script>
