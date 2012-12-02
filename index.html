@@ -14,18 +14,13 @@
     </head>
 
     <body>
-        <div id="alertContainer"></div>
-        <div id="banner"></div>
-        <div class="container-fluid onepage">
-            <div class="row-fluid onepage">
-                <div class="span2 tabs">
-                  gettin them tabs
-                </div>
-                <div class="span10 page">
-                  gettin them search results
-                </div>
-            </div>
-        </div>
+
+        
+
+
+
+        
+        
 
     </body>
 
@@ -37,6 +32,23 @@
         <button type="button" class="close" data-dismiss="alert">×</button>
         <strong>Oops!</strong> {{message}}
     </div>
+</script>
+<script id="app-view" type="text/html">
+        <div id="alertContainer"></div>
+        <div id="banner">{{title}}</div>
+        <div class="container-fluid onepage">
+            <div class="row-fluid onepage">
+                <div class="span2 tabs onepage">
+                  
+                </div>
+                <div class="span10 desktop onepage">
+                  
+                </div>
+            </div>
+        </div>
+</script>
+<script id="tab-card" type="text/html">
+<h2>{{name}}</h2>
 </script>
 
 
@@ -61,6 +73,6 @@
 
     $(function() {
         $.Mustache.addFromDom();
-        //$('body').html(new AppView().el);
+        $('body').html(new AppView().el);
     });
 </script>

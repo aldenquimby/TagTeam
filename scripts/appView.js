@@ -8,7 +8,7 @@ var AppView = Backbone.View.extend({
     className: 'page',
     // Cache the template function for a single item.
     //TODO: set template shit up
-
+    template: 'app-view',
     // The DOM events specific to an item.
     events: {
       //i don't think there are events for this really either...
@@ -19,7 +19,7 @@ var AppView = Backbone.View.extend({
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
       //render my template yo
-
+      alert('hey you newed up an appview');
 
       /*
 		function onSearchSuccess(data) {
@@ -48,18 +48,19 @@ var AppView = Backbone.View.extend({
 
       */
 
-
-
-      	//maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
-      	//this.model.on('destroy', this.remove, this);
+      this.render();
     },
 
     // Re-render the titles of the todo item.
     render: function() {
-      	//this.$el.html(this.template(this.model.toJSON()));
+	    this.$el.mustache(this.template, {
+	        title:'Tag Team', 
+	    }, { method:'html' });
 
-      	//html into my different divs the default shit
-      	//i.e. this.$el.find('tabplace').html(tabsview); etc...
+	    this.$el.find('.tabs').html(new TabsView().el);
+
+
+
       return this;
     },
     
