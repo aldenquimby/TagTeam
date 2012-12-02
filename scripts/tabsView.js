@@ -19,7 +19,7 @@ var TabsView = Backbone.View.extend({
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      alert('hey you newed up a tab(s)view');
+
 
       //let's define some sort of tabs... object, and put in it search and bookmarks
       //the key can be the business id, the value can be the tabview... or whatevs

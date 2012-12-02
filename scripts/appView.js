@@ -19,7 +19,6 @@ var AppView = Backbone.View.extend({
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
       //render my template yo
-      alert('hey you newed up an appview');
 
       /*
 		function onSearchSuccess(data) {
