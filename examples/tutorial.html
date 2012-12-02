@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Tag Team</title>
+        <!-- stylesheets -->
+        <link type="text/css" rel="stylesheet" href="../styles/bootstrap/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="../styles/bootstrap/bootstrap-responsive.min.css" />
+        <style>
+            .row { padding-bottom: 150px; }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <div style="float:right;padding-top:50px;padding-right:80px;">
+                <a href='#' onclick="return false;" id="help-link">Help</a>
+            </div>
+            <div class="page-header">
+                <h1>Tag Team
+                    <br />
+                    <small>4 guys, 1 site.</small>
+                    <button class="btn" onclick="return false;" id="kickoff-tutorial">Do Tutorial</a>
+                </h1>
+            </div>
+            <div class="row">
+                <div class="span6">
+                    <h3>Search</h3>
+                    <div id="explore">Explore some shit!</div>
+                </div>
+                <div class="span6">
+                    <h3>Right Side</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span6">
+                    <h3>Left Side</h3>
+                </div>
+                <div class="span6">
+                    <h3>Filter</h3>
+                    <div id="filter">Do some filtering!</div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="span6">
+                    <h3>Canvas</h3>
+                    <div id="canvas">Draw some shit here!</div>
+                </div>
+                <div class="span6">
+                    <h3>Right Side</h3>
+                </div>
+            </div>
+            </div>
+        </div>
+    </body>
+
+</html>
+
+<!-- mustache templates -->
+<script id="popover-title" type="text/html">
+    <strong>{{number}}. {{title}}</strong>
+    <button type="button" class="close popover-close" data-target="{{target}}">&times;</button>
+</script>
+
+<script id="popover-content" type="text/html">
+    {{content}}
+    <div class="btn-wrapper">
+        {{#nextTarget}}
+            <button type="button" class="btn btn-primary popover-next" data-target="{{nextTarget}}">Next »</button>
+        {{/nextTarget}}
+        {{^nextTarget}}
+            <button type="button" class="btn btn-primary popover-done">Get Started »</button>
+        {{/nextTarget}}
+    </div>
+</script>
+
+<!-- scripts -->
+<script type="text/javascript" src="../scripts/framework/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="../scripts/framework/mustache.js"></script>
+<script type="text/javascript" src="../scripts/framework/jquery-Mustache.js"></script>
+<script type="text/javascript" src="../scripts/framework/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/framework/bootstrap.min.js"></script>
+<script type="text/javascript" src="../scripts/tutorial.js"></script>
+<script type="text/javascript">
+    (function () {
+
+        var exampleTutorial = [
+        {
+            title:'Explore Images', 
+            target:'#explore', 
+            content:'Browse through your images and select one to start editing.',
+            placement:'bottom'
+        },
+        {
+            title:'Filter Search Results', 
+            target:'#filter', 
+            content:'Use these options to filter your search results.',
+            placement:'left'
+        },
+        {
+            title:'Draw Gestures on Image',
+            target:'#canvas', 
+            content:'Draw gestures here after selecting an image.',
+            placement:'top'
+        },
+        {
+            title:'Help and Documentation',
+            target:'#help-link', 
+            content:'Questions? Click here for help and documentation.',
+            placement:'bottom'
+        }
+        ];
+
+        var myTutorial = new Tutorial(exampleTutorial);
+
+        $(function() {
+
+            $.Mustache.addFromDom();
+
+            $('#kickoff-tutorial').click(function() {
+                myTutorial.kickoff();  
+            });
+
+        });
+
+    })();
+</script>
