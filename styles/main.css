@@ -1,0 +1,37 @@
+.page {
+	position: fixed;
+	top:0px;
+	bottom:0px;
+	left:0px;
+	right:0px;
+}
+#alertContainer {
+	width: 100%;
+	padding: 0 20%;
+	display: none;
+}
+
+#banner {
+	width: 100%;
+	background-color: #BBD8E9;
+	font-size: 20px;
+	padding: .5% 3%;
+}
+
+.onepage {
+	height: 100%;
+}
+
+.desktop {
+	background-color: green;
+}
+
+.tabs {
+	background-color: blue;
+}
+
+.tab-wrapper {
+	background-color: red;
+	margin: 1%;
+	height: 100%;
+}

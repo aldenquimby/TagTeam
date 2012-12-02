@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+    <head>
+        <meta charset="utf-8">
+        <title>Tag Team (oh yeah hmm get it)</title>
+
+        <!-- stylesheets -->
+        <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap-responsive.min.css" />
+        <link type="text/css" rel="stylesheet" href="styles/main.css" />
+
+    
+    </head>
+
+    <body>
+
+        
+
+
+
+        
+        
+
+    </body>
+
+</html>
+
+<!-- mustache templates -->
+<script id="alert" type="text/html">
+    <div class="alert alert-{{type}} fade in">
+        <button type="button" class="close" data-dismiss="alert">×</button>
+        <strong>Oops!</strong> {{message}}
+    </div>
+</script>
+<script id="app-view" type="text/html">
+        <div id="alertContainer"></div>
+        <div id="banner">{{title}}</div>
+        <div class="container-fluid onepage">
+            <div class="row-fluid onepage">
+                <div class="span2 tabs onepage">
+                  
+                </div>
+                <div class="span10 desktop onepage">
+                  
+                </div>
+            </div>
+        </div>
+</script>
+<script id="tab-card" type="text/html">
+<h2>{{name}}</h2>
+</script>
+
+
+<!-- scripts -->
+        <script type="text/javascript" src="scripts/framework/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="scripts/framework/mustache.js"></script>
+        <script type="text/javascript" src="scripts/framework/jquery-Mustache.js"></script>
+        <script type="text/javascript" src="scripts/framework/moment.js"></script>
+        <script type="text/javascript" src="scripts/framework/bootstrap.min.js"></script>
+        <script type="text/javascript" src="scripts/framework/underscore.js"></script>
+        <script type="text/javascript" src="scripts/framework/backbone-min.js"></script>
+        <script type="text/javascript" src="scripts/framework/yelp/oauth.js"></script>
+        <script type="text/javascript" src="scripts/framework/yelp/sha1.js"></script>
+        <script type="text/javascript" src="scripts/framework/yelp/yelpapi.js"></script>
+        <script type="text/javascript" src="scripts/framework/persist.js"></script>
+<!-- our scripts -->
+        <script type="text/javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" src="scripts/tabView.js"></script>
+        <script type="text/javascript" src="scripts/tabsView.js"></script>
+        <script type="text/javascript" src="scripts/appView.js"></script>
+<script type="text/javascript">
+
+    $(function() {
+        $.Mustache.addFromDom();
+        $('body').html(new AppView().el);
+    });
+</script>
