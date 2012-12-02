@@ -8,13 +8,24 @@
         <link type="text/css" rel="stylesheet" href="../styles/bootstrap/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="../styles/bootstrap/bootstrap-responsive.min.css" />
         <style>
-            .row { padding-bottom: 150px; }
+            .row { 
+                padding-bottom: 150px; 
+            }
+            .popover .btn-wrapper {
+                text-align: right;
+                padding: 10px 10px 0 0;
+            }
+            .help-wrapper {
+                float:right;
+                padding-top:50px;
+                padding-right:80px;
+            }
         </style>
     </head>
 
     <body>
         <div class="container">
-            <div style="float:right;padding-top:50px;padding-right:80px;">
+            <div class="help-wrapper">
                 <a href='#' onclick="return false;" id="help-link">Help</a>
             </div>
             <div class="page-header">
@@ -80,8 +91,7 @@
 <script type="text/javascript" src="../scripts/framework/mustache.js"></script>
 <script type="text/javascript" src="../scripts/framework/jquery-Mustache.js"></script>
 <script type="text/javascript" src="../scripts/framework/bootstrap.min.js"></script>
-<script type="text/javascript" src="../scripts/framework/bootstrap.min.js"></script>
-<script type="text/javascript" src="../scripts/tutorial.js"></script>
+<script type="text/javascript" src="../scripts/components/tutorial.js"></script>
 <script type="text/javascript">
     (function () {
 

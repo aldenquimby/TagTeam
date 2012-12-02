@@ -6,38 +6,43 @@
         <title>Tag Team</title>
 
         <!-- stylesheets -->
-        <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />
-        <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap-responsive.min.css" />
+        <link type="text/css" rel="stylesheet" href="../styles/bootstrap/bootstrap.min.css" />
+        <link type="text/css" rel="stylesheet" href="../styles/bootstrap/bootstrap-responsive.min.css" />
 
         <!-- scripts -->
-        <script type="text/javascript" src="scripts/framework/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="scripts/framework/mustache.js"></script>
-        <script type="text/javascript" src="scripts/framework/jquery-Mustache.js"></script>
-        <script type="text/javascript" src="scripts/framework/moment.js"></script>
-        <script type="text/javascript" src="scripts/framework/bootstrap.min.js"></script>
-        <script type="text/javascript" src="scripts/framework/yelp/oauth.js"></script>
-        <script type="text/javascript" src="scripts/framework/yelp/sha1.js"></script>
-        <script type="text/javascript" src="scripts/framework/yelp/yelpapi.js"></script>
-        <script type="text/javascript" src="scripts/store.js"></script>
-	<script type="text/javascript">
+        <script type="text/javascript" src="../scripts/framework/jquery-1.8.3.min.js"></script>
+        <script type="text/javascript" src="../scripts/framework/mustache.js"></script>
+        <script type="text/javascript" src="../scripts/framework/jquery-Mustache.js"></script>
+        <script type="text/javascript" src="../scripts/framework/bootstrap.min.js"></script>
+        <script type="text/javascript" src="../scripts/framework/oauth.js"></script>
+        <script type="text/javascript" src="../scripts/framework/sha1.js"></script>
+        <script type="text/javascript" src="../scripts/components/yelpapi.js"></script>
+        <script type="text/javascript" src="../scripts/components/store.js"></script>
+        <script type="text/javascript">
 
             (function () {
    
                 var yelpApi = new YelpApiDebug(onApiError);
-		var store = new storeData(onApiError);
+                var store = new StoreDataDebug(onApiError);
+                
                 $(function() {
+
                     $.Mustache.addFromDom();
     
                     var location = "New York City";
                     var query = "japanese restaurant downtown";
 
+                    // do a search
                     yelpApi.search(onSearchSuccess, location, query);
+
+                    // get all bookmarks from db
+                    store.get(onMongoSuccess);
 
                 });
 
                 function onSearchSuccess(data) {
                     if (data.total == 0) {
-                        // handle no results here
+                        alert('no results!');
                         return;
                     }
 
@@ -46,20 +51,23 @@
 
                     // get more info about first result (exmample reviews, etc)
                     yelpApi.business(onBusinessSuccess, data.businesses[0].id);
+
+                    // put the first 3 into the database
+                    for (var i = 0; i < 3; i++) {
+                        store.set(data.businesses[i].id, data.businesses[i]);
+                    }
+
+                    // remove the second one
+                    store.remove(data.businesses[1].id);
                 };
 
                 function onBusinessSuccess(data) {
-                    $('#businessContainer').mustache('business', data, {method:'html'});
-			
-		   // store.set(data.id, data);
-		    //store.get(onMongoSuccess);
-		    //store.remove(data.id);
+                    $('#businessContainer').mustache('business', data, {method:'append'});
                 }
 
-		function onMongoSuccess(data){
-			//data has an array of objects which are businesses
-	
-		}
+                function onMongoSuccess(data){
+                    $('#businessContainer').mustache('business', data[1].data, {method:'append'});
+                }
 
                 function onApiError() {
                     $('#alertContainer').mustache('alert', {
