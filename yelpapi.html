@@ -26,7 +26,10 @@
                 var yelpApi = new YelpApiDebug(onApiError);
 
                 $(function() {
-                    
+		    store = new Persist.Store('TagTeam');
+		    //store.set('some_key', 'this is a bunch of persistent data');
+		    //val = store.get('some_key')
+   		    //store.remove('some_key')	                    
                     $.Mustache.addFromDom();
     
                     var location = "New York City";
@@ -51,6 +54,8 @@
 
                 function onBusinessSuccess(data) {
                     $('#businessContainer').mustache('business', data, {method:'html'});
+			
+		    store.set(data.id, JSON.stringify(data));
                 }
 
                 function onApiError() {
