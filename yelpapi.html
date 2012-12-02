@@ -24,7 +24,7 @@
             (function () {
    
                 var yelpApi = new YelpApiDebug(onApiError);
-		var store = new storeData();
+		var store = new storeData(onApiError);
                 $(function() {
                     $.Mustache.addFromDom();
     
@@ -51,7 +51,7 @@
                 function onBusinessSuccess(data) {
                     $('#businessContainer').mustache('business', data, {method:'html'});
 			
-		    //store.set(data.id, data);
+		   // store.set(data.id, data);
 		    //store.get(onMongoSuccess);
 		    //store.remove(data.id);
                 }

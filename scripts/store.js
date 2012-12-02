@@ -1,13 +1,15 @@
 
-function storeData(){
+function storeData(onError){
     this.set = function(id, data) {
+      this.remove(id);
       $.ajax( { url: "https://api.mongolab.com/api/1/databases/tagteam/collections/business?apiKey=50678d1fe4b0c0cda3668e9b",
          data: JSON.stringify( {
 		"id" : id,
 		"data" : JSON.stringify(data)
 		} ),
          type: "POST",
-         contentType: "application/json" } );
+         contentType: "application/json",
+	 error: function (xhr, status, err) {onError(); } } );
     };
     
     this.get = function(callback) {
@@ -16,7 +18,8 @@ function storeData(){
           async: true,
           success: function (data) { 
 	      callback(data);
-	  }});
+	  },
+	  error: function (xhr, status, err) {onError(); }});
     }; 
 
     this.remove = function(id) {
@@ -33,7 +36,7 @@ function storeData(){
                 async: true,
                 timeout: 300000,
                 success: function (data) { },
-                error: function (xhr, status, err) { } } );
+                error: function (xhr, status, err) {onError(); } } );
     	     }});
     }; 
 } 
