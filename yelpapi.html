@@ -18,18 +18,14 @@
         <script type="text/javascript" src="scripts/framework/yelp/oauth.js"></script>
         <script type="text/javascript" src="scripts/framework/yelp/sha1.js"></script>
         <script type="text/javascript" src="scripts/framework/yelp/yelpapi.js"></script>
-        <script type="text/javascript" src="scripts/framework/persist.js"></script>
+        <script type="text/javascript" src="scripts/store.js"></script>
 	<script type="text/javascript">
 
             (function () {
    
                 var yelpApi = new YelpApiDebug(onApiError);
-
+		var store = new storeData();
                 $(function() {
-		    store = new Persist.Store('TagTeam');
-		    //store.set('some_key', 'this is a bunch of persistent data');
-		    //val = store.get('some_key')
-   		    //store.remove('some_key')	                    
                     $.Mustache.addFromDom();
     
                     var location = "New York City";
@@ -55,8 +51,15 @@
                 function onBusinessSuccess(data) {
                     $('#businessContainer').mustache('business', data, {method:'html'});
 			
-		    store.set(data.id, JSON.stringify(data));
+		    //store.set(data.id, data);
+		    //store.get(onMongoSuccess);
+		    //store.remove(data.id);
                 }
+
+		function onMongoSuccess(data){
+			//data has an array of objects which are businesses
+	
+		}
 
                 function onApiError() {
                     $('#alertContainer').mustache('alert', {
