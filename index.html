@@ -8,15 +8,24 @@
         <!-- stylesheets -->
         <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />
         <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap-responsive.min.css" />
+        <link type="text/css" rel="stylesheet" href="styles/main.css" />
 
     
     </head>
 
     <body>
         <div id="alertContainer"></div>
-        <div></div>
-        <div></div>
-        <div></div>
+        <div id="banner"></div>
+        <div class="container-fluid onepage">
+            <div class="row-fluid onepage">
+                <div class="span2 tabs">
+                  gettin them tabs
+                </div>
+                <div class="span10 page">
+                  gettin them search results
+                </div>
+            </div>
+        </div>
 
     </body>
 
@@ -37,15 +46,21 @@
         <script type="text/javascript" src="scripts/framework/jquery-Mustache.js"></script>
         <script type="text/javascript" src="scripts/framework/moment.js"></script>
         <script type="text/javascript" src="scripts/framework/bootstrap.min.js"></script>
+        <script type="text/javascript" src="scripts/framework/underscore.js"></script>
+        <script type="text/javascript" src="scripts/framework/backbone-min.js"></script>
         <script type="text/javascript" src="scripts/framework/yelp/oauth.js"></script>
         <script type="text/javascript" src="scripts/framework/yelp/sha1.js"></script>
         <script type="text/javascript" src="scripts/framework/yelp/yelpapi.js"></script>
         <script type="text/javascript" src="scripts/framework/persist.js"></script>
-
+<!-- our scripts -->
+        <script type="text/javascript" src="scripts/global.js"></script>
+        <script type="text/javascript" src="scripts/tabView.js"></script>
+        <script type="text/javascript" src="scripts/tabsView.js"></script>
+        <script type="text/javascript" src="scripts/appView.js"></script>
 <script type="text/javascript">
 
     $(function() {
         $.Mustache.addFromDom();
-        $('body').html(new AppView().el);
+        //$('body').html(new AppView().el);
     });
 </script>

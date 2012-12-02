@@ -20,7 +20,7 @@ var TabsView = Backbone.View.extend({
       //make new tabview with special shit (search/bookmark)
 
       //maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
-      this.model.on('destroy', this.remove, this);
+      //this.model.on('destroy', this.remove, this);
     },
 
     // Re-render the titles of the todo item.
@@ -30,8 +30,8 @@ var TabsView = Backbone.View.extend({
       //this.$el.html(this.template(this.model.toJSON()));
       return this;
     },
-    
 
-    
+
+
 
   });

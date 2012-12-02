@@ -51,7 +51,7 @@ var AppView = Backbone.View.extend({
 
 
       	//maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
-      	this.model.on('destroy', this.remove, this);
+      	//this.model.on('destroy', this.remove, this);
     },
 
     // Re-render the titles of the todo item.
