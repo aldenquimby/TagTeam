@@ -16,13 +16,15 @@ var TabView = Backbone.View.extend({
 
     bookmark: false,
 
+    help: false,
+
     businessId: 0,
 
     name: '',
     // The TodoView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
     // app, we set a direct reference on the model for convenience.
-    initialize: function(place, s, b) {
+    initialize: function(place, s, b, h) {
       if(s){
         this.search = true;
         this.name = 'Search';
@@ -30,6 +32,11 @@ var TabView = Backbone.View.extend({
       else if(b){
         this.bookmark = true;
         this.name = 'My Bookmarks';
+      }
+      else if(h){
+        this.help = true;
+        this.name = 'Help';
+        this.$el.addClass('helpTab');
       }
       else{
         console.log("hey");
@@ -46,15 +53,42 @@ var TabView = Backbone.View.extend({
 
     // Re-render the titles of the todo item.
     render: function() {
-
-      this.$el.mustache(this.template, {
-          name: this.name 
+      var self = this;
+      self.$el.mustache(self.template, {
+          name: self.name 
       }, { method:'html' });
-      return this;
+      return self;
     },
 
     showStuff: function () {
-      alert('why you clickin bitch: ' + this.name);
+      if(this.search){
+        //show the search view
+
+
+      }
+      else if(this.bookmark){
+        //show the bookmarks view
+
+
+      }
+      else if(this.help){
+        //show help stuff
+      }
+      else{
+        //it's a business, show the profile view
+      }
+
+
+
+
     }
 
   });
+
+
+
+
+
+
+
+

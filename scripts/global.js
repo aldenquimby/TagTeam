@@ -19,4 +19,8 @@ var appEvents = {
 	errorYelpApi: 'yelp-api-error', //error with yelp api
 	//etc....
 }
+var appDefaults = {
+	location: 'New York',
+	query: 'Dive Bars'
+}
 

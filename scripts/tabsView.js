@@ -13,6 +13,7 @@ var TabsView = Backbone.View.extend({
 
     search: {},
     bookmark: {},
+    helpTab: {},
 
     // The TodoView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
@@ -38,6 +39,8 @@ var TabsView = Backbone.View.extend({
       self.bookmark.tab = new TabView(null, false, true);
       self.bookmark.bookmarks = {};
 
+      //set up the help tab!
+      self.helpTab = new TabView(null, false, false, true);
       //maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
       //this.model.on('destroy', this.remove, this);
       self.render();
@@ -62,7 +65,7 @@ var TabsView = Backbone.View.extend({
         self.$el.append(tab.el);
       });
       //render the help tab
-      
+      self.$el.append(self.helpTab.el);
       return self;
     },
 
