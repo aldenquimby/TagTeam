@@ -68,7 +68,7 @@
     <div class="filter">
 
     </div>
-    <div class="results">
+    <div class="results well">
 
     </div>
 
@@ -81,7 +81,21 @@
 </script>
 
 <script id="result-card" type="text/html">
-    {{name}} - {{display_phone}} - <img src="{{rating_img_url}}"/> - <a href="{{url}}">view on yelp</a>
+    <div class="result-image-wrapper">
+        <img src="{{image_url}}" class="result-image" />
+    </div>
+    <div class="result-name">
+        {{name}}
+        
+    </div>
+    <div class="result-details">
+        <div><img src="{{rating_img_url}}"/></div>
+        <div>{{display_phone}} </div>
+        <div><a href="{{url}}">view on yelp</a></div>
+        <div class="result-location">
+            {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
+        </div>
+    </div>
 </script>
 
 <!-- scripts -->

@@ -106,9 +106,34 @@
 	font-size: 18px;
 }
 .result {
-	width: 100%;
+	width: 98%;
 	float:left;
+	height: 100px;
+	padding: 10px;
+	margin: 5px 0;
+	background-color: #fff;
 }
-
+.result-image-wrapper {
+	float:left;
+	margin-right: 20px;
+}
+.result-name{
+	font-size: 30px;
+}
+.result-details {
+	font-style: italic;
+	width: 350px;
+	float:left;
+	margin-top: 10px;
+}
+.result-details div {
+	float:left;
+	margin-right: 10px;
+}
+.result-location {
+	float: left;
+	width: 340px;
+	margin-top: 10px;
+}
 
 
