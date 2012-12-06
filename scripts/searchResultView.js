@@ -30,8 +30,8 @@ var SearchResultView = Backbone.View.extend({
     },
 
     showStuff: function () {
-      alert('do some stuff');
-
+      var self = this;
+      dispatcher.trigger(appEvents.viewProfilePage, self.model);
     }
 
   });

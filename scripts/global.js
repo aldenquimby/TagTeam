@@ -17,6 +17,7 @@ var appEvents = {
 	closeTab: 'close-tab', //someone closes a tab (maybe remove the detailed object)
 	yelpResultsReturned: 'returned-yelp-results', //yelp results returned succesfully
 	errorYelpApi: 'yelp-api-error', //error with yelp api
+	showSearchPage: 'show-search-page'
 	//etc....
 }
 var appDefaults = {

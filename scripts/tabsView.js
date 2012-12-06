@@ -52,20 +52,20 @@ var TabsView = Backbone.View.extend({
       self.$el.html('');
 
       //render search tab
-      self.$el.append(self.search.tab.el);
+      self.$el.append(self.search.tab.render().el);
       //render all tabs opened from searches
       _.each(self.search.searches, function (tab) {
-        self.$el.append(tab.el);
-      })
+        self.$el.append(tab.render().el);
+      });
 
       //render bookmark tab
-      self.$el.append(self.bookmark.tab.el);
+      self.$el.append(self.bookmark.tab.render().el);
       //render all tabs opened from bookmarks
       _.each(self.bookmark.bookmarks, function (tab){
-        self.$el.append(tab.el);
+        self.$el.append(tab.render().el);
       });
       //render the help tab
-      self.$el.append(self.helpTab.el);
+      self.$el.append(self.helpTab.render().el);
       return self;
     },
 

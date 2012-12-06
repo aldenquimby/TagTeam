@@ -3,7 +3,7 @@
     
     <head>
         <meta charset="utf-8">
-        <title>Tag Team (oh yeah hmm get it)</title>
+        <title>Tag Team</title>
 
         <!-- stylesheets -->
         <link type="text/css" rel="stylesheet" href="styles/bootstrap/bootstrap.min.css" />
@@ -36,13 +36,13 @@
 
 <script id="app-view" type="text/html">
         <div id="alertContainer"></div>
-        <div id="banner">{{title}}</div>
+        <div id="banner"><span>{{title}}</span></div>
         <div class="container-fluid onepage">
             <div class="row-fluid onepage">
-                <div class="span2 tabs onepage">
+                <div class="tabs onepage">
                   
                 </div>
-                <div class="span10 desktop onepage">
+                <div class="span10 offset2 desktop onepage">
                   
                 </div>
             </div>
@@ -50,7 +50,8 @@
 </script>
 
 <script id="tab-card" type="text/html">
-<h2>{{name}}</h2>
+    {{name}}
+    <span class="tab-close close">×</span>
 </script>
 
 <script id="search-view" type="text/html">
@@ -96,6 +97,18 @@
             {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
         </div>
     </div>
+    <div class="btn bookmarkit">Add To Bookmarks</div> 
+</script>
+
+<script id="profile-page" type="text/html">
+    <h1>{{name}}</h1>
+    <ul>
+        <li>{{display_phone}}</li>
+        <li>{{id}}</li>
+        <li>your mom</li>
+        <li>is so fat....</li>
+    </ul>
+
 </script>
 
 <!-- scripts -->

@@ -20,7 +20,13 @@ var SearchView = Backbone.View.extend({
       //let's set up the events!!
       dispatcher.on(appEvents.yelpResultsReturned, function (data){
         self.displayResults(data);
-      })
+      });
+      dispatcher.on(appEvents.viewProfilePage, function (){
+        self.$el.hide();
+      });
+      dispatcher.on(appEvents.showSearchPage, function (){
+        self.$el.show();
+      });
       
       self.render();
     },

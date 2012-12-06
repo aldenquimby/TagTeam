@@ -15,7 +15,12 @@
 	width: 100%;
 	background-color: #BBD8E9;
 	font-size: 20px;
-	padding: .5% 3%;
+	padding: .5% 0;
+	text-align: right;
+	float:left;
+}
+#banner span {
+	margin-right: 2%;
 }
 
 .onepage {
@@ -27,29 +32,58 @@
 }
 
 .tabs {
-
+	position:fixed;
+	left: 0px;
+	top: 34px;
+	bottom: 0px;
+	width: 20%;
 }
 
 .tab-wrapper {
 	height: 95%;
 	position:relative;
+	border-right: 1px solid #ddd;
 }
 
 .tab {
-	border: 1px solid black;
 	cursor: pointer;
+	font-size: 25px;
+	height: 24px;
+	padding: 10px;
+	margin: 5px;
+	position:relative;
+}
+.tab:hover {
+	margin-left: 10px;
+	background-color: #f2f2f2;
+}
+.tabShadow{
+
 }
 .helpTab {
 	position:absolute;
 	bottom: 0px;
-	width: 100%;
+	width: 85%;
 }
-
+.businessTab {
+	font-size: 18px;
+	font-style: italic;
+	margin-left: 20px;
+}
+.businessTab:hover{
+	margin-left: 25px;
+}
+.tab-close{
+	display:none;
+}
+.tab:hover .tab-close{
+	display:block;
+}
 .search{
 	position:relative;
 	float:left;
 	width: 100%;
-	height: 95%;
+	height: 85%;
 }
 .search-header{
 	margin: 2% 0;
@@ -94,11 +128,12 @@
 }
 .results{
 	height: 84%;
-	width: 80%;
-	margin-left: 10%;
+	width: 70%;
+	margin-left: 5%;
 	border: 1px solid #ccc;
 	float:left;
 	position:relative;
+	overflow: auto;
 }
 .result-message {
 	position:absolute;
