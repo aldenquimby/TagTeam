@@ -25,7 +25,7 @@ var TabView = Backbone.View.extend({
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
     // app, we set a direct reference on the model for convenience.
     initialize: function(place, s, b, h) {
-      
+
       if(s){
         this.search = true;
         this.name = 'Search';
@@ -55,15 +55,14 @@ var TabView = Backbone.View.extend({
       self.$el.mustache(self.template, {
           name: self.name 
       }, { method:'html' });
+      self.delegateEvents();
       return self;
     },
 
     showStuff: function () {
-      alert('mufucker');
       if(this.search){
         //show the search view
         dispatcher.trigger(appEvents.showSearchPage);
-        console.log('showed it bitch');
       }
       else if(this.bookmark){
         //show the bookmarks view

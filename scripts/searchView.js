@@ -30,7 +30,7 @@ var SearchView = Backbone.View.extend({
       dispatcher.on(appEvents.showSearchPage, function (){
         self.$el.show();
       });
-      
+
       self.render();
     },
 
@@ -69,7 +69,7 @@ var SearchView = Backbone.View.extend({
       self.displayMessage(data.businesses.length, self.lastSearch.query, self.lastSearch.location);
       _.each(data.businesses, function(result){
         self.$el.find('.results').append(new SearchResultView({model:result}).el);
-      })
+      });
     },
 
     displayMessage: function (num,search,location){

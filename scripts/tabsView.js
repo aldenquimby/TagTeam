@@ -49,6 +49,7 @@ var TabsView = Backbone.View.extend({
     // Re-render the titles of the todo item.
     render: function() {
       var self = this;
+      
       self.$el.html('');
 
       //render search tab
