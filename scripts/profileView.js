@@ -21,9 +21,7 @@ var ProfileView = Backbone.View.extend({
       self.model = businessObject;
 
       dispatcher.on(appEvents.showSearchPage, function (){
-        console.log('yo');
-        self.remove();
-        console.log('yo');
+        self.$el.remove();
       })
       //businessObject is the thing that has the id in it so you can do the yelp business call
       self.render();
@@ -40,7 +38,7 @@ var ProfileView = Backbone.View.extend({
       alert('whatever brah');
     },
     off: function (){
-      
+
     }
 
   });
