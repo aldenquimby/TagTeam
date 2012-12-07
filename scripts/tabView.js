@@ -29,7 +29,6 @@ var TabView = Backbone.View.extend({
       if(s){
         this.search = true;
         this.name = 'Search';
-        alert('made the search tab');
       }
       else if(b){
         this.bookmark = true;

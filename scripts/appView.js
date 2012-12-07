@@ -58,7 +58,7 @@ var AppView = Backbone.View.extend({
 
 	    this.$el.find('.tabs').html(new TabsView().el);
         this.$el.find('.desktop').html(new SearchView().el);
-
+        this.$el.find('.desktop').append(new BookmarksView().el);
 
       return this;
     },

@@ -24,6 +24,9 @@ var SearchView = Backbone.View.extend({
       dispatcher.on(appEvents.viewProfilePage, function (){
         self.$el.hide();
       });
+      dispatcher.on(appEvents.showBookmarksPage, function (){
+        self.$el.hide();
+      });
       dispatcher.on(appEvents.showSearchPage, function (){
         self.$el.show();
       });
@@ -37,7 +40,6 @@ var SearchView = Backbone.View.extend({
       self.$el.mustache(self.template, {
           results: self.results 
       }, { method:'html' });
-      
       return self;
     },
 

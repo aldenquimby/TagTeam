@@ -111,27 +111,68 @@
 
 </script>
 
-<!-- scripts -->
-        <script type="text/javascript" src="scripts/framework/jquery-1.8.3.min.js"></script>
-        <script type="text/javascript" src="scripts/framework/mustache.js"></script>
-        <script type="text/javascript" src="scripts/framework/jquery-Mustache.js"></script>
-        <script type="text/javascript" src="scripts/framework/moment.js"></script>
-        <script type="text/javascript" src="scripts/framework/bootstrap.min.js"></script>
-        <script type="text/javascript" src="scripts/framework/underscore.js"></script>
-        <script type="text/javascript" src="scripts/framework/backbone-min.js"></script>
-        <script type="text/javascript" src="scripts/framework/oauth.js"></script>
-        <script type="text/javascript" src="scripts/framework/sha1.js"></script>
-        <script type="text/javascript" src="scripts/components/yelpapi.js"></script>
-        <script type="text/javascript" src="scripts/components/store.js"></script>
-<!-- our scripts -->
-        <script type="text/javascript" src="scripts/global.js"></script>
-        <script type="text/javascript" src="scripts/tabView.js"></script>
-        <script type="text/javascript" src="scripts/tabsView.js"></script>
-        <script type="text/javascript" src="scripts/searchResultView.js"></script>
-        <script type="text/javascript" src="scripts/searchView.js"></script>
-        <script type="text/javascript" src="scripts/appView.js"></script>
-<script type="text/javascript">
+<script id="bookmarks-view" type="text/html">
+    <div class="bookmarks-header">
+        <form class="bookmarks-form-wrapper">
+            <div class="bookmarks-form">
+                <span class="bookmarks-header-text">find</span>
+                <input id="bookmarks-query" type="text" placeholder="i.e. dive bars..."/>
+                <span class="bookmarks-header-text">near</span>
+                <input id="bookmarks-location" type="text" placeholder="New York..."/>
+                <input type="submit" class="btn"/>
+            </div>
+        </form>
+    </div>
+    <div class="filter">
 
+    </div>
+    <div class="results well">
+
+    </div>
+</script>
+
+<script id="bookmark-card-view" type="text/html">
+    <div class="result-image-wrapper">
+        <img src="{{image_url}}" class="result-image" />
+    </div>
+    <div class="result-name">
+        {{name}}
+        
+    </div>
+    <div class="result-details">
+        <div><img src="{{rating_img_url}}"/></div>
+        <div>{{display_phone}} </div>
+        <div><a href="{{url}}">view on yelp</a></div>
+        <div class="result-location">
+            {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
+        </div>
+    </div>
+    <div class="btn bookmarkit">Add To Bookmarks</div> 
+</script>
+
+<!-- scripts -->
+<script type="text/javascript" src="scripts/framework/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="scripts/framework/mustache.js"></script>
+<script type="text/javascript" src="scripts/framework/jquery-Mustache.js"></script>
+<script type="text/javascript" src="scripts/framework/moment.js"></script>
+<script type="text/javascript" src="scripts/framework/bootstrap.min.js"></script>
+<script type="text/javascript" src="scripts/framework/underscore.js"></script>
+<script type="text/javascript" src="scripts/framework/backbone-min.js"></script>
+<script type="text/javascript" src="scripts/framework/oauth.js"></script>
+<script type="text/javascript" src="scripts/framework/sha1.js"></script>
+<script type="text/javascript" src="scripts/components/yelpapi.js"></script>
+<script type="text/javascript" src="scripts/components/store.js"></script>
+<!-- our scripts -->
+<script type="text/javascript" src="scripts/global.js"></script>
+<script type="text/javascript" src="scripts/tabView.js"></script>
+<script type="text/javascript" src="scripts/tabsView.js"></script>
+<script type="text/javascript" src="scripts/searchResultView.js"></script>
+<script type="text/javascript" src="scripts/searchView.js"></script>
+<script type="text/javascript" src="scripts/appView.js"></script>
+<script type="text/javascript" src="scripts/bookmarkCardView.js"></script>
+<script type="text/javascript" src="scripts/bookmarksView.js"></script>
+
+<script type="text/javascript">
     $(function() {
         $.Mustache.addFromDom();
         $('body').html(new AppView().el);
