@@ -56,6 +56,9 @@ var BookmarksView = Backbone.View.extend({
       _.each(data, function(persistItem){
         self.$el.find('.results').append(new BookmarkCardView({model:persistItem.data}).el);
       });
+      if (data.length > 0) {
+        self.$el.find('.results').show();
+      }
     },
 
     addBookmark: function(business) {
