@@ -95,25 +95,40 @@
 </script>
 
 <script id="profile-page" type="text/html">
-    <h1>{{name}}</h1>
-    <h2>{{rating}}
-    reg size: {{rating_img_url}}
-    small: {{rating_img_url_small}}
-    big: {{rating_img_url_large}}
-    <h3>{{snippet_text}}</h3>
-    snip img: {{snippet_image_url}}
-    <ul>
-        <li>disp phone: {{display_phone}}</li>
-        <li>img url: {{image_url}}</li>//url of photo for the business
-        <li>yelp page: {{url}}</li>//yelp business page
-        <li>num reviews: {{review_count}}</li>//number of reviews
-        <li>dist from search: {{distance}}</li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li>your mom</li>
-        <li>is so fat....</li>
-    </ul>
+
+    <div class="row-fluid">
+        <div class="span10 offset1">
+            <div class="page-header">
+                <h1>{{name}} <small> - {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}</small></h1>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid prof-details">
+        <div class="span6 offset1">
+            <p class="lead">"{{snippet_text}}"</p>
+            <dl class="dl-horizontal">
+                <dt>rating</dt>
+                <dd><img src="{{rating_img_url}}"/></dd>
+                <dt>phone</dt>
+                <dd>{{display_phone}}</dd>
+                <dt># reviews</dt>
+                <dd>{{review_count}}</dd>
+                <dt>categories</dt>
+                <dd>{{fixed_cat}}</dd>
+            </dl>
+            
+        </div>
+        <div class="span4">
+            <img class="big-img" src="{{big_img}}"/>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <div class="span6 offset1">
+        </div>
+        <div class="span4">
+            <div class="map"></div>
+        </div>
+    </div>
 </script>
 
 <script id="add-bookmark-popover-title" type="text/html">
@@ -189,6 +204,8 @@
 </script>
 
 <!-- framework scripts -->
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
+
 <script type="text/javascript" src="scripts/framework/jquery-1.8.3.min.js"></script>
 <script type="text/javascript" src="scripts/framework/mustache.js"></script>
 <script type="text/javascript" src="scripts/framework/jquery-Mustache.js"></script>
