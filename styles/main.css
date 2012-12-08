@@ -88,11 +88,14 @@ ul.typeahead li.active span {
 .businessTab:hover .tab-close{
 	display:block;
 }
+.businessTab.tab-select {
+	margin-left: 25px;
+	background-color: #f2f2f2;
+}
 .tab-select {
 	margin-left: 10px;
 	background-color: #f2f2f2;
 }
-
 
 .search{
 	position:relative;
