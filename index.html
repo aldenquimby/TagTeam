@@ -100,16 +100,15 @@
     <div class="row-fluid">
         <div class="span10 offset1">
             <div class="page-header">
-                <h1>{{name}} <small> - {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}</small></h1>
+                <h1>{{name}} <small> - {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}} - <img src="{{rating_img_url}}"/></small></h1>
             </div>
         </div>
     </div>
     <div class="row-fluid prof-details">
         <div class="span6 offset1">
             <p class="lead">"{{snippet_text}}"</p>
+            <div class="well">
             <dl class="dl-horizontal">
-                <dt>rating</dt>
-                <dd><img src="{{rating_img_url}}"/></dd>
                 <dt>phone</dt>
                 <dd>{{display_phone}}</dd>
                 <dt># reviews</dt>
@@ -117,16 +116,16 @@
                 <dt>categories</dt>
                 <dd>{{fixed_cat}}</dd>
             </dl>
-            
+            {{#reviews}}
+                <blockquote>
+                    <p>{{excerpt}}</p>
+                    <small>written by <cite title="Source Title">{{user.name}}</cite> <img src="{{rating_img_url_small}}"/></small>
+                </blockquote>
+            {{/reviews}}
+            </div>
         </div>
         <div class="span4">
-            <img class="big-img" src="{{big_img}}"/>
-        </div>
-    </div>
-    <div class="row-fluid">
-        <div class="span6 offset1">
-        </div>
-        <div class="span4">
+            <img class="big-img img-polaroid" src="{{big_img}}"/>
             <div class="map"></div>
         </div>
     </div>
