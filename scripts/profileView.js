@@ -61,6 +61,10 @@ var ProfileView = Backbone.View.extend({
       };
       var map = new google.maps.Map(self.$el.find('.map')[0],
           mapOptions);
+        marker = new google.maps.Marker({
+            position: new google.maps.LatLng(coord.latitude, coord.longitude),
+            map: map
+        });
       return self;
     },
 
@@ -77,8 +81,9 @@ var ProfileView = Backbone.View.extend({
       });
       fullBusiness.fixed_cat = cats.join(' - ');
       //now get that big img...
-      
-
+      var spotToCut = fullBusiness.image_url.lastIndexOf('/');
+      var bigimg = fullBusiness.image_url.substring(0, spotToCut + 1) + 'l.jpg';
+      fullBusiness.big_img = bigimg;
       // re-render
       self.render();
     },
