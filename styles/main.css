@@ -118,6 +118,10 @@ ul.typeahead li.active span {
 	width: 300px;
 	height: 30px;
 }
+#bookmark-query {
+	width: 450px;
+	height: 30px;
+}
 #search-location {
 	width: 150px;
 	height: 30px;

@@ -37,6 +37,7 @@ var SearchResultView = Backbone.View.extend({
     render: function() {
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
+      
       return self;
     },
 
