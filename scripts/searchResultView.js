@@ -24,10 +24,16 @@ var SearchResultView = Backbone.View.extend({
       var self = this;
 
       dispatcher.on(appEvents.bookmarkUpdated, function(business){
-        self.render();
+        if (self.model.id == business.id) {
+          self.model = business;
+          self.render();
+        }
       });
       dispatcher.on(appEvents.bookmarkAdded, function(business){
-        self.render();
+        if (self.model.id == business.id) {
+          self.model = business;
+          self.render();
+        }
       });
 
       self.render();
