@@ -153,7 +153,11 @@
 	margin-right: 20px;
 }
 .result-name{
+	color: #333;
 	font-size: 30px;
+}
+.result-name:hover {
+	color: #333;
 }
 .result-details {
 	font-style: italic;
