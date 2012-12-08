@@ -11,10 +11,13 @@ var TabView = Backbone.View.extend({
     events: {
       "click": "showStuff"
     },
+    tabId: 0,
 
     search: false,
 
     bookmark: false,
+
+    bookmarkedBusiness: false,
 
     help: false,
 
@@ -24,29 +27,41 @@ var TabView = Backbone.View.extend({
     // The TodoView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
     // app, we set a direct reference on the model for convenience.
-    initialize: function(place, s, b, h) {
-
+    initialize: function(tabId, place, bookmarked, s, b, h) {
+      var self = this;
+      self.tabId = tabId;
+      if(place && !bookmarked || bookmarked && bookmarked.show){
+        self.$el.addClass('tab-select');
+        dispatcher.trigger(appEvents.tabSelected, self.tabId);
+      }
+      if(bookmarked){
+        self.bookmarkedBusiness = true;
+      }
       if(s){
-        this.search = true;
-        this.name = 'Search';
+        self.search = true;
+        self.name = 'Search';
       }
       else if(b){
-        this.bookmark = true;
-        this.name = 'My Bookmarks';
+        self.bookmark = true;
+        self.name = 'My Bookmarks';
       }
       else if(h){
-        this.help = true;
-        this.name = 'Help';
-        this.$el.addClass('helpTab');
+        self.help = true;
+        self.name = 'Help';
+        self.$el.addClass('helpTab');
       }
       else{
-        this.business = place;
-        this.name = place.name;
-        this.$el.addClass('businessTab');
+        self.business = place;
+        self.name = place.name;
+        self.$el.addClass('businessTab');
       }
-
+      dispatcher.on(appEvents.tabSelected, function (id){
+        if(self.tabId!=id){
+          self.$el.removeClass('tab-select');
+        }
+      });
       //maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
-      this.render();
+      self.render();
     },
 
     // Re-render the titles of the todo item.
@@ -77,6 +92,8 @@ var TabView = Backbone.View.extend({
         //it's a business, show the profile view
         dispatcher.trigger(appEvents.viewProfilePage, self.business);
       }
+      self.$el.addClass('tab-select');
+      dispatcher.trigger(appEvents.tabSelected, self.tabId);
     }
 
   });

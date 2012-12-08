@@ -76,9 +76,15 @@
 .tab-close{
 	display:none;
 }
-.tab:hover .tab-close{
+.businessTab:hover .tab-close{
 	display:block;
 }
+.tab-select {
+	margin-left: 10px;
+	background-color: #f2f2f2;
+}
+
+
 .search{
 	position:relative;
 	float:left;
@@ -180,7 +186,9 @@
 	width: 100%;
 	margin-top: 20px;
 }
-
+.profile {
+	margin-left:20px;
+}
 
 .prof-details {
 	margin-bottom: 20px;

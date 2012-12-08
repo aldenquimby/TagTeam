@@ -19,6 +19,8 @@ var TabsView = Backbone.View.extend({
     },
     helpTab: {},
 
+    tabCount: 0,
+
     // The TodoView listens for changes to its model, re-rendering. Since there's
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
     // app, we set a direct reference on the model for convenience.
@@ -31,7 +33,7 @@ var TabsView = Backbone.View.extend({
           self.handleViewProfile(business);          
         }
         else {
-          self.handleViewBookmarkedProfile(business);          
+          self.handleViewBookmarkedProfile(business, true);          
         }
       });
       dispatcher.on(appEvents.bookmarkUpdated, function(business){
@@ -39,17 +41,20 @@ var TabsView = Backbone.View.extend({
           self.handleBookmarkRemoved(business);
         }
       });
+      dispatcher.on(appEvents.bookmarkAdded, function (business){
+          self.handleViewBookmarkedProfile(business, false);
+      })
 
       //first let's set up search tab
-      self.search.tab = new TabView(null, true,false)
+      self.search.tab = new TabView(self.tabCount++, null, false, true,false)
       self.search.searches = {};
 
       //then let's set up bookmark tab
-      self.bookmark.tab = new TabView(null, false, true);
+      self.bookmark.tab = new TabView(self.tabCount++, null, false, false, true);
       self.bookmark.bookmarks = {};
 
       //set up the help tab!
-      self.helpTab = new TabView(null, false, false, true);
+      self.helpTab = new TabView(self.tabCount++, null, false, false, false, true);
       //maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
       //this.model.on('destroy', this.remove, this);
       self.render();
@@ -83,16 +88,16 @@ var TabsView = Backbone.View.extend({
       var self = this;
       // move tab from bookmarks to searches
       if (self.bookmark.bookmarks[business.id] != null) {
-        self.search.searches[business.id] = new TabView(business);
+        self.search.searches[business.id] = new TabView(self.tabCount++, business);
         delete self.bookmark.bookmarks[business.id];
         self.render();
       }
     },
 
-    handleViewBookmarkedProfile: function(business) {
+    handleViewBookmarkedProfile: function(business, show) {
       var self = this;
       if (self.bookmark.bookmarks[business.id] == null) {
-        self.bookmark.bookmarks[business.id] = new TabView(business);
+        self.bookmark.bookmarks[business.id] = new TabView(self.tabCount++, business, {show:show});
         if (self.search.searches[business.id] != null) {
           delete self.search.searches[business.id];
         }
@@ -103,7 +108,7 @@ var TabsView = Backbone.View.extend({
     handleViewProfile: function(business) {
       var self = this;
       if (self.search.searches[business.id] == null) {
-        self.search.searches[business.id] = new TabView(business);
+        self.search.searches[business.id] = new TabView(self.tabCount++, business);
         if (self.bookmark.bookmarks[business.id] != null) {
           delete self.bookmark.bookmarks[business.id];
         }
