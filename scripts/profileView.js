@@ -10,6 +10,8 @@ var ProfileView = Backbone.View.extend({
     initialize: function() {
       var self = this;
 
+
+      //wiring everything up
       dispatcher.on(appEvents.showSearchPage, function () {
         self.$el.hide();
       });
@@ -37,29 +39,52 @@ var ProfileView = Backbone.View.extend({
         self.render();
       });
 
+      //actual initialize functions
+
       yelpApi.business(function(fullBusiness) {
         self.businessReturned(fullBusiness);
       }, self.options.smallModel.id);
+
+      
+
 
     },
 
     render: function () {
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
+      var coord = self.model.location.coordinate;
+      var mapOptions = {
+        center: new google.maps.LatLng(coord.latitude, coord.longitude),
+        zoom: 13,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      var map = new google.maps.Map(self.$el.find('.map')[0],
+          mapOptions);
       return self;
     },
 
     businessReturned: function(fullBusiness) {
       var self = this;
       self.model = fullBusiness;
+      console.log(fullBusiness);
       // make sure we know about bookmark if it exists
       self.model.bookmark = self.options.smallModel.bookmark;
+      //do some object cleanup
+      var cats = [];
+      _.each(fullBusiness.categories, function(cat){
+        cats.push(cat[0]);
+      });
+      fullBusiness.fixed_cat = cats.join(' - ');
+      //now get that big img...
+      
+
       // re-render
       self.render();
     },
 
     clickedSomewhereOnMe: function () {
-      alert('whatever brah');
+      console.log('clicked somewhere');
     }
 
   });

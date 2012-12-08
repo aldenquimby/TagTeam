@@ -171,13 +171,19 @@
 	margin-top: 10px;
 }
 
+.map {
+	height: 300px;
+	width: 100%;
+}
 
 
+.prof-details {
+	margin-bottom: 20px;
+}
 
-
-
-
-
+.big-img {
+	height: 300px;
+}
 
 
 
