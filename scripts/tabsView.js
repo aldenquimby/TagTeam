@@ -27,11 +27,18 @@ var TabsView = Backbone.View.extend({
       //let's set up the events!!
 
       dispatcher.on(appEvents.viewProfilePage, function (business){
-        self.handleViewProfilePage(business);
+        if (business.bookmark == null) {
+          self.handleViewProfile(business);          
+        }
+        else {
+          self.handleViewBookmarkedProfile(business);          
+        }
       });
-      dispatcher.on(appEvents.bookmarkRemoved, function(business){
-        self.handleBookmarkRemoved(business);
-      })
+      dispatcher.on(appEvents.bookmarkUpdated, function(business){
+        if (business.bookmark == null) {
+          self.handleBookmarkRemoved(business);
+        }
+      });
 
       //first let's set up search tab
       self.search.tab = new TabView(null, true,false)
@@ -82,26 +89,26 @@ var TabsView = Backbone.View.extend({
       }
     },
 
-    handleViewProfilePage: function(business) {
+    handleViewBookmarkedProfile: function(business) {
       var self = this;
-      // put tab in bookmarks or searches
-      if (business.bookmark != null) {
+      if (self.bookmark.bookmarks[business.id] == null) {
         self.bookmark.bookmarks[business.id] = new TabView(business);
         if (self.search.searches[business.id] != null) {
           delete self.search.searches[business.id];
         }
       }
-      else {
+      self.render();
+    },
+
+    handleViewProfile: function(business) {
+      var self = this;
+      if (self.search.searches[business.id] == null) {
         self.search.searches[business.id] = new TabView(business);
         if (self.bookmark.bookmarks[business.id] != null) {
           delete self.bookmark.bookmarks[business.id];
         }
       }
-
       self.render();
     }
-
-
-
 
   });

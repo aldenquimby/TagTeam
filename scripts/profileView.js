@@ -1,64 +1,65 @@
 var ProfileView = Backbone.View.extend({
 
-    //... is a list tag.
     tagName:  "div",
-
     className: 'profile',
-    // Cache the template function for a single item.
-    //TODO: set template shit up
     template: 'profile-page',
-    // The DOM events specific to an item.
     events: {
-      "click": "showStuff"
+      "click": "clickedSomewhereOnMe"
     },
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
+
     initialize: function() {
       var self = this;
 
-//      var yelpApi = new YelpApiDebug(self.onApiError);
-
-      var businessObject = self.options.smallModel;
-      //for now
-      self.model = businessObject;
-
-      dispatcher.on(appEvents.showSearchPage, function (){
-        self.$el.remove();
+      dispatcher.on(appEvents.showSearchPage, function () {
+        self.$el.hide();
+      });
+      dispatcher.on(appEvents.showHelpPage, function () {
+        self.$el.hide();
+      });
+      dispatcher.on(appEvents.showBookmarksPage, function () {
+        self.$el.hide();
+      });
+      dispatcher.on(appEvents.viewProfilePage, function(business){
+        if (business.id == self.model.id) {
+          self.$el.show();
+        }
+        else {
+          self.$el.hide();
+        }
       });
 
-      console.log("right before api call");
-      console.log(businessObject);
-
-      yelpApi.business(dispatcher.trigger("got " + businessObject[0]), businessObject[0]);//here************* what am i doing wrong?
-
-      console.log("right after api call");
-
-      //businessObject is the thing that has the id in it so you can do the yelp business call
-      dispatcher.listen("got " + businessObject[0], function (data){//here***************** what am i doing wrong?
-        self.render(data)
+      dispatcher.on(appEvents.bookmarkUpdated, function (smallModel) {
+        self.model.bookmark = smallModel.bookmark;
+        self.render();
+      });
+      dispatcher.on(appEvents.bookmarkAdded, function (smallModel) {
+        self.model.bookmark = smallModel.bookmark;
+        self.render();
       });
 
-//      yelpApi.business(self.render, businessObject[0]);    
+      yelpApi.business(function(fullBusiness) {
+        self.businessReturned(fullBusiness);
+      }, self.options.smallModel.id);
 
     },
 
-    // Re-render the titles of the todo item.
-    render: function (data) {
+    render: function () {
       var self = this;
-      self.$el.mustache(self.template, data, { method:'html' });
+      self.$el.mustache(self.template, self.model, { method:'html' });
       return self;
     },
 
-    onApiError: function () {
-      alert("something bad happened with the api");
+    businessReturned: function(fullBusiness) {
+      var self = this;
+      self.model = fullBusiness;
+      // make sure we know about bookmark if it exists
+      self.model.bookmark = self.options.smallModel.bookmark;
+      // re-render
+      self.render();
     },
 
-    showStuff: function () {
+    clickedSomewhereOnMe: function () {
       alert('whatever brah');
-    },
-    off: function (){
-
     }
 
   });

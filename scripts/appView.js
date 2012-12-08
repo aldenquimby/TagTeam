@@ -14,18 +14,36 @@ var AppView = Backbone.View.extend({
       //i don't think there are events for this really either...
     },
 
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
+    // keep list of the profiles we've loaded so we don't load every time
+    profiles: {},
+
     initialize: function() {
-      //render my template yo
       var self = this;
+
       dispatcher.on(appEvents.viewProfilePage, function(business){
-        self.$el.find('.desktop').append(new ProfileView({smallModel:business}).el); 
+        // create new profile view if we haven't yet
+        if (self.profiles[business.id] == null) {
+          self.$el.find('.desktop').append(new ProfileView({smallModel:business}).el); 
+          self.profiles[business.id] = business;
+        }
       });
+
       dispatcher.on(appEvents.apiError, function(msg){
         onApiError(msg);
-      })
+      });
+
+      dispatcher.on(appEvents.persistResultsReturned, function(data){
+        _.each(data, function(persistItem){
+          allBookmarks[persistItem.id] = persistItem.data.bookmark;
+        });
+      });
+      dispatcher.on(appEvents.bookmarkAdded, function(business){
+        allBookmarks[business.id] = business.bookmark;
+      });
+      dispatcher.on(appEvents.bookmarkUpdated, function(business){
+        allBookmarks[business.id] = business.bookmark;
+      });
+
       self.render();
 
       // fetch bookmarks when app starts up
@@ -34,7 +52,6 @@ var AppView = Backbone.View.extend({
       });
     },
 
-    // Re-render the titles of the todo item.
     render: function() {
 	    this.$el.mustache(this.template, {
 	        title:'Tag Team', 
@@ -53,6 +70,6 @@ var AppView = Backbone.View.extend({
             type:'error', 
             message: message
         }, { method:'html' });  
-    }
+    },
 
   });

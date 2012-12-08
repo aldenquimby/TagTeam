@@ -8,14 +8,14 @@ var appEvents = {
 	showBookmarksPage: 'show-bookmarks-page', //someone clicks bookmarks tab
 	showHelpPage: 'show-help-page', //someone clicks help tab
 
+    persistResultsReturned: 'returned-persist-results', //mongo results returned succesfully
 	yelpResultsReturned: 'returned-yelp-results', //yelp results returned succesfully
-	persistResultsReturned: 'returned-persist-results', //mongo results returned succesfully
 	apiError: 'api-error',
 
 	search: 'yelp-search', //someone searches (we could show loading gif)
 	bookmarkPopOver: 'bookmark-bringup-popover', //someone should be shown the popover
     bookmarkAdded: 'bookmark-added', //someone bookmarks something
-	bookmarkRemoved: 'bookmark-removed', //someone removed a bookmark
+	bookmarkUpdated: 'bookmark-updated', //someone changed a bookmark
 	closeTab: 'close-tab', //someone closes a tab (maybe remove the detailed object)
 
 };
@@ -25,8 +25,9 @@ var appDefaults = {
 	query: 'Dive Bars'
 };
 
-
-
+// search needs to know if stuff is bookmarked
+// appView maintains this
+var allBookmarks = {};
 
 
 var yelpApi = new YelpApiDebug(function(){

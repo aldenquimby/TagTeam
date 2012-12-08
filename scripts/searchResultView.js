@@ -18,8 +18,16 @@ var SearchResultView = Backbone.View.extend({
     // a one-to-one correspondence between a **Todo** and a **TodoView** in this
     // app, we set a direct reference on the model for convenience.
     initialize: function() {
-      
-      this.render();
+      var self = this;
+
+      dispatcher.on(appEvents.bookmarkUpdated, function(business){
+        self.render();
+      });
+      dispatcher.on(appEvents.bookmarkAdded, function(business){
+        self.render();
+      })
+
+      self.render();
     },
 
     // Re-render the titles of the todo item.

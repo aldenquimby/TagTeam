@@ -87,7 +87,12 @@
             {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
         </div>
     </div>
-    <div class="btn bookmarkit">Add To Bookmarks</div> 
+    {{#bookmark}}
+        <div>Already bookmarked!</div>
+    {{/bookmark}}
+    {{^bookmark}}
+        <div class="btn bookmarkit">Add To Bookmarks</div> 
+    {{/bookmark}}
 </script>
 
 <script id="profile-page" type="text/html">

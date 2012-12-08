@@ -1,23 +1,17 @@
 var SearchView = Backbone.View.extend({
 
-    //... is a list tag.
     tagName:  "div",
-
     className: 'search',
-    // Cache the template function for a single item.
     template: 'search-view',
-    // The DOM events specific to an item.
     events: {
       "submit form": "search"
     },
+
     lastSearch: {},
 
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
     initialize: function() {
       var self = this;
-      //let's set up the events!!
+
       dispatcher.on(appEvents.yelpResultsReturned, function (data){
         self.displayResults(data);
       });
@@ -59,10 +53,22 @@ var SearchView = Backbone.View.extend({
       }
       self.lastSearch.location = location;
       self.lastSearch.query = query;
+
       yelpApi.search(function(data){
-        dispatcher.trigger(appEvents.yelpResultsReturned, data);
+        self.yelpSearchComplete(data);
       }, location, query);
 
+    },
+
+    yelpSearchComplete: function(data) {
+      // need to check for bookmarked places
+      _.each(data.businesses, function(result){
+        if (allBookmarks[result.id] != null) {
+          result.bookmark = allBookmarks[result.id];
+        }
+      });
+      // trigger AFTER setting bookmarks
+      dispatcher.trigger(appEvents.yelpResultsReturned, data);
     },
 
     displayResults: function (data) {

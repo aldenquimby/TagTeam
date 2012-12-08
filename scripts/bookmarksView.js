@@ -32,7 +32,6 @@ var BookmarksView = Backbone.View.extend({
       });
 
       self.render();
-
     },
 
     render: function() {
@@ -56,7 +55,7 @@ var BookmarksView = Backbone.View.extend({
       self.$el.find('.results').html('');
       _.each(data, function(persistItem){
         self.$el.find('.results').append(new BookmarkCardView({model:persistItem.data}).el);
-      })
+      });
     },
 
     addBookmark: function(business) {
