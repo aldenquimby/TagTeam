@@ -32,7 +32,6 @@ var SearchResultView = Backbone.View.extend({
     // Re-render the titles of the todo item.
     render: function() {
       var self = this;
-      console.log(self.model);
       self.$el.mustache(self.template, self.model, { method:'html' });
       return self;
     },

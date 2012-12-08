@@ -46,24 +46,58 @@
 </script>
 
 <script id="search-view" type="text/html">
-    <div class="search-header">
-        <form class="search-form-wrapper">
-            <div class="search-form">
-                <span class="search-header-text">find</span>
-                <input id="search-query" type="text" placeholder="i.e. dive bars..."/>
-                <span class="search-header-text">near</span>
-                <input id="search-location" type="text" placeholder="New York..."/>
-                <input type="submit" class="btn"/>
-            </div>
-        </form>
-    </div>
-    <div class="filter">
 
+    <div class="row-fluid">
+        <div class="span9 search-header">
+            
+            <form class="search-form-wrapper">
+                <div class="search-form">
+                    <span class="search-header-text">find</span>
+                    <input id="search-query" type="text" placeholder="i.e. dive bars..."/>
+                    <span class="search-header-text">near</span>
+                    <input id="search-location" type="text" placeholder="New York..."/>
+                    <input type="submit" class="btn"/>
+                </div>
+            </form>
+        </div>
+        <div class="span3">
+        </div>
     </div>
-    <div class="results well">
-
+    <div class="row-fluid">
+        <div class="span9">
+            <div class="results well"></div>
+        </div>
+        <div class="span3 filter">
+            
+        </div>
     </div>
+    
 </script>
+
+
+<script id="filter-view" type="text/html">
+    <h2>View Options</h2>
+    <form>
+        <legend>Sort By: </legend>
+        <select>
+            <option>default</option>
+            <option>alphabetical</option>
+            <option># reviews</option>
+            <option>rating</option>
+            <option>bookmarked</option>
+        </select>
+        <legend>Categories: </legend>
+        {{#categories}}
+            <label class="checkbox" >
+            <input checked type="checkbox" value="{{.}}">
+            {{.}}
+            </label>
+        {{/categories}}
+    </form>
+</script>
+
+
+
 
 <script id="results-message" type="text/html">
     <div class="result-message">
