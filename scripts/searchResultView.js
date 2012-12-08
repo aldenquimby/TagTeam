@@ -9,14 +9,13 @@ var SearchResultView = Backbone.View.extend({
     template: 'result-card',
     // The DOM events specific to an item.
     events: {
-      "click": "showStuff",
-      "click .bookmarkit" : "showBookmarkPopover"
+      "click .result-name": "showStuff",
+      "click .result-image-wrapper": "showStuff",
+      "click .bookmarkit": "showBookmarkPopover",
+      "click .popover .close": "hideBookmarkPopover", 
+      "click .popover .addBookmark": "addBookmark" 
     },
 
-    
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
     initialize: function() {
       var self = this;
 
@@ -35,6 +34,15 @@ var SearchResultView = Backbone.View.extend({
       var self = this;
       console.log(self.model);
       self.$el.mustache(self.template, self.model, { method:'html' });
+
+      var title = $.Mustache.render('add-bookmark-popover-title');
+      var content = $.Mustache.render('add-bookmark-popover-content', {
+        content: 'testing 123'
+      });
+      self.$el.find('.bookmarkit').popover({
+        title:title, content:content, html:true, trigger:'manual', placement:'bottom'
+      });
+
       return self;
     },
 
@@ -43,11 +51,24 @@ var SearchResultView = Backbone.View.extend({
       dispatcher.trigger(appEvents.viewProfilePage, self.model);
     },
 
-    showBookmarkPopover: function() {
+    showBookmarkPopover: function(e) {
       var self = this;  
 
-      // right now just calls addBookmark to test linking
-      self.addBookmark();
+      e.stopPropagation();
+
+      // dispatcher.trigger(appEvents.bookmarkPopOver, self.model);
+
+      $(e.currentTarget).popover('show');
+
+    },
+
+    hideBookmarkPopover: function(e) {
+      var self = this;
+
+      e.stopPropagation();
+
+
+      self.$el.find('.bookmarkit').popover('hide');      
     },
 
     addBookmark: function() {

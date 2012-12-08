@@ -75,10 +75,9 @@
     <div class="result-image-wrapper">
         <img src="{{image_url}}" class="result-image" />
     </div>
-    <div class="result-name">
+    <a class="result-name" href="" onclick="return false;">
         {{name}}
-        
-    </div>
+    </a>
     <div class="result-details">
         <div><img src="{{rating_img_url}}"/></div>
         <div>{{display_phone}} </div>
@@ -117,6 +116,18 @@
     </ul>
 </script>
 
+<script id="add-bookmark-popover-title" type="text/html">
+    <strong>Add Bookmark</strong>
+    <button type="button" class="close">&times;</button>
+</script>
+
+<script id="add-bookmark-popover-content" type="text/html">
+    {{content}}
+    <div class="btn-wrapper">
+        <button type="button" class="btn btn-primary addBookmark">Bookmark It</button>
+    </div>
+</script>
+
 <script id="bookmarks-view" type="text/html">
     <div class="bookmarks-header">
         <h3>Bookmarks</h3>
@@ -133,9 +144,8 @@
     <div class="result-image-wrapper">
         <img src="{{image_url}}" class="result-image" />
     </div>
-    <div class="result-name">
+    <a class="result-name" href="" onclick="return false;">
         {{name}}
-        
     </div>
     <div class="result-details">
         <div><img src="{{rating_img_url}}"/></div>
