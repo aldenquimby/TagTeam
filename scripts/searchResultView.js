@@ -9,7 +9,7 @@ var SearchResultView = Backbone.View.extend({
     template: 'result-card',
     // The DOM events specific to an item.
     events: {
-      "click .result-name": "showStuff",
+      "click .result-name a": "showStuff",
       "click .result-image-wrapper": "showStuff",
       "click .bookmarkit": "showBookmarkPopover",
       "click .popover .close": "hideBookmarkPopover", 
@@ -34,15 +34,6 @@ var SearchResultView = Backbone.View.extend({
       var self = this;
       console.log(self.model);
       self.$el.mustache(self.template, self.model, { method:'html' });
-
-      var title = $.Mustache.render('add-bookmark-popover-title');
-      var content = $.Mustache.render('add-bookmark-popover-content', {
-        content: 'testing 123'
-      });
-      self.$el.find('.bookmarkit').popover({
-        title:title, content:content, html:true, trigger:'manual', placement:'top'
-      });
-
       return self;
     },
 
@@ -51,15 +42,39 @@ var SearchResultView = Backbone.View.extend({
       dispatcher.trigger(appEvents.viewProfilePage, self.model);
     },
 
+    createPopover: function() {
+      var self = this;
+      var title = $.Mustache.render('add-bookmark-popover-title');
+      var content = $.Mustache.render('add-bookmark-popover-content', {
+        content: 'testing 123'
+      });
+      self.$el.find('.bookmarkit').popover({
+        title:title, content:content, html:true, trigger:'manual', placement:'bottom'
+      });
+    },
+
     showBookmarkPopover: function(e) {
       var self = this;  
-
       e.stopPropagation();
 
-      // dispatcher.trigger(appEvents.bookmarkPopOver, self.model);
+      if ($(e.currentTarget).attr('class').indexOf('disabled') >= 0) {
+        // currently disabled
+        return;
+      }
 
+      // kill other popovers
+      $('.bookmarkit').popover('destroy');
+
+      // remove disabled
+      $('.bookmarkit').removeClass('disabled');
+
+      self.createPopover();
+
+      // disable button
+      $(e.currentTarget).addClass('disabled');
+
+      // show popover
       $(e.currentTarget).popover('show');
-
     },
 
     hideBookmarkPopover: function(e) {
@@ -67,8 +82,9 @@ var SearchResultView = Backbone.View.extend({
 
       e.stopPropagation();
 
-
-      self.$el.find('.bookmarkit').popover('hide');      
+      self.$el.find('.bookmarkit').removeClass('disabled');
+      self.$el.find('.bookmarkit').popover('hide');
+      // self.createPopover();
     },
 
     addBookmark: function() {
