@@ -53,18 +53,21 @@ var ProfileView = Backbone.View.extend({
     render: function () {
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
-      var coord = self.model.location.coordinate;
-      var mapOptions = {
-        center: new google.maps.LatLng(coord.latitude, coord.longitude),
-        zoom: 13,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
+      setTimeout(function (){
+        //this is messed up but you gotta do what you gotta do...
+        var coord = self.model.location.coordinate;
+        var mapOptions = {
+          center: new google.maps.LatLng(coord.latitude, coord.longitude),
+          zoom: 13,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
       var map = new google.maps.Map(self.$el.find('.map')[0],
           mapOptions);
         marker = new google.maps.Marker({
             position: new google.maps.LatLng(coord.latitude, coord.longitude),
             map: map
         });
+      }, 100);
       return self;
     },
 

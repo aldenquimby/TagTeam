@@ -4,7 +4,8 @@ var SearchView = Backbone.View.extend({
     className: 'search',
     template: 'search-view',
     events: {
-      "submit form": "search"
+      "submit form": "search",
+      "change .filter form": "filterResults"
     },
 
     lastSearch: {},
@@ -37,6 +38,8 @@ var SearchView = Backbone.View.extend({
       self.$el.mustache(self.template, {
           results: self.results 
       }, { method:'html' });
+      //i just... i just don't understand
+      self.$el.find('.filter').hide();
       return self;
     },
 
@@ -57,7 +60,8 @@ var SearchView = Backbone.View.extend({
       yelpApi.search(function(data){
         self.yelpSearchComplete(data);
       }, location, query);
-
+      
+      
     },
 
     yelpSearchComplete: function(data) {
@@ -69,17 +73,40 @@ var SearchView = Backbone.View.extend({
       });
       // trigger AFTER setting bookmarks
       dispatcher.trigger(appEvents.yelpResultsReturned, data);
+      
     },
 
     displayResults: function (data) {
       var self = this;
       console.log(data);
       self.$el.find('.results').html('');
+      self.lastSearch.results = data;
       self.displayMessage(data.businesses.length, self.lastSearch.query, self.lastSearch.location);
       _.each(data.businesses, function(result){
         self.$el.find('.results').append(new SearchResultView({model:result}).el);
       });
+      self.$el.find('.results').show().height(window.innerHeight-200);
+      self.showFilterView(data.businesses);
     },
+
+    showFilterView: function (){
+      var self = this;
+      cats = _.uniq(_.flatten(_.map(self.lastSearch.results.businesses, function(bus){
+        return _.pluck(bus.categories, 0);
+      })));
+
+      self.$el.find('.filter').mustache('filter-view', {
+           categories: cats
+      }, { method:'html' });
+
+      self.$el.find('.filter').show();
+    },
+
+    filterResults: function () {
+      alert('fuuuu');
+    },
+
+
 
     displayMessage: function (num,search,location){
       var self = this;

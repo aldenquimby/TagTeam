@@ -101,31 +101,15 @@ ul.typeahead li.active span {
 	height: 85%;
 }
 .search-header{
-	margin: 2% 0;
-	height: 10%;
-	width: 90%;
-	margin-left: 5%;
 	font-size: 30px;
+	margin-top: 20px;
 }
-.search-form-wrapper {
-	position:relative;
-	float:left;
-	width: 100%;
-	height: 100%;
-}
+
 .search-header-text {
 	margin-left: 30px;
 	margin-right: 10px;
 }
-.search-form {
-   width: 800px;
-   height: 46px;
-   position: absolute;
-   left: 50%;
-   top: 50%; 
-   margin-left: -400px;
-   margin-top: -23px;
-}
+
 .search-form .btn {
 	margin-bottom: 10px;
 	margin-left: 10px;
@@ -139,16 +123,13 @@ ul.typeahead li.active span {
 	height: 30px;
 }
 .filter {
-
+	display:none;
 }
 .results{
-	height: 84%;
-	width: 70%;
-	margin-left: 5%;
-	border: 1px solid #ccc;
 	float:left;
 	position:relative;
 	overflow: auto;
+	display: none;
 }
 .result-message {
 	position:absolute;
