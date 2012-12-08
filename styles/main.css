@@ -31,6 +31,15 @@
 
 }
 
+ul.typeahead li.active span {
+    color: white;
+}
+
+.popover .typeahead {
+	width:100px;
+}
+
+
 .tabs {
 	position:fixed;
 	left: 0px;

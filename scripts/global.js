@@ -23,13 +23,13 @@ var appEvents = {
 
 var appDefaults = {
 	location: 'New York',
-	query: 'Dive Bars'
+	query: 'Dive Bars',
+    labels: ['check it out', 'must go back', 'stay away']
 };
 
 // search needs to know if stuff is bookmarked
 // appView maintains this
 var allBookmarks = {};
-
 
 var yelpApi = new YelpApiDebug(function(){
     dispatcher.trigger(appEvents.apiError, 'Looks like the Yelp API might be down, please try again later.');
