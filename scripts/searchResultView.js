@@ -81,11 +81,9 @@ var SearchResultView = Backbone.View.extend({
         },
         items: 5,
         updater: function(item) {
-          popover.find('.applied-labels').append(
-            '<span class="label" style="margin-right:10px;">' + item + '<span data-tag="' + item + '" class="close remove-label" style="padding-left:5px;height:0px;margin-top:-2px;">×</span></span>'
-          );
           self.appliedLabels.push(item);
           self.allowedLabels = _.without(self.allowedLabels, item);
+          popover.find('.applied-labels').mustache('bookmark-tags', {bookmark:{labels:self.appliedLabels}}, {method:'html'});
           return '';
         },
         sorter: function(items) {
@@ -100,11 +98,9 @@ var SearchResultView = Backbone.View.extend({
         if (e.keyCode == 13) {
           var item = $(this).val();
           if (self.appliedLabels.indexOf(item) < 0 && item != '') {
-            popover.find('.applied-labels').append(
-              '<span class="label" style="margin-right:10px;">' + item + '<span data-tag="' + item + '" class="close remove-label" style="padding-left:5px;height:0px;margin-top:-2px;">×</span></span>'
-            );
             self.appliedLabels.push(item);
             self.allowedLabels = _.without(self.allowedLabels, item);
+            popover.find('.applied-labels').mustache('bookmark-tags', {bookmark:{labels:self.appliedLabels}}, {method:'html'});
           }
           $(this).val('');
           return false;

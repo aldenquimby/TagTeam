@@ -102,6 +102,12 @@
     </div> 
 </script>
 
+<script id="bookmark-tags" type="text/html">
+    {{#bookmark.labels}}
+        <span class="label" style="margin-right:10px;">{{.}}<span data-tag="{{.}}" class="close remove-label" style="padding-left:5px;height:0px;margin-top:-2px;">×</span></span>
+    {{/bookmark.labels}}
+</script>
+
 <script id="result-card" type="text/html">
     <div class="result-image-wrapper">
         <img src="{{image_url}}" class="result-image" />
@@ -136,9 +142,7 @@
     <div class="row-fluid edit-bookmark">
         <div class="span11">
             {{#bookmark}}
-                {{#bookmark.labels}}
-                    '<span class="label" style="margin-right:10px;">{{.}}<span data-tag="{{.}}" class="close remove-label" style="padding-left:5px;height:0px;margin-top:-2px;">×</span></span>'
-                {{/bookmark.labels}}
+                {{>bookmark-tags}}
             {{/bookmark}}
             {{^bookmark}}
                 <div class="btn bookmarkit">Add To Bookmarks</div> 
