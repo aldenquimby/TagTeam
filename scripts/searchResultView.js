@@ -24,7 +24,7 @@ var SearchResultView = Backbone.View.extend({
       });
       dispatcher.on(appEvents.bookmarkAdded, function(business){
         self.render();
-      })
+      });
 
       self.render();
     },
@@ -40,7 +40,7 @@ var SearchResultView = Backbone.View.extend({
         content: 'testing 123'
       });
       self.$el.find('.bookmarkit').popover({
-        title:title, content:content, html:true, trigger:'manual', placement:'bottom'
+        title:title, content:content, html:true, trigger:'manual', placement:'top'
       });
 
       return self;
