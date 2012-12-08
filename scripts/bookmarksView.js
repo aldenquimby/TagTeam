@@ -5,8 +5,8 @@ var BookmarksView = Backbone.View.extend({
     template: 'bookmarks-view',
 
     events: {
-      "click sort-submit": "sort",
-      "click filter-submit": "filter"
+      "submit form": "filterResults",
+      "change .filter form": "filterResults"
     },
 
     initialize: function() {
@@ -41,24 +41,80 @@ var BookmarksView = Backbone.View.extend({
       return self;
     },
 
-    filter: function(e) {
+    showFilterView: function (){
       var self = this;
+      console.log(self.bookmarks);
+      cats = _.uniq(_.flatten(_.map(self.bookmarks, function(bus){
+        return _.pluck(bus.data.categories, 0);
+      })));
 
+      self.$el.find('.filter').mustache('filter-view', {
+           categories: cats
+      }, { method:'html' });
+
+      self.$el.find('.filter').show();
     },
 
-    sort: function(e) {
+    filterResults: function () {
       var self = this;
+      var sort = $('.filter form').find("select").val();
+      var filtered = self.bookmarks;
+      if(sort=="alphabetical"){
+        filtered = _.sortBy(filtered, function(bus){ return bus.data.name; });
+      }
+      else if(sort=="# reviews"){
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.data.review_count; });
+      }
+      else if(sort=="rating"){
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.data.rating; });
+      }
+      else if(sort=="bookmarked"){
+        filtered = _.sortBy(filtered, function(bus){ return allBookmarks[bus.data.id] == null;});
+      }
+      else{
+        //leave it yo
+      }
+      var categoryHash = {};
+      $('.filter form').find('.category-check').each(function (){
+        if($(this).is(':checked')){
+          categoryHash[$(this).val()] = true;
+        }
+      });
 
+      var filterTerm = self.$el.find('#bookmark-query').val();
+      filtered = _.filter(filtered, function (bus){
+        var values = _.flatten(_.values(bus.data));
+        return _.any(values, function (val){
+          if(typeof val == 'string'){
+            return val.indexOf(filterTerm!=-1);
+          }
+          return false;
+        });
+      });
+
+      filtered = _.filter(filtered, function (bus){
+        return _.any(bus.data.categories, function (cat){
+          return categoryHash[cat[0]];
+        });
+      });
+
+
+      self.$el.find('.results').html('');
+      _.each(filtered, function(result){
+        self.$el.find('.results').append(new BookmarkCardView({model:result}).el);
+      });
     },
 
     displayBookmarks: function (data) {
       var self = this;
+      self.bookmarks = data;
       self.$el.find('.results').html('');
       _.each(data, function(persistItem){
         self.$el.find('.results').append(new BookmarkCardView({model:persistItem.data}).el);
       });
       if (data.length > 0) {
         self.$el.find('.results').show();
+        self.showFilterView();
       }
     },
 
