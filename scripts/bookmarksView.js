@@ -37,6 +37,7 @@ var BookmarksView = Backbone.View.extend({
     render: function() {
       var self = this;
       self.$el.mustache(self.template, { }, { method:'html' });
+      self.$el.find('.results').show().height(window.innerHeight-200);
       return self;
     },
 
