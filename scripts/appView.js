@@ -41,7 +41,12 @@ var AppView = Backbone.View.extend({
         allBookmarks[business.id] = business.bookmark;
       });
       dispatcher.on(appEvents.bookmarkUpdated, function(business){
-        allBookmarks[business.id] = business.bookmark;
+        if (business.bookmark) {
+          allBookmarks[business.id] = business.bookmark;
+        }
+        else if (allBookmarks[business.id]) {
+          delete allBookmarks[business.id];
+        }
       });
 
       self.render();
