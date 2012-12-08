@@ -18,7 +18,7 @@ var TabView = Backbone.View.extend({
 
     help: false,
 
-    businessId: 0,
+    business: {},
 
     name: '',
     // The TodoView listens for changes to its model, re-rendering. Since there's
@@ -40,7 +40,7 @@ var TabView = Backbone.View.extend({
         this.$el.addClass('helpTab');
       }
       else{
-        businessId = place.id;
+        this.business = place;
         this.name = place.name;
         this.$el.addClass('businessTab');
       }
@@ -60,23 +60,23 @@ var TabView = Backbone.View.extend({
     },
 
     showStuff: function () {
-      if(this.search){
+      var self = this;
+      if(self.search){
         //show the search view
         dispatcher.trigger(appEvents.showSearchPage);
       }
-      else if(this.bookmark){
+      else if(self.bookmark){
         //show the bookmarks view
+        dispatcher.trigger(appEvents.showBookmarksPage);
       }
-      else if(this.help){
+      else if(self.help){
         //show help stuff
+        dispatcher.trigger(appEvents.showHelpPage);
       }
       else{
         //it's a business, show the profile view
+        dispatcher.trigger(appEvents.viewProfilePage, self.business);
       }
-
-
-
-
     }
 
   });

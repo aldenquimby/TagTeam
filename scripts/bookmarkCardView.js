@@ -2,7 +2,7 @@ var BookmarkCardView = Backbone.View.extend({
 
     tagName:  "div",
     className: 'bookmark',
-    template: 'bookmark-card-view',
+    template: 'bookmark-card',
 
     events: {
       "click remove": "remove",

@@ -27,6 +27,9 @@ var SearchView = Backbone.View.extend({
       dispatcher.on(appEvents.showBookmarksPage, function (){
         self.$el.hide();
       });
+      dispatcher.on(appEvents.showHelpPage, function () {
+        self.$el.hide();
+      });
       dispatcher.on(appEvents.showSearchPage, function (){
         self.$el.show();
       });

@@ -23,6 +23,9 @@ var AppView = Backbone.View.extend({
       dispatcher.on(appEvents.viewProfilePage, function(business){
         self.$el.find('.desktop').append(new ProfileView({smallModel:business}).el); 
       });
+      dispatcher.on(appEvents.apiError, function(msg){
+        onApiError(msg);
+      })
       self.render();
     },
 
@@ -33,13 +36,18 @@ var AppView = Backbone.View.extend({
 	    }, { method:'html' });
 
 	    this.$el.find('.tabs').html(new TabsView().el);
-        this.$el.find('.desktop').html(new SearchView().el);
-        this.$el.find('.desktop').append(new BookmarksView().el);
+      this.$el.find('.desktop').html(new SearchView().el);
+      this.$el.find('.desktop').append(new BookmarksView().el);
+      this.$el.find('.desktop').append(new HelpView().el);
 
       return this;
     },
     
-
-    
+    onApiError: function(message) {
+        $('#alertContainer').mustache('alert', {
+            type:'error', 
+            message: message
+        }, { method:'html' });  
+    }
 
   });

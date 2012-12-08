@@ -31,10 +31,6 @@
 
 }
 
-.bookmarks {
-	display: none;
-}
-
 .tabs {
 	position:fixed;
 	left: 0px;
@@ -175,4 +171,23 @@
 	margin-top: 10px;
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+.bookmarks {
+	display: none;
+}
+.help-page {
+	display: none;
+}
 

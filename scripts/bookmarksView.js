@@ -5,9 +5,8 @@ var BookmarksView = Backbone.View.extend({
     template: 'bookmarks-view',
 
     events: {
-      "click": "filter",
-      "sort-click": "sort",
-      "filter-click": "filter"
+      "click sort-submit": "sort",
+      "click filter-submit": "filter"
     },
 
     initialize: function() {
@@ -23,6 +22,9 @@ var BookmarksView = Backbone.View.extend({
         self.$el.hide();
       });
       dispatcher.on(appEvents.showSearchPage, function () {
+        self.$el.hide();
+      });
+      dispatcher.on(appEvents.showHelpPage, function () {
         self.$el.hide();
       });
       dispatcher.on(appEvents.showBookmarksPage, function () {
@@ -49,10 +51,6 @@ var BookmarksView = Backbone.View.extend({
 
     sort: function(e) {
 
-    },
-
-    removeBookmark: function(e) {
-      persistApi.remove(businessId);
     },
 
     displayBookmarks: function (data) {
