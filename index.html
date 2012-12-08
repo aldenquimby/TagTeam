@@ -102,15 +102,7 @@
 
 <script id="bookmarks-view" type="text/html">
     <div class="bookmarks-header">
-        <form class="bookmarks-form-wrapper">
-            <div class="bookmarks-form">
-                <span class="bookmarks-header-text">find</span>
-                <input id="bookmarks-query" type="text" placeholder="i.e. dive bars..."/>
-                <span class="bookmarks-header-text">near</span>
-                <input id="bookmarks-location" type="text" placeholder="New York..."/>
-                <input type="submit" class="btn"/>
-            </div>
-        </form>
+        <h3>Bookmarks</h3>
     </div>
     <div class="filter">
 
@@ -136,11 +128,13 @@
             {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
         </div>
     </div>
-    <div class="btn bookmarkit">Add To Bookmarks</div> 
+    <div class="btn remove">Remove From Bookmarks</div> 
 </script>
 
 <script id="help-page" type="text/html">
-    <h3>Help and Documentation</h3>
+    <div class="help-header">
+        <h3>Help and Documentation</h3>
+    </div>
     <div class="help-content-inner">
         <h4>Do stuff</h4>
         <ul>

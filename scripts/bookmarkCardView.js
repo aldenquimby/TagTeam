@@ -5,8 +5,8 @@ var BookmarkCardView = Backbone.View.extend({
     template: 'bookmark-card',
 
     events: {
-      "click remove": "remove",
-      "click add-label": "addLabel"
+      "click .remove": "remove",
+      "click .add-label": "addLabel"
     },
 
     initialize: function() {
@@ -21,13 +21,15 @@ var BookmarkCardView = Backbone.View.extend({
 
     remove: function() {
       var self = this;
+      delete self.model.bookmark;
       persistApi.remove(self.model.id);
+      dispatcher.trigger(appEvents.bookmarkRemoved, self.model);
       self.$el.remove();
     },
 
     addLabel: function(label) {
       var self = this;
-      self.model.labels.add(label);
+      self.model.bookmark.labels.push(label);
       persistApi.set(self.model.id, self.model);
       self.render();
     }

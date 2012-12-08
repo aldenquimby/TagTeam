@@ -27,6 +27,11 @@ var AppView = Backbone.View.extend({
         onApiError(msg);
       })
       self.render();
+
+      // fetch bookmarks when app starts up
+      persistApi.get(function(data) {
+        dispatcher.trigger(appEvents.persistResultsReturned, data);
+      });
     },
 
     // Re-render the titles of the todo item.

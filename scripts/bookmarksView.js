@@ -12,8 +12,8 @@ var BookmarksView = Backbone.View.extend({
     initialize: function() {
       var self = this;
 
-      dispatcher.on(appEvents.bookMarkPlaceFinish, function (bkmrk) {
-        self.addBookmark(bkmrk);
+      dispatcher.on(appEvents.bookmarkAdded, function (business) {
+        self.addBookmark(business);
       });
       dispatcher.on(appEvents.persistResultsReturned, function (data) {
         self.displayBookmarks(data);
@@ -33,10 +33,6 @@ var BookmarksView = Backbone.View.extend({
 
       self.render();
 
-      persistApi.get(function(data) {
-        dispatcher.trigger(appEvents.persistResultsReturned, data);
-      });
-
     },
 
     render: function() {
@@ -46,24 +42,27 @@ var BookmarksView = Backbone.View.extend({
     },
 
     filter: function(e) {
+      var self = this;
 
     },
 
     sort: function(e) {
+      var self = this;
 
     },
 
     displayBookmarks: function (data) {
       var self = this;
       self.$el.find('.results').html('');
-      _.each(data, function(bkmrk){
-        self.$el.find('.results').append(new BookmarkCardView({model:bkmrk.data}).el);
+      _.each(data, function(persistItem){
+        self.$el.find('.results').append(new BookmarkCardView({model:persistItem.data}).el);
       })
     },
 
-    addBookmark: function(bkmrk) {
-      persistApi.set(bkmrk.id, bkmrk);
-      self.$el.find('.results').append(new BookmarkCardView({model:bkmrk}).el);
+    addBookmark: function(business) {
+      var self = this;
+      persistApi.set(business.id, business);
+      self.$el.find('.results').append(new BookmarkCardView({model:business}).el);
     }
 
 });

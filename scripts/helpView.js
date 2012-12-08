@@ -1,7 +1,7 @@
 var HelpView = Backbone.View.extend({
 
     tagName:  "div",
-    className: 'help',
+    className: 'help-page',
     template: 'help-page',
 
     events: {

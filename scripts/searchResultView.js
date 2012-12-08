@@ -9,7 +9,8 @@ var SearchResultView = Backbone.View.extend({
     template: 'result-card',
     // The DOM events specific to an item.
     events: {
-      "click": "showStuff"
+      "click": "showStuff",
+      "click .bookmarkit" : "showBookmarkPopover"
     },
 
     
@@ -32,7 +33,26 @@ var SearchResultView = Backbone.View.extend({
     showStuff: function () {
       var self = this;
       dispatcher.trigger(appEvents.viewProfilePage, self.model);
+    },
+
+    showBookmarkPopover: function() {
+      var self = this;  
+
+      // right now just calls addBookmark to test linking
+      self.addBookmark();
+    },
+
+    addBookmark: function() {
+      var self = this;
+
+      // create bookmark object on business model using result of popover form
+      self.model.bookmark = {
+        labels: ['group hangout', 'date spot']
+      };
+
+      dispatcher.trigger(appEvents.bookmarkAdded, self.model);
     }
+
 
   });
 

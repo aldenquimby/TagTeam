@@ -11,8 +11,12 @@ var TabsView = Backbone.View.extend({
       //i don't think there are events for this really
     },
 
-    search: {},
-    bookmark: {},
+    search: {
+      searches: {}
+    },
+    bookmark: {
+      bookmarks: {}
+    },
     helpTab: {},
 
     // The TodoView listens for changes to its model, re-rendering. Since there's
@@ -23,13 +27,11 @@ var TabsView = Backbone.View.extend({
       //let's set up the events!!
 
       dispatcher.on(appEvents.viewProfilePage, function (business){
-        self.search.searches[business.id] = new TabView(business);
-        self.render();
+        self.handleViewProfilePage(business);
       });
-      dispatcher.on(appEvents.bookMarkPlaceFinish, function (business){
-        self.bookmark.bookmarks[business.id] = new TabView(business);
-        self.render();
-      });
+      dispatcher.on(appEvents.bookmarkRemoved, function(business){
+        self.handleBookmarkRemoved(business);
+      })
 
       //first let's set up search tab
       self.search.tab = new TabView(null, true,false)
@@ -69,6 +71,35 @@ var TabsView = Backbone.View.extend({
       self.$el.append(self.helpTab.render().el);
       return self;
     },
+
+    handleBookmarkRemoved: function(business) {
+      var self = this;
+      // move tab from bookmarks to searches
+      if (self.bookmark.bookmarks[business.id] != null) {
+        self.search.searches[business.id] = new TabView(business);
+        delete self.bookmark.bookmarks[business.id];
+        self.render();
+      }
+    },
+
+    handleViewProfilePage: function(business) {
+      var self = this;
+      // put tab in bookmarks or searches
+      if (business.bookmark != null) {
+        self.bookmark.bookmarks[business.id] = new TabView(business);
+        if (self.search.searches[business.id] != null) {
+          delete self.search.searches[business.id];
+        }
+      }
+      else {
+        self.search.searches[business.id] = new TabView(business);
+        if (self.bookmark.bookmarks[business.id] != null) {
+          delete self.bookmark.bookmarks[business.id];
+        }
+      }
+
+      self.render();
+    }
 
 
 
