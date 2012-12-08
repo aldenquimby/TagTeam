@@ -89,10 +89,10 @@ var SearchResultView = Backbone.View.extend({
         }
       }); 
 
-      popover.find('.typeahead').keypress(function (e) {
-        if (e.which == 13) {
+      popover.find('.typeahead').keyup(function (e) {
+        if (e.keyCode == 13) {
           var item = $(this).val();
-          if (self.appliedLabels.indexOf(item) < 0) {
+          if (self.appliedLabels.indexOf(item) < 0 && item != '') {
             popover.find('.applied-labels').append(
               '<span class="label" style="margin-right:10px;">' + item + '<span data-tag="' + item + '" class="close remove-label" style="padding-left:5px;height:0px;margin-top:-2px;">×</span></span>'
             );
@@ -100,6 +100,10 @@ var SearchResultView = Backbone.View.extend({
             self.allowedLabels = _.without(self.allowedLabels, item);
           }
           $(this).val('');
+          return false;
+        }
+        else if (e.keyCode == 27) {
+          self.hideBookmarkPopover();
           return false;
         }
       });
@@ -134,12 +138,11 @@ var SearchResultView = Backbone.View.extend({
 
     hideBookmarkPopover: function(e) {
       var self = this;
-
-      e.stopPropagation();
-
+      if (e){
+        e.stopPropagation();
+      }
       self.$el.find('.bookmarkit').removeClass('disabled');
       self.$el.find('.bookmarkit').popover('hide');
-      // self.createPopover();
     },
 
     removeLabel: function(e) {
