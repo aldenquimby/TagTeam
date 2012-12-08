@@ -103,7 +103,42 @@ var SearchView = Backbone.View.extend({
     },
 
     filterResults: function () {
-      alert('fuuuu');
+      var self = this;
+      var sort = $('.filter form').find("select").val();
+      var filtered = self.lastSearch.results.businesses;
+      if(sort=="alphabetical"){
+        filtered = _.sortBy(filtered, function(bus){ return bus.name; });
+      }
+      else if(sort=="# reviews"){
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.review_count; });
+      }
+      else if(sort=="rating"){
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.rating; });
+      }
+      else if(sort=="bookmarked"){
+        filtered = _.sortBy(filtered, function(bus){ return allBookmarks[bus.id] == null;});
+      }
+      else{
+        //leave it yo
+      }
+      var categoryHash = {};
+      $('.filter form').find('.category-check').each(function (){
+        if($(this).is(':checked')){
+          categoryHash[$(this).val()] = true;
+        }
+      });
+
+      filtered = _.filter(filtered, function (bus){
+        return _.any(bus.categories, function (cat){
+          return categoryHash[cat[0]];
+        });
+      });
+
+
+      self.$el.find('.results').html('');
+      _.each(filtered, function(result){
+        self.$el.find('.results').append(new SearchResultView({model:result}).el);
+      });
     },
 
 

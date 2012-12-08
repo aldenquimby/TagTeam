@@ -130,6 +130,7 @@ ul.typeahead li.active span {
 	position:relative;
 	overflow: auto;
 	display: none;
+	width: 95%;
 }
 .result-message {
 	position:absolute;
