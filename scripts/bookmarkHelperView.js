@@ -86,7 +86,8 @@ var BookmarkHelperView = Backbone.View.extend({
         endDatepicker.val('');
       });
 
-      modal.find('.bookmark-submit').click(function() {
+      $('#bookmark-submit-' + self.model.id).click(function(e) {
+      	e.stopPropagation();
         var notes = $("#bookmark-notes-" + self.model.id).val();
         var start = startDatepicker.val();
         var end = endDatepicker.val();
@@ -114,7 +115,8 @@ var BookmarkHelperView = Backbone.View.extend({
         }
       });
 
-      modal.find('.bookmark-delete').click(function() {
+      $('#bookmark-delete-' + self.model.id).click(function(e) {
+      	e.stopPropagation();
         if (confirm('Are you sure you want to delete this bookmark?')) {
           modal.modal('hide');
           delete self.model.bookmark;

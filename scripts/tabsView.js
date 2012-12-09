@@ -1,14 +1,8 @@
 var TabsView = Backbone.View.extend({
 
-    //... is a list tag.
     tagName:  "div",
-
     className: 'tab-wrapper',
-    // Cache the template function for a single item.
-    
-    // The DOM events specific to an item.
     events: {
-      //i don't think there are events for this really
     },
 
     search: {
@@ -21,9 +15,6 @@ var TabsView = Backbone.View.extend({
 
     tabCount: 0,
 
-    // The TodoView listens for changes to its model, re-rendering. Since there's
-    // a one-to-one correspondence between a **Todo** and a **TodoView** in this
-    // app, we set a direct reference on the model for convenience.
     initialize: function() {
       var self = this;
       //let's set up the events!!
@@ -33,7 +24,7 @@ var TabsView = Backbone.View.extend({
           self.handleViewProfile(business);          
         }
         else {
-          self.handleViewBookmarkedProfile(business, true);          
+          self.handleViewBookmarkedProfile(business);          
         }
       });
       dispatcher.on(appEvents.bookmarkUpdated, function(business){
@@ -42,8 +33,17 @@ var TabsView = Backbone.View.extend({
         }
       });
       dispatcher.on(appEvents.bookmarkAdded, function (business){
-          self.handleViewBookmarkedProfile(business, false);
-      })
+          self.handleBookmarkAdded(business);
+      });
+      dispatcher.on(appEvents.tabClosed, function(businessId) {
+          self.tabClosed(businessId);
+      });
+      dispatcher.on(appEvents.showSearchPage, function() {
+        self.search.tab.$el.addClass('tab-select');
+      });
+      dispatcher.on(appEvents.showBookmarksPage, function() {
+        self.bookmark.tab.$el.addClass('tab-select');
+      });
 
       //first let's set up search tab
       self.search.tab = new TabView(self.tabCount++, null, false, true,false)
@@ -86,21 +86,29 @@ var TabsView = Backbone.View.extend({
 
     handleBookmarkRemoved: function(business) {
       var self = this;
-      // move tab from bookmarks to searches
-      if (self.bookmark.bookmarks[business.id] != null) {
-        self.search.searches[business.id] = new TabView(self.tabCount++, business);
+      var currentTab = self.bookmark.bookmarks[business.id];
+      if (currentTab != null) {
+        var shouldShow = currentTab.$el.hasClass('tab-select');
+        self.search.searches[business.id] = new TabView(self.tabCount++, business, {show:shouldShow});
         delete self.bookmark.bookmarks[business.id];
-        self.render();
       }
+      self.render();
     },
 
-    handleViewBookmarkedProfile: function(business, show) {
+    handleBookmarkAdded: function(business) {
+      var self = this;
+      var currentTab = self.search.searches[business.id];
+      var shouldShow = currentTab != null && currentTab.$el.hasClass('tab-select');
+      self.bookmark.bookmarks[business.id] = new TabView(self.tabCount++, business, {show:shouldShow});
+      delete self.search.searches[business.id];
+      self.render();
+    },
+
+    handleViewBookmarkedProfile: function(business) {
       var self = this;
       if (self.bookmark.bookmarks[business.id] == null) {
-        self.bookmark.bookmarks[business.id] = new TabView(self.tabCount++, business, {show:show});
-        if (self.search.searches[business.id] != null) {
-          delete self.search.searches[business.id];
-        }
+        self.bookmark.bookmarks[business.id] = new TabView(self.tabCount++, business, {show:true});
+        delete self.search.searches[business.id];
       }
       self.render();
     },
@@ -108,12 +116,17 @@ var TabsView = Backbone.View.extend({
     handleViewProfile: function(business) {
       var self = this;
       if (self.search.searches[business.id] == null) {
-        self.search.searches[business.id] = new TabView(self.tabCount++, business);
-        if (self.bookmark.bookmarks[business.id] != null) {
-          delete self.bookmark.bookmarks[business.id];
-        }
+        self.search.searches[business.id] = new TabView(self.tabCount++, business, {show:true});
+        delete self.bookmark.bookmarks[business.id];
       }
       self.render();
+    },
+
+    tabClosed: function(businessId) {
+      var self = this;
+      delete self.search.searches[businessId];
+      delete self.bookmark.bookmarks[businessId];
+      dispatcher.trigger(appEvents.showSearchPage);
     }
 
   });

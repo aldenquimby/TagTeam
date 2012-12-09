@@ -27,18 +27,18 @@
 </script>
 
 <script id="app-view" type="text/html">
-        <div id="alertContainer"></div>
-        <div id="banner"><span>{{title}}</span></div>
-        <div class="container-fluid onepage">
-            <div class="row-fluid onepage">
-                <div class="tabs onepage">
-                  
-                </div>
-                <div class="span10 offset2 desktop onepage">
-                  
-                </div>
+    <div id="alertContainer"></div>
+    <div id="banner"><span>{{title}}</span></div>
+    <div class="container-fluid onepage">
+        <div class="row-fluid onepage">
+            <div class="tabs onepage">
+              
+            </div>
+            <div class="span10 offset2 desktop onepage">
+              
             </div>
         </div>
+    </div>
 </script>
 
 <script id="tab-card" type="text/html">
@@ -260,12 +260,12 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary bookmark-submit" onclick="return false;">Save</button>
+                    <button class="btn btn-primary" id="bookmark-submit-{{id}}" onclick="return false;">Save</button>
                     or
                     <a href="" onclick="return false;" data-dismiss="modal">Cancel</a>
                     {{#bookmark}}
                     or
-                    <button class="btn btn-danger bookmark-delete" onclick="return false;">Delete</button>
+                    <button class="btn btn-danger" id="bookmark-delete-{{id}}" onclick="return false;">Delete</button>
                     {{/bookmark}}
                 </div>
             </form>

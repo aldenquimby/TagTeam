@@ -30,11 +30,15 @@ var ProfileView = BookmarkHelperView.extend({
       });
 
       dispatcher.on(appEvents.bookmarkUpdated, function (smallModel) {
-        self.model.bookmark = smallModel.bookmark;
+        if (smallModel.id == self.model.id) {
+          self.model.bookmark = smallModel.bookmark;
+        }
         self.render();
       });
       dispatcher.on(appEvents.bookmarkAdded, function (smallModel) {
-        self.model.bookmark = smallModel.bookmark;
+        if (smallModel.id == self.model.id) {
+          self.model.bookmark = smallModel.bookmark;
+        }
         self.render();
       });
 

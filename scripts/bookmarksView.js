@@ -43,7 +43,6 @@ var BookmarksView = Backbone.View.extend({
 
     showFilterView: function (){
       var self = this;
-      console.log(self.bookmarks);
       cats = _.uniq(_.flatten(_.map(self.bookmarks, function(bus){
         return _.pluck(bus.data.categories, 0);
       })));

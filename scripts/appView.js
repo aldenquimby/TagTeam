@@ -55,6 +55,8 @@ var AppView = Backbone.View.extend({
       persistApi.get(function(data) {
         dispatcher.trigger(appEvents.persistResultsReturned, data);
       });
+
+      dispatcher.trigger(appEvents.showSearchPage);
     },
 
     render: function() {

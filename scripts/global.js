@@ -18,7 +18,8 @@ var appEvents = {
 	bookmarkUpdated: 'bookmark-updated', //someone changed a bookmark
 	closeTab: 'close-tab', //someone closes a tab (maybe remove the detailed object)
 
-    tabSelected: 'tab-selected' //to all them tabs no bout that shit
+    tabSelected: 'tab-selected', //to all them tabs no bout that shit
+    tabClosed: 'tab-closed' //to all them tabs no bout that shit
 };
 
 var appDefaults = {

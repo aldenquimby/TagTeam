@@ -9,15 +9,14 @@ var TabView = Backbone.View.extend({
     template: 'tab-card',
     // The DOM events specific to an item.
     events: {
-      "click": "showStuff"
+      "click": "showStuff",
+      "click .tab-close": "close"
     },
     tabId: 0,
 
     search: false,
 
     bookmark: false,
-
-    bookmarkedBusiness: false,
 
     help: false,
 
@@ -30,12 +29,16 @@ var TabView = Backbone.View.extend({
     initialize: function(tabId, place, bookmarked, s, b, h) {
       var self = this;
       self.tabId = tabId;
+
+      dispatcher.on(appEvents.tabSelected, function (id){
+        if(self.tabId!=id){
+          self.$el.removeClass('tab-select');
+        }
+      });
+
       if(place && !bookmarked || bookmarked && bookmarked.show){
         self.$el.addClass('tab-select');
         dispatcher.trigger(appEvents.tabSelected, self.tabId);
-      }
-      if(bookmarked){
-        self.bookmarkedBusiness = true;
       }
       if(s){
         self.search = true;
@@ -55,11 +58,7 @@ var TabView = Backbone.View.extend({
         self.name = place.name.length < 20 ? place.name : (place.name.substring(0, 19) + '...');
         self.$el.addClass('businessTab');
       }
-      dispatcher.on(appEvents.tabSelected, function (id){
-        if(self.tabId!=id){
-          self.$el.removeClass('tab-select');
-        }
-      });
+
       //maybe i can keep the destroy? if we remove the object we should remove the tab for it i guess...
       self.render();
     },
@@ -68,7 +67,8 @@ var TabView = Backbone.View.extend({
     render: function() {
       var self = this;
       self.$el.mustache(self.template, {
-          name: self.name 
+          name: self.name,
+          id: self.business.id
       }, { method:'html' });
       self.delegateEvents();
       return self;
@@ -94,7 +94,14 @@ var TabView = Backbone.View.extend({
       }
       self.$el.addClass('tab-select');
       dispatcher.trigger(appEvents.tabSelected, self.tabId);
-    }
+    },
+
+    close: function(e) {
+      var self = this;
+      e.stopPropagation();
+      dispatcher.trigger(appEvents.tabClosed, self.business.id);
+      self.$el.remove();
+    } 
 
   });
 
