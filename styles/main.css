@@ -219,6 +219,7 @@ ul.typeahead li.active span {
 .prof-details {
 	margin-bottom: 20px;
 	overflow: auto;
+	width: 98%;
 }
 
 .big-img {

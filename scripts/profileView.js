@@ -64,6 +64,8 @@ var ProfileView = BookmarkHelperView.extend({
         });
       }, 100);
 
+      self.$el.find('.prof-details').height(window.innerHeight-280);
+
       self.setupBookmark();
 
       return self;
