@@ -52,7 +52,7 @@ var TabView = Backbone.View.extend({
       }
       else{
         self.business = place;
-        self.name = place.name;
+        self.name = place.name.length < 20 ? place.name : (place.name.substring(0, 19) + '...');
         self.$el.addClass('businessTab');
       }
       dispatcher.on(appEvents.tabSelected, function (id){

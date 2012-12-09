@@ -1,16 +1,11 @@
 var SearchResultView = Backbone.View.extend({
 
-    //... is a list tag.
     tagName:  "div",
-
     className: 'result',
-    // Cache the template function for a single item.
-    //TODO: set template shit up
     template: 'result-card',
-    // The DOM events specific to an item.
     events: {
-      "click .result-name a": "showStuff",
-      "click .result-image-wrapper": "showStuff",
+      "click .result-name a": "showProfilePage",
+      "click .result-image-wrapper": "showProfilePage",
       "click .bookmarkit": "showBookmarkPopover",
       "click .popover .close-bookmark-popover": "hideBookmarkPopover", 
       "click .popover .addBookmark": "addBookmark",
@@ -39,15 +34,13 @@ var SearchResultView = Backbone.View.extend({
       self.render();
     },
 
-    // Re-render the titles of the todo item.
     render: function() {
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
-      
       return self;
     },
 
-    showStuff: function () {
+    showProfilePage: function () {
       var self = this;
       dispatcher.trigger(appEvents.viewProfilePage, self.model);
     },
@@ -59,23 +52,23 @@ var SearchResultView = Backbone.View.extend({
       self.$el.find('.bookmarkit').popover({
         title:title, content:content, html:true, trigger:'manual', placement:'bottom'
       });
-
     },
 
     setupTypeahead: function() {
       var self = this;
 
       var popover = self.$el.find('.popover');
+      var typeaheadInput = popover.find('.typeahead');
 
       self.allowedLabels = appDefaults.labels;
-      _.each(allBookmarks, function(bkmrk){
+      _.each(allBookmarks, function(bkmrk) {
           _.each(bkmrk.labels, function(label) {
               self.allowedLabels.push(label);
           });
       });
       self.allowedLabels = _.uniq(self.allowedLabels);
 
-      popover.find('.typeahead').typeahead({
+      typeaheadInput.typeahead({
         source: function(a, b) {
           return self.allowedLabels;
         },
@@ -94,7 +87,7 @@ var SearchResultView = Backbone.View.extend({
         }
       }); 
 
-      popover.find('.typeahead').keyup(function (e) {
+      typeaheadInput.keyup(function (e) {
         if (e.keyCode == 13) {
           var item = $(this).val();
           if (self.appliedLabels.indexOf(item) < 0 && item != '') {
@@ -110,7 +103,6 @@ var SearchResultView = Backbone.View.extend({
           return false;
         }
       });
-
     },
 
     showBookmarkPopover: function(e) {
@@ -122,26 +114,20 @@ var SearchResultView = Backbone.View.extend({
         return;
       }
 
-      // kill other popovers
+      // kill other popovers, disable appropriate button
       $('.bookmarkit').popover('destroy');
-
-      // remove disabled
       $('.bookmarkit').removeClass('disabled');
-
-      self.createPopover();
-
-      // disable button
       $(e.currentTarget).addClass('disabled');
 
-      // show popover
+      // create and show popover, and setup typeahead
+      self.createPopover();
       $(e.currentTarget).popover('show');
-
       self.setupTypeahead();
     },
 
     hideBookmarkPopover: function(e) {
       var self = this;
-      if (e){
+      if (e) {
         e.stopPropagation();
       }
       self.$el.find('.bookmarkit').removeClass('disabled');
@@ -159,9 +145,10 @@ var SearchResultView = Backbone.View.extend({
     addBookmark: function() {
       var self = this;
 
-      // create bookmark object on business model using result of popover form
-      self.model.bookmark = {
-        labels: self.appliedLabels
+      self.model.bookmark = { 
+        labels: self.appliedLabels,
+        note: '',
+        reminder: null
       };
 
       dispatcher.trigger(appEvents.bookmarkAdded, self.model);
