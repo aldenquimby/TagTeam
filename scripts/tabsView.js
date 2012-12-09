@@ -106,18 +106,26 @@ var TabsView = Backbone.View.extend({
 
     handleViewBookmarkedProfile: function(business) {
       var self = this;
-      if (self.bookmark.bookmarks[business.id] == null) {
+      var currentTab = self.bookmark.bookmarks[business.id];
+      if (currentTab == null) {
         self.bookmark.bookmarks[business.id] = new TabView(self.tabCount++, business, {show:true});
         delete self.search.searches[business.id];
+      }
+      else {
+        dispatcher.trigger(appEvents.tabSelected, currentTab.tabId);
       }
       self.render();
     },
 
     handleViewProfile: function(business) {
       var self = this;
-      if (self.search.searches[business.id] == null) {
+      var currentTab = self.search.searches[business.id];
+      if (currentTab == null) {
         self.search.searches[business.id] = new TabView(self.tabCount++, business, {show:true});
         delete self.bookmark.bookmarks[business.id];
+      } 
+      else {
+        dispatcher.trigger(appEvents.tabSelected, currentTab.tabId);
       }
       self.render();
     },

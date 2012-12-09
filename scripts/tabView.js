@@ -33,11 +33,12 @@ var TabView = Backbone.View.extend({
       dispatcher.on(appEvents.tabSelected, function (id){
         if(self.tabId!=id){
           self.$el.removeClass('tab-select');
+        } else {
+          self.$el.addClass('tab-select');
         }
       });
 
       if(place && !bookmarked || bookmarked && bookmarked.show){
-        self.$el.addClass('tab-select');
         dispatcher.trigger(appEvents.tabSelected, self.tabId);
       }
       if(s){
@@ -92,7 +93,6 @@ var TabView = Backbone.View.extend({
         //it's a business, show the profile view
         dispatcher.trigger(appEvents.viewProfilePage, self.business);
       }
-      self.$el.addClass('tab-select');
       dispatcher.trigger(appEvents.tabSelected, self.tabId);
     },
 
