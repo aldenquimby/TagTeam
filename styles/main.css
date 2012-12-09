@@ -31,6 +31,10 @@
 
 }
 
+#logo {
+	color:#333;
+}
+
 ul.typeahead li.active span {
     color: white;
 }
