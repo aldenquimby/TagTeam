@@ -50,6 +50,7 @@ var SearchResultView = Backbone.View.extend({
       var title = $.Mustache.render('add-bookmark-popover-title');
       var content = $.Mustache.render('add-bookmark-popover-content');
       self.$el.find('.bookmarkit').popover({
+        template: '<div class="popover add-bookmark-popover"><div class="arrow"></div><div class="popover-inner"><h3 class="popover-title"></h3><div class="popover-content"><p></p></div></div></div>',
         title:title, content:content, html:true, trigger:'manual', placement:'bottom'
       });
     },
@@ -67,6 +68,7 @@ var SearchResultView = Backbone.View.extend({
           });
       });
       self.allowedLabels = _.uniq(self.allowedLabels);
+      self.appliedLabels = [];
 
       typeaheadInput.typeahead({
         source: function(a, b) {

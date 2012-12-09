@@ -97,6 +97,32 @@ ul.typeahead li.active span {
 	background-color: #f2f2f2;
 }
 
+.add-bookmark-popover {
+	width:320px;
+}
+
+.bookmark-tag {
+	margin-right:10px;
+}
+
+.bookmark-remove-tag {
+	padding-left:5px;
+	height:0px;
+	margin-top:-2px;
+}
+
+.typeahead {
+	z-index: 1051;
+}
+
+.modal-body form {
+	margin-bottom: 0px;
+}
+
+.modal-body .form-actions {
+	margin-bottom: 0px;
+}
+
 .search{
 	position:relative;
 	float:left;
