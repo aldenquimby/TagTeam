@@ -136,14 +136,18 @@
     </div>
     <div class="row-fluid edit-bookmark">
         <div class="span11">
+            {{> bookmark-tags-noremove}}
+            <div>
+                {{bookmark.notes}}
+            </div>
+            <a href="#modal-bookmark-{{id}}" data-toggle="modal">
             {{#bookmark}}
-                {{> bookmark-tags-noremove}}
-                <a href="#modal-edit-bookmark-{{id}}" data-toggle="modal">Edit Bookmark</a>
+                Edit Bookmark
             {{/bookmark}}
             {{^bookmark}}
-                <div class="btn bookmarkit">Add To Bookmarks</div>
-                <a href="#modal-add-bookmark-{{id}}" data-toggle="modal">Add Bookmark</a>
+                Add Bookmark
             {{/bookmark}}
+            </a>
         </div>
     </div>
     <hr>
@@ -175,72 +179,75 @@
 </script>
 
 <script id="bookmark-tags" type="text/html">
-    {{#bookmark.labels}}
+    {{#bookmark.tags}}
         <span class="label bookmark-tag">
             {{.}}<span data-tag="{{.}}" class="close remove-label bookmark-remove-tag">×</span>
         </span>
-    {{/bookmark.labels}}
+    {{/bookmark.tags}}
 </script>
 
 <script id="bookmark-tags-noremove" type="text/html">
-    {{#bookmark.labels}}
+    {{#bookmark.tags}}
         <span class="label bookmark-tag">{{.}}</span>
-    {{/bookmark.labels}}
+    {{/bookmark.tags}}
 </script>
 
-<script id="bookmark-add-tag" type="text/html">
-    <label for="addLabel" style="float:left;padding-right:10px;margin-top:8px;">Add Tag</label>
-    <div class="controls">
-        <input type="text" class="typeahead" id="addLabel" placeholder="group hangout...">
-    </div>
-</script>
-
-<script id="bookmark-modals" type="text/html">
-    <div class="modal hide fade" id="modal-edit-bookmark-{{id}}">
+<script id="bookmark-modal" type="text/html">
+    <div class="modal hide fade" id="modal-bookmark-{{id}}">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h3>Edit Bookmark</h3>
+            <h3>
+            {{#bookmark}}
+                Edit Bookmark
+            {{/bookmark}}
+            {{^bookmark}}
+                Add Bookmark
+            {{/bookmark}}
+            </h3>
         </div>
         <div class="modal-body">
             <form class="form-horizontal">
                 <div class="control-group">
-                    <label class="control-label" for="edit-bookmark-addTag-{{id}}">Add Tag</label>
-                    <div class="controls">
-                        <input type="text" class="bookmark-add-tag" id="edit-bookmark-addTag-{{id}}" placeholder="group hangout...">
-                    </div>
-                </div>
-                <div class="control-group">
                     <label class="control-label">Tags</label>
                     <div class="controls applied-tags">
                         {{> bookmark-tags}}
+                        {{^bookmark.tags}}
+                            <span>No tags. Tag this bookmark below.</span>
+                        {{/bookmark.tags}}
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="edit-bookmark-notes-{{id}}">Notes</label>
+                    <label class="control-label">Add Tag</label>
                     <div class="controls">
-                        <textarea class="input-xlarge" id="edit-bookmark-notes-{{id}}" rows="3">{{bookmark.notes}}</textarea>
+                        <input type="text" class="bookmark-add-tag" placeholder="group hangout...">
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="edit-bookmark-reminder-start-{{id}}">Reminder Start</label>
+                    <label class="control-label" for="bookmark-notes-{{id}}">Notes</label>
+                    <div class="controls">
+                        <textarea class="input-xlarge" id="bookmark-notes-{{id}}" rows="3">{{bookmark.notes}}</textarea>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="bookmark-reminder-start-{{id}}">Reminder Start</label>
                     <div class="controls">
                         <div class="input-append">
-                            <input class="input-medium bookmark-date" type="text" id="edit-bookmark-reminder-start-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" data-date="{{boomark.reminder.start}}" value="{{boomark.reminder.start}}">
+                            <input class="input-medium" type="text" id="bookmark-reminder-start-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" value="{{bookmark.reminder.start}}">
                             <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="edit-bookmark-reminder-end-{{id}}">Reminder End</label>
+                    <label class="control-label" for="bookmark-reminder-end-{{id}}">Reminder End</label>
                     <div class="controls">
                         <div class="input-append">
-                            <input class="input-medium bookmark-date" type="text" id="edit-bookmark-reminder-end-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" data-date="{{boomark.reminder.end}}" value="{{boomark.reminder.end}}">
+                            <input class="input-medium" disabled type="text" id="bookmark-reminder-end-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" value="{{bookmark.reminder.end}}">
                             <span class="add-on"><i class="icon-calendar"></i></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary bookmark-edit-submit" data-id="{{id}}" onclick="return false;">Submit</button>
+                    <button type="submit" class="btn btn-primary bookmark-submit" onclick="return false;">Submit</button>
                     or
                     <a href="" onclick="return false;" data-dismiss="modal">Cancel</a>
                 </div>
@@ -257,12 +264,12 @@
 <script id="add-bookmark-popover-content" type="text/html">
     <div>
         <div>
-            <label for="addLabel" style="float:left;padding-right:10px;margin-top:8px;">Add Label</label>
+            <label style="float:left;padding-right:10px;margin-top:8px;">Add Label</label>
             <div class="controls">
-              <input type="text" class="typeahead" id="addLabel" placeholder="group hangout...">
+              <input type="text" class="typeahead" placeholder="group hangout...">
             </div>
         </div>
-        <div class="applied-labels">
+        <div class="applied-tags">
         </div>
         <div class="btn-wrapper" style="padding-top:10px;">
             <button type="button" class="btn btn-primary addBookmark">Bookmark It</button>

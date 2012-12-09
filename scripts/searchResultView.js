@@ -12,8 +12,8 @@ var SearchResultView = Backbone.View.extend({
       "click .popover .remove-label": "removeLabel"
     },
 
-    appliedLabels: [],
-    allowedLabels: [],
+    appliedTags: [],
+    allowedTags: [],
 
     initialize: function() {
       var self = this;
@@ -61,24 +61,24 @@ var SearchResultView = Backbone.View.extend({
       var popover = self.$el.find('.popover');
       var typeaheadInput = popover.find('.typeahead');
 
-      self.allowedLabels = appDefaults.labels;
+      self.allowedTags = appDefaults.tags;
       _.each(allBookmarks, function(bkmrk) {
-          _.each(bkmrk.labels, function(label) {
-              self.allowedLabels.push(label);
+          _.each(bkmrk.tags, function(label) {
+              self.allowedTags.push(label);
           });
       });
-      self.allowedLabels = _.uniq(self.allowedLabels);
-      self.appliedLabels = [];
+      self.allowedTags = _.uniq(self.allowedTags);
+      self.appliedTags = [];
 
       typeaheadInput.typeahead({
         source: function(a, b) {
-          return self.allowedLabels;
+          return self.allowedTags;
         },
         items: 5,
         updater: function(item) {
-          self.appliedLabels.push(item);
-          self.allowedLabels = _.without(self.allowedLabels, item);
-          popover.find('.applied-labels').mustache('bookmark-tags', {bookmark:{labels:self.appliedLabels}}, {method:'html'});
+          self.appliedTags.push(item);
+          self.allowedTags = _.without(self.allowedTags, item);
+          popover.find('.applied-tags').mustache('bookmark-tags', {bookmark:{tags:self.appliedTags}}, {method:'html'});
           return '';
         },
         sorter: function(items) {
@@ -92,10 +92,10 @@ var SearchResultView = Backbone.View.extend({
       typeaheadInput.keyup(function (e) {
         if (e.keyCode == 13) {
           var item = $(this).val();
-          if (self.appliedLabels.indexOf(item) < 0 && item != '') {
-            self.appliedLabels.push(item);
-            self.allowedLabels = _.without(self.allowedLabels, item);
-            popover.find('.applied-labels').mustache('bookmark-tags', {bookmark:{labels:self.appliedLabels}}, {method:'html'});
+          if (self.appliedTags.indexOf(item) < 0 && item != '') {
+            self.appliedTags.push(item);
+            self.allowedTags = _.without(self.allowedTags, item);
+            popover.find('.applied-tags').mustache('bookmark-tags', {bookmark:{tags:self.appliedTags}}, {method:'html'});
           }
           $(this).val('');
           return false;
@@ -139,8 +139,8 @@ var SearchResultView = Backbone.View.extend({
     removeLabel: function(e) {
       var self = this;
       var tag = $(e.currentTarget).data('tag');
-      self.allowedLabels.push(tag);
-      self.appliedLabels = _.without(self.appliedLabels, tag);
+      self.allowedTags.push(tag);
+      self.appliedTags = _.without(self.appliedTags, tag);
       $(e.currentTarget).parent().remove();
     },
 
@@ -148,8 +148,8 @@ var SearchResultView = Backbone.View.extend({
       var self = this;
 
       self.model.bookmark = { 
-        labels: self.appliedLabels,
-        note: '',
+        tags: self.appliedTags,
+        notes: '',
         reminder: null
       };
 

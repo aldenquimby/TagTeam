@@ -24,7 +24,7 @@ var appEvents = {
 var appDefaults = {
 	location: 'New York',
 	query: 'Dive Bars',
-    labels: ['check it out', 'must go back', 'stay away']
+    tags: ['check it out', 'must go back', 'stay away']
 };
 
 // search needs to know if stuff is bookmarked

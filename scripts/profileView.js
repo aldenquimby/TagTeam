@@ -4,12 +4,13 @@ var ProfileView = Backbone.View.extend({
     className: 'profile',
     template: 'profile-page',
     events: {
-      "click": "clickedSomewhereOnMe"
     },
+
+    appliedTags: [],
+    allowedTags: [],
 
     initialize: function() {
       var self = this;
-
 
       //wiring everything up
       dispatcher.on(appEvents.showSearchPage, function () {
@@ -91,45 +92,41 @@ var ProfileView = Backbone.View.extend({
       self.render();
     },
 
-    clickedSomewhereOnMe: function () {
-      console.log('clicked somewhere');
-    },
-
     setupBookmark: function() {
       var self = this;
 
-      $('body').mustache('bookmark-modals', self.model);
+      $('#modal-bookmark-' + self.model.id).remove();
+      $('body').mustache('bookmark-modal', self.model);
 
-      var modal = $('#modal-edit-bookmark-' + self.model.id);
+      var modal = $('#modal-bookmark-' + self.model.id);
       var appliedTagsWrapper = modal.find('.applied-tags');
       var typeaheadInput = modal.find('.bookmark-add-tag');
-      var datepickers = modal.find('.bookmark-date');
 
-      var appliedTags = self.model.bookmark.labels;
-      var allowedTags = appDefaults.labels;
+      self.appliedTags = (self.model.bookmark || {}).tags || [];
+      self.allowedTags = appDefaults.tags;
       _.each(allBookmarks, function(bkmrk) {
-          _.each(bkmrk.labels, function(label) {
-              allowedTags.push(label);
+          _.each(bkmrk.tags, function(label) {
+              self.allowedTags.push(label);
           });
       });
-      allowedTags = _.uniq(_.difference(allowedTags, appliedTags));
+      self.allowedTags = _.uniq(_.difference(self.allowedTags, self.appliedTags));
 
       modal.find('.bookmark-remove-tag').live('click', function(e) {
         var tag = $(e.currentTarget).data('tag');
-        allowedTags.push(tag);
-        appliedTags = _.without(appliedTags, tag);
+        self.allowedTags.push(tag);
+        self.appliedTags = _.without(self.appliedTags, tag);
         $(e.currentTarget).parent().remove();
       });
 
       var applyTag = function(tag) {
-          appliedTags.push(tag);
-          allowedTags = _.without(allowedTags, tag);
-          appliedTagsWrapper.mustache('bookmark-tags', {bookmark:{labels:appliedTags}}, {method:'html'});
+          self.appliedTags.push(tag);
+          self.allowedTags = _.without(self.allowedTags, tag);
+          appliedTagsWrapper.mustache('bookmark-tags', {bookmark:{tags:self.appliedTags}}, {method:'html'});
       };
 
       typeaheadInput.typeahead({
         source: function(a, b) {
-          return allowedTags;
+          return self.allowedTags;
         },
         items: 5,
         updater: function(item) {
@@ -141,10 +138,11 @@ var ProfileView = Backbone.View.extend({
         }
       }); 
 
-      typeaheadInput.keyup(function (e) {
-        if (e.keyCode == 13) {
+      typeaheadInput.keypress(function (e) {
+        if (e.which == 13) {
+          e.preventDefault();
           var tag = $(this).val();
-          if (appliedTags.indexOf(tag) < 0 && tag != '') {
+          if (self.appliedTags.indexOf(tag) < 0 && tag != '') {
             applyTag(tag);
           }
           $(this).val('');
@@ -152,9 +150,57 @@ var ProfileView = Backbone.View.extend({
         }
       });
 
-      datepickers.datepicker({
+      var startDatepicker = $('#bookmark-reminder-start-' + self.model.id);
+      var endDatepicker = $('#bookmark-reminder-end-' + self.model.id);
+
+      var currentStart = startDatepicker.val();
+
+      if (currentStart != '') {
+        endDatepicker.removeAttr('disabled');
+      }
+
+      endDatepicker.datepicker({
+        autoclose: true,
+        startDate: currentStart
+      });
+
+      startDatepicker.datepicker({
         autoclose: true,
         startDate: new Date()
+      }).on('changeDate', function(ev) {
+        endDatepicker.removeAttr('disabled');
+        endDatepicker.datepicker('setStartDate', ev.date);
+        endDatepicker.val(startDatepicker.val());
+        endDatepicker.datepicker('update');
+        endDatepicker.val('');
+      });
+
+      modal.find('.bookmark-submit').click(function() {
+        var notes = $("#bookmark-notes-" + self.model.id).val();
+        var start = startDatepicker.val();
+        var end = endDatepicker.val();
+
+        var isAdd = self.model.bookmark == null;
+
+        self.model.bookmark = { 
+          tags: self.appliedTags,
+          notes: notes
+        };
+
+        if (start != '') {
+          self.model.bookmark.reminder = {
+            start: start,
+            end: end == '' ? null : end
+          }
+        }
+
+        modal.modal('hide');
+
+        if (isAdd) {
+          dispatcher.trigger(appEvents.bookmarkAdded, self.model);
+        } else {
+          dispatcher.trigger(appEvents.bookmarkUpdated, self.model);          
+        }
       });
     }
 

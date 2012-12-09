@@ -6,11 +6,18 @@ var BookmarkCardView = Backbone.View.extend({
 
     events: {
       "click .remove": "remove",
-      "click .add-label": "addLabel"
     },
 
     initialize: function() {
-      this.render();
+      var self = this;
+
+      dispatcher.on(appEvents.bookmarkUpdated, function (business) {
+        if (business.id == self.model.id) {
+          self.updated(business);
+        }
+      });
+
+      self.render();
     },
 
     render: function() {
@@ -27,11 +34,10 @@ var BookmarkCardView = Backbone.View.extend({
       self.$el.remove();
     },
 
-    addLabel: function(label) {
+    updated: function(business) {
       var self = this;
-      self.model.bookmark.labels.push(label);
+      self.model = business;
       persistApi.set(self.model.id, self.model);
-      dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
       self.render();
     }
 
