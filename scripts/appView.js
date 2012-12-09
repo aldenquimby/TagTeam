@@ -34,7 +34,9 @@ var AppView = Backbone.View.extend({
 
       dispatcher.on(appEvents.persistResultsReturned, function(data){
         _.each(data, function(persistItem){
-          allBookmarks[persistItem.id] = persistItem.data.bookmark;
+          if (persistItem.data.bookmark) {
+            allBookmarks[persistItem.id] = persistItem.data.bookmark;
+          }
         });
       });
       dispatcher.on(appEvents.bookmarkAdded, function(business){
