@@ -37,7 +37,12 @@ var BookmarkCardView = Backbone.View.extend({
     updated: function(business) {
       var self = this;
       self.model = business;
-      persistApi.set(self.model.id, self.model);
+      if (self.model.bookmark) {
+        persistApi.set(self.model.id, self.model);        
+      }
+      else {
+        persistApi.remove(self.model.id);
+      }
       self.render();
     }
 

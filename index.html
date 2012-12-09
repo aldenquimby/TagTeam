@@ -110,13 +110,18 @@
         </div>
     </div>
     <div class="result-bookmark">
-        {{#bookmark}}
-            <div>Bookmarked!</div>
-            {{> bookmark-tags-noremove}}
-        {{/bookmark}}
-        {{^bookmark}}
-            <div class="btn bookmarkit">Add To Bookmarks</div> 
-        {{/bookmark}}
+        {{> bookmark-tags-noremove}}
+        <div>
+            {{bookmark.notes}}
+        </div>
+        <a href="#modal-bookmark-{{id}}" data-toggle="modal">
+            {{#bookmark}}
+                Edit Bookmark
+            {{/bookmark}}
+            {{^bookmark}}
+                Add Bookmark
+            {{/bookmark}}
+        </a>
     </div>
 </script>
 
@@ -223,33 +228,45 @@
                     </div>
                 </div>
                 <div class="control-group">
-                    <label class="control-label" for="bookmark-notes-{{id}}">Notes</label>
-                    <div class="controls">
-                        <textarea class="input-xlarge" id="bookmark-notes-{{id}}" rows="3">{{bookmark.notes}}</textarea>
+                    <div style="float:right;">
+                        <a href="" id="bookmark-advanced-hide-{{id}}" class="hide" onclick="return false;">Hide Advanced Options <i class="icon-chevron-up"></i></a>
+                        <a href="" id="bookmark-advanced-show-{{id}}" onclick="return false;">Show Advanced Options <i class="icon-chevron-down"></i></a>
                     </div>
                 </div>
-                <div class="control-group">
-                    <label class="control-label" for="bookmark-reminder-start-{{id}}">Reminder Start</label>
-                    <div class="controls">
-                        <div class="input-append">
-                            <input class="input-medium" type="text" id="bookmark-reminder-start-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" value="{{bookmark.reminder.start}}">
-                            <span class="add-on"><i class="icon-calendar"></i></span>
+                <div id="bookmark-advanced-{{id}}" class="hide">
+                    <div class="control-group">
+                        <label class="control-label" for="bookmark-notes-{{id}}">Notes</label>
+                        <div class="controls">
+                            <textarea class="input-xlarge" id="bookmark-notes-{{id}}" rows="3">{{bookmark.notes}}</textarea>
                         </div>
                     </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="bookmark-reminder-end-{{id}}">Reminder End</label>
-                    <div class="controls">
-                        <div class="input-append">
-                            <input class="input-medium" disabled type="text" id="bookmark-reminder-end-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" value="{{bookmark.reminder.end}}">
-                            <span class="add-on"><i class="icon-calendar"></i></span>
+                    <div class="control-group">
+                        <label class="control-label" for="bookmark-reminder-start-{{id}}">Reminder Start</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="input-medium" type="text" id="bookmark-reminder-start-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" value="{{bookmark.reminder.start}}">
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label" for="bookmark-reminder-end-{{id}}">Reminder End</label>
+                        <div class="controls">
+                            <div class="input-append">
+                                <input class="input-medium" disabled type="text" id="bookmark-reminder-end-{{id}}" data-date-format="mm/dd/yyyy" placeholder="mm/dd/yyyy" value="{{bookmark.reminder.end}}">
+                                <span class="add-on"><i class="icon-calendar"></i></span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="btn btn-primary bookmark-submit" onclick="return false;">Submit</button>
+                    <button type="submit" class="btn btn-primary bookmark-submit" onclick="return false;">Save</button>
                     or
                     <a href="" onclick="return false;" data-dismiss="modal">Cancel</a>
+                    {{#bookmark}}
+                    or
+                    <button class="btn btn-danger bookmark-delete" onclick="return false;">Delete</button>
+                    {{/bookmark}}
                 </div>
             </form>
         </div>
@@ -367,6 +384,7 @@
 <script type="text/javascript" src="scripts/components/tutorial.js"></script>
 <!-- backbone scripts -->
 <script type="text/javascript" src="scripts/global.js"></script>
+<script type="text/javascript" src="scripts/bookmarkHelperView.js"></script>
 <script type="text/javascript" src="scripts/tabView.js"></script>
 <script type="text/javascript" src="scripts/tabsView.js"></script>
 <script type="text/javascript" src="scripts/searchResultView.js"></script>
