@@ -123,18 +123,6 @@ var BookmarkHelperView = Backbone.View.extend({
           dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
         }
       });
-
-      $('#bookmark-advanced-show-' + self.model.id).click(function() {
-          $(this).hide();
-          $('#bookmark-advanced-hide-' + self.model.id).show();
-          $('#bookmark-advanced-' + self.model.id).slideDown();
-      });
-
-      $('#bookmark-advanced-hide-' + self.model.id).click(function () {
-          $(this).hide();
-          $('#bookmark-advanced-show-' + self.model.id).show();
-          $('#bookmark-advanced-' + self.model.id).slideUp();
-      });
     }
 
 });

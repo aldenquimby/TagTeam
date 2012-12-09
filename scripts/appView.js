@@ -56,6 +56,24 @@ var AppView = Backbone.View.extend({
         dispatcher.trigger(appEvents.persistResultsReturned, data);
       });
 
+      $('.slidey-show').live('click', function(e) {
+        var slidey = $(e.currentTarget);
+        var target = slidey.data('target');
+        var otherSlidey = $('.slidey-hide[data-target="' + target + '"]');
+        otherSlidey.show();
+        slidey.hide();
+        $(target).slideDown();
+      });
+
+      $('.slidey-hide').live('click', function(e) {
+        var slidey = $(e.currentTarget);
+        var target = slidey.data('target');
+        var otherSlidey = $('.slidey-show[data-target="' + target + '"]');
+        otherSlidey.show();
+        slidey.hide();
+        $(target).slideUp();
+      });
+
       dispatcher.trigger(appEvents.showSearchPage);
     },
 

@@ -27,11 +27,13 @@ var BookmarkCardView = Backbone.View.extend({
     },
 
     remove: function() {
-      var self = this;
-      delete self.model.bookmark;
-      persistApi.remove(self.model.id);
-      dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
-      self.$el.remove();
+      if (confirm('Are you sure you want to delete this bookmark?')) {
+        var self = this;
+        delete self.model.bookmark;
+        persistApi.remove(self.model.id);
+        dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
+        self.$el.remove();
+      }
     },
 
     updated: function(business) {
