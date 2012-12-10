@@ -77,14 +77,17 @@ var BookmarkHelperView = Backbone.View.extend({
         endDatepicker.removeAttr('disabled');
       }
 
+      var startD = moment().subtract('days', 2);
+
       endDatepicker.datepicker({
         autoclose: true,
-        startDate: currentStart
+        startDate: currentStart,
+        todayHighlight: false
       });
 
       startDatepicker.datepicker({
         autoclose: true,
-        startDate: new Date()
+        startDate: startDate._d
       }).on('changeDate', function(ev) {
         endDatepicker.removeAttr('disabled');
         endDatepicker.datepicker('setStartDate', ev.date);
