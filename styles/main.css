@@ -182,9 +182,16 @@ ul.typeahead li.active span {
 	margin: 5px 0;
 	background-color: #fff;
 }
+.resultList dt{
+	width: 80px;
+}
+.resultList dd {
+	margin-left: 100px;
+}
 .result-image-wrapper {
 	float:left;
 	margin-right: 20px;
+	cursor: pointer;
 }
 .result-name{
 	font-size: 30px;
@@ -196,10 +203,8 @@ ul.typeahead li.active span {
 	color: #333;
 }
 .result-details {
-	font-style: italic;
 	width: 350px;
 	float:left;
-	margin-top: 10px;
 }
 .result-details div {
 	float:left;

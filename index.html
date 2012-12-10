@@ -102,9 +102,14 @@
         <a href="" onclick="return false;">{{name}}</a>
     </div>
     <div class="result-details">
-        <div><img src="{{rating_img_url}}"/></div>
-        <div>{{display_phone}} </div>
-        <div><a href="{{url}}" target="_blank">view on yelp</a></div>
+        <dl class="dl-horizontal resultList">
+            <dt>phone</dt>
+            <dd>{{display_phone}}</dd>
+            <dt># reviews</dt>
+            <dd>{{review_count}}</dd>
+            <dt>categories</dt>
+            <dd>{{fixed_cat}}</dd>
+        </dl>
         <div class="result-location">
             {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
         </div>

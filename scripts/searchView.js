@@ -122,11 +122,12 @@ var SearchView = Backbone.View.extend({
         //leave it yo
       }
       var categoryHash = {};
-      $('.filter form').find('.category-check').each(function (){
+      self.$el.find('.category-check').each(function (){
         if($(this).is(':checked')){
           categoryHash[$(this).val()] = true;
         }
       });
+      console.log(categoryHash);
 
       filtered = _.filter(filtered, function (bus){
         return _.any(bus.categories, function (cat){
@@ -134,13 +135,12 @@ var SearchView = Backbone.View.extend({
         });
       });
 
-
+      console.log(filtered);
       self.$el.find('.results').html('');
       _.each(filtered, function(result){
         self.$el.find('.results').append(new SearchResultView({model:result}).el);
       });
     },
-
 
 
     displayMessage: function (num,search,location){

@@ -23,7 +23,11 @@ var SearchResultView = BookmarkHelperView.extend({
           self.render();
         }
       });
-
+       var cats = [];
+      _.each(self.model.categories, function(cat){
+        cats.push(cat[0]);
+      });
+      self.model.fixed_cat = cats.join(', ');
       self.render();
     },
 
@@ -31,6 +35,7 @@ var SearchResultView = BookmarkHelperView.extend({
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
       self.setupBookmark();
+      self.delegateEvents();
       return self;
     },
 
