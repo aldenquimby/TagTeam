@@ -30,7 +30,7 @@ var HelpView = Backbone.View.extend({
     render: function() {
       var self = this;
       self.$el.mustache(self.template, { }, { method:'html' });
-      self.$el.find('.row-fluid').height(window.innerHeight-190);
+      self.$el.find('.row-fluid').height(window.innerHeight-210);
       return self;
     },
 
