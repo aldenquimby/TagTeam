@@ -1,7 +1,6 @@
 var BookmarkHelperView = Backbone.View.extend({
 
     appliedTags: [],
-    allowedTags: [],
 
     setupBookmark: function() {
       var self = this;
@@ -17,37 +16,34 @@ var BookmarkHelperView = Backbone.View.extend({
       modal.remove();
       $('body').mustache('bookmark-modal', self.model);
 
-	  modal = $('#modal-bookmark-' + self.model.id);
+	    modal = $('#modal-bookmark-' + self.model.id);
       typeaheadInput = modal.find('.bookmark-add-tag');
       startDatepicker = $('#bookmark-reminder-start-' + self.model.id);
       endDatepicker = $('#bookmark-reminder-end-' + self.model.id);
       var appliedTagsWrapper = modal.find('.applied-tags');
 
       self.appliedTags = (self.model.bookmark || {}).tags || [];
-      self.allowedTags = appDefaults.tags;
-      _.each(allBookmarks, function(bkmrk) {
-          _.each(bkmrk.tags, function(label) {
-              self.allowedTags.push(label);
-          });
-      });
-      self.allowedTags = _.uniq(_.difference(self.allowedTags, self.appliedTags));
 
       modal.find('.bookmark-remove-tag').live('click', function(e) {
         var tag = $(e.currentTarget).data('tag');
-        self.allowedTags.push(tag);
         self.appliedTags = _.without(self.appliedTags, tag);
         $(e.currentTarget).parent().remove();
       });
 
       var applyTag = function(tag) {
           self.appliedTags.push(tag);
-          self.allowedTags = _.without(self.allowedTags, tag);
           appliedTagsWrapper.mustache('bookmark-tags', {bookmark:{tags:self.appliedTags}}, {method:'html'});
       };
 
       typeaheadInput.typeahead({
         source: function(a, b) {
-          return self.allowedTags;
+          var tmp = [];
+          _.each(allBookmarks, function(bkmrk) {
+              _.each(bkmrk.tags, function(label) {
+                  tmp.push(label);
+              });
+          });
+          return _.uniq(_.difference(tmp, self.appliedTags));
         },
         items: 5,
         updater: function(item) {
