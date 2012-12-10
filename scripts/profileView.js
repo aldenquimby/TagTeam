@@ -51,6 +51,35 @@ var ProfileView = BookmarkHelperView.extend({
 
     render: function () {
       var self = this;
+      if(self.model.bookmark) {
+        var shouldRemind = false;
+        if(self.model.bookmark.reminder){
+          if(self.model.bookmark.reminder.end){
+            var start = moment(self.model.bookmark.reminder.start);
+            var end = moment(self.model.bookmark.reminder.end);
+            if(start < moment() < end){
+              shouldRemind = true;
+            }
+            else {
+               self.model.bookmark.remindernote = "Remind me to visit between " + self.model.bookmark.reminder.start
+                 + " and " + self.model.bookmark.reminder.end;
+            }
+          }
+          else {
+            var start = moment(self.model.bookmark.reminder.start);
+            if(start < moment()){
+              shouldRemind = true;
+            }
+            else {
+               self.model.bookmark.remindernote = "Remind me to visit after " + self.model.bookmark.reminder.start;
+            }
+          }
+          if(shouldRemind){
+            self.model.bookmark.remindernote = "Don't forget to visit!"
+          }
+        }
+      }
+
       self.$el.mustache(self.template, self.model, { method:'html' });
       setTimeout(function (){
         //this is messed up but you gotta do what you gotta do...
@@ -81,6 +110,10 @@ var ProfileView = BookmarkHelperView.extend({
       // make sure we know about bookmark if it exists
       self.model.bookmark = self.options.smallModel.bookmark;
       //do some object cleanup
+
+      //like setting the reminder note if there is one...
+      
+      console.log(self.model.bookmark);
       var cats = [];
       _.each(fullBusiness.categories, function(cat){
         cats.push(cat[0]);
