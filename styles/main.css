@@ -220,7 +220,7 @@ ul.typeahead li.active span {
 	float:left;
 }
 .result-details-2 {
-	width: 300px;
+	width: 285px;
 	float:left;
 }
 .result-details div {
@@ -264,10 +264,11 @@ ul.typeahead li.active span {
 .bookmark {
 	width: 98%;
 	float:left;
-	height: 100px;
+	height: 120px;
 	padding: 10px;
 	margin: 5px 0;
 	background-color: #fff;
+	position:relative;
 }
 .bookmark-image-wrapper {
 	float:left;

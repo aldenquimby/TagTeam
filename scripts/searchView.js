@@ -78,7 +78,6 @@ var SearchView = Backbone.View.extend({
 
     displayResults: function (data) {
       var self = this;
-      console.log(data);
       self.$el.find('.results').html('');
       self.lastSearch.results = [];
       self.displayMessage(data.businesses.length, self.lastSearch.query, self.lastSearch.location);
@@ -130,7 +129,6 @@ var SearchView = Backbone.View.extend({
           categoryHash[$(this).val()] = true;
         }
       });
-      console.log(categoryHash);
 
       filtered = _.filter(filtered, function (bus){
         return _.any(bus.model.categories, function (cat){

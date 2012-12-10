@@ -311,24 +311,6 @@
     </div>
 </script>
 
-<script id="bookmark-card" type="text/html">
-    <div class="result-image-wrapper">
-        <img src="{{image_url}}" class="result-image" />
-    </div>
-    <div class="result-name">
-        <a href="" onclick="return false;">{{name}}</a>
-    </div>
-    <div class="result-details">
-        <div><img src="{{rating_img_url}}"/></div>
-        <div>{{display_phone}} </div>
-        <div><a href="{{url}}" target="_blank">view on yelp</a></div>
-        <div class="result-location">
-            {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
-        </div>
-    </div>
-    <div class="btn remove">Remove From Bookmarks</div> 
-</script>
-
 <script id="help-page" type="text/html">
     <div class="help-header">
         <h3>Help and Documentation</h3>

@@ -14,7 +14,7 @@ var BookmarkHelperView = Backbone.View.extend({
       startDatepicker.datepicker('remove');
       endDatepicker.datepicker('remove');
       
-      $('#modal-bookmark-' + self.model.id).remove();
+      modal.remove();
       $('body').mustache('bookmark-modal', self.model);
 
 	  modal = $('#modal-bookmark-' + self.model.id);
@@ -87,7 +87,7 @@ var BookmarkHelperView = Backbone.View.extend({
 
       startDatepicker.datepicker({
         autoclose: true,
-        startDate: startDate._d
+        startDate: startD._d
       }).on('changeDate', function(ev) {
         endDatepicker.removeAttr('disabled');
         endDatepicker.datepicker('setStartDate', ev.date);

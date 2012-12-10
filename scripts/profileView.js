@@ -78,7 +78,6 @@ var ProfileView = BookmarkHelperView.extend({
     businessReturned: function(fullBusiness) {
       var self = this;
       self.model = fullBusiness;
-      console.log(fullBusiness);
       // make sure we know about bookmark if it exists
       self.model.bookmark = self.options.smallModel.bookmark;
       //do some object cleanup

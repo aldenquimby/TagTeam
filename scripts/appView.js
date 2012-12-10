@@ -34,7 +34,6 @@ var AppView = Backbone.View.extend({
 
       dispatcher.on(appEvents.persistResultsReturned, function(data){
         _.each(data, function(persistItem){
-          console.log(persistItem);
           if (persistItem.data && persistItem.data.bookmark) {
             allBookmarks[persistItem.id] = persistItem.data.bookmark;
           }

@@ -1,11 +1,13 @@
-var BookmarkCardView = Backbone.View.extend({
+var BookmarkCardView = BookmarkHelperView.extend({
 
     tagName:  "div",
     className: 'bookmark',
-    template: 'bookmark-card',
+    template: 'result-card',
 
     events: {
       "click .remove": "remove",
+      "click .result-name a": "showProfilePage",
+      "click .result-image-wrapper": "showProfilePage"
     },
 
     initialize: function() {
@@ -18,6 +20,8 @@ var BookmarkCardView = Backbone.View.extend({
       });
 
       self.render();
+
+      self.setupBookmark();
     },
 
     render: function() {
@@ -47,6 +51,11 @@ var BookmarkCardView = Backbone.View.extend({
         persistApi.remove(self.model.id);
       }
       self.render();
+    },
+
+    showProfilePage: function () {
+      var self = this;
+      dispatcher.trigger(appEvents.viewProfilePage, self.model);
     }
 
 });

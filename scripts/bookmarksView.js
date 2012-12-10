@@ -10,6 +10,8 @@ var BookmarksView = Backbone.View.extend({
       "change .filter form": "filterResults"
     },
 
+    renderedModals: false,
+
     initialize: function() {
       var self = this;
 
@@ -30,6 +32,12 @@ var BookmarksView = Backbone.View.extend({
       });
       dispatcher.on(appEvents.showBookmarksPage, function () {
         self.$el.show();
+        if (!self.renderedModals) {
+          _.each(self.bookmarkViews, function(view) {
+            view.setupBookmark();
+          });
+          self.renderedModals = true;
+        }
       });
 
       self.render();
@@ -64,7 +72,7 @@ var BookmarksView = Backbone.View.extend({
 
       var filtered = self.bookmarkViews;
       var filterTerm = $(e.currentTarget).val();
-      
+
       filtered = _.filter(filtered, function (bus) {
         var props = [];
         _.each(bus.model.categories, function(c) { props.push(c[0]); });
