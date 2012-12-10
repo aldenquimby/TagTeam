@@ -6,12 +6,22 @@ var BookmarkHelperView = Backbone.View.extend({
     setupBookmark: function() {
       var self = this;
 
+      var modal = $('#modal-bookmark-' + self.model.id);
+      var typeaheadInput = modal.find('.bookmark-add-tag');
+      var startDatepicker = $('#bookmark-reminder-start-' + self.model.id);
+      var endDatepicker = $('#bookmark-reminder-end-' + self.model.id);
+
+      startDatepicker.datepicker('remove');
+      endDatepicker.datepicker('remove');
+      
       $('#modal-bookmark-' + self.model.id).remove();
       $('body').mustache('bookmark-modal', self.model);
 
-      var modal = $('#modal-bookmark-' + self.model.id);
+	  modal = $('#modal-bookmark-' + self.model.id);
+      typeaheadInput = modal.find('.bookmark-add-tag');
+      startDatepicker = $('#bookmark-reminder-start-' + self.model.id);
+      endDatepicker = $('#bookmark-reminder-end-' + self.model.id);
       var appliedTagsWrapper = modal.find('.applied-tags');
-      var typeaheadInput = modal.find('.bookmark-add-tag');
 
       self.appliedTags = (self.model.bookmark || {}).tags || [];
       self.allowedTags = appDefaults.tags;
@@ -60,9 +70,6 @@ var BookmarkHelperView = Backbone.View.extend({
           return false;
         }
       });
-
-      var startDatepicker = $('#bookmark-reminder-start-' + self.model.id);
-      var endDatepicker = $('#bookmark-reminder-end-' + self.model.id);
 
       var currentStart = startDatepicker.val();
 
