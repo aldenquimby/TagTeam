@@ -236,10 +236,15 @@ ul.typeahead li.active span {
 	margin-top: 10px;
 }
 
+
 .map {
 	height: 300px;
 	width: 100%;
 	margin-top: 20px;
+}
+.remindnow{
+	-webkit-box-shadow: 0px 0px 10px 0px #FFFF3A; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+          box-shadow: 0px 0px 10px 0px #FFFF3A; /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
 .profile {
 	margin-left:20px;

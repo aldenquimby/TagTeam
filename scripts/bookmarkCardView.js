@@ -6,9 +6,18 @@ var BookmarkCardView = BookmarkHelperView.extend({
 
     events: {
       "click .result-name a": "showProfilePage",
-      "click .result-image-wrapper": "showProfilePage"
+      "click .result-image-wrapper": "showProfilePage",
+      "mouseenter": "triggerToolTip",
+      'mouseleave': 'untriggerToolTip'
     },
 
+    triggerToolTip: function (){
+      this.$el.find('.result-image-wrapper').tooltip('show');
+    },
+
+    untriggerToolTip: function (){
+      this.$el.find('.result-image-wrapper').tooltip('hide');
+    },
     initialize: function() {
       var self = this;
 
@@ -27,6 +36,9 @@ var BookmarkCardView = BookmarkHelperView.extend({
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
       self.delegateEvents();
+      if(self.model.remindnow){
+          self.$el.find('.result-image-wrapper').tooltip({placement: 'bottom', title: 'remember to visit!', trigger: 'manual'});
+        }
       return self;
     },
 

@@ -161,12 +161,12 @@ var BookmarksView = Backbone.View.extend({
         var result = persistItem.data;
         var view = new BookmarkCardView({model:result})
         self.bookmarkViews.push(view);
-        self.$el.find('.results').append(view.el);
       });
       if (data.length > 0) {
         self.$el.find('.results').show();
         self.showFilterView();
       }
+      self.reminderSort();
     },
 
     addBookmark: function(business) {
@@ -174,7 +174,45 @@ var BookmarksView = Backbone.View.extend({
       persistApi.set(business.id, business);
       var view = new BookmarkCardView({model:business});
       self.bookmarkViews.push(view);
-      self.$el.find('.results').append(view.el);
+      self.$el.find('.results').show();
+      self.reminderSort();
+    },
+
+    reminderSort: function (){
+      var self = this;
+      _.each(self.bookmarkViews, function (view) {
+        var shouldRemind = false;
+        if(view.model.bookmark.reminder){
+          if(view.model.bookmark.reminder.end){
+            var start = moment(view.model.bookmark.reminder.start);
+            var end = moment(view.model.bookmark.reminder.end);
+            if(start < moment() < end){
+              shouldRemind = true;
+            }
+          }
+          else {
+            var start = moment(view.model.bookmark.reminder.start);
+            if(start < moment()){
+              shouldRemind = true;
+            }
+          }
+          if(shouldRemind){
+            view.model.remindnow = true;
+            view.$el.addClass("remindnow");
+          }
+          else{
+            view.model.remindnow = false;
+          }
+        }
+      });
+      self.bookmarkViews = _.sortBy(self.bookmarkViews, function (view) {
+        return !view.model.remindnow;
+      });
+      self.$el.find('.results').html('');
+      _.each(self.bookmarkViews, function (v){
+        self.$el.find('.results').append(v.render().el);
+      });
     }
+
 
 });
