@@ -6,6 +6,7 @@ var BookmarksView = Backbone.View.extend({
 
     events: {
       "submit form": "filterResults",
+      "keyup #bookmark-query": "filterResults2",
       "change .filter form": "filterResults"
     },
 
@@ -57,6 +58,35 @@ var BookmarksView = Backbone.View.extend({
       self.$el.find('.filter').show();
     },
 
+    filterResults2: function(e) {
+      e.stopPropagation();
+      var self = this;
+
+      var filtered = self.bookmarkViews;
+      var filterTerm = $(e.currentTarget).val();
+      
+      filtered = _.filter(filtered, function (bus) {
+        var props = [];
+        _.each(bus.model.categories, function(c) { props.push(c[0]); });
+        props.push(bus.model.name);
+        props.push(bus.model.location.cross_streets);
+        props = _.union(props, bus.model.location.neighborhoods, bus.model.bookmark.tags);
+
+        return _.any(props, function (val) {
+          return val.toLowerCase().indexOf(filterTerm.toLowerCase())!=-1;
+        });
+      });
+
+      _.each(self.bookmarkViews, function (view){
+        view.$el.remove();
+      });
+      _.each(filtered, function(view){
+        self.$el.find('.results').append(view.render().el);
+      });
+
+      return false;
+    },
+
     filterResults: function (e) {
       e.stopPropagation();
       var self = this;
@@ -94,10 +124,10 @@ var BookmarksView = Backbone.View.extend({
       filtered = _.filter(filtered, function (bus) {
 
         var props = [];
-        _.each(bus.categories, function(c) { props.push(c[0]); });
-        props.push(bus.name);
-        props.push(bus.location.cross_streets);
-        props = _.union(props, bus.location.neighborhoods, bus.bookmark.tags);
+        _.each(bus.model.categories, function(c) { props.push(c[0]); });
+        props.push(bus.model.name);
+        props.push(bus.model.location.cross_streets);
+        props = _.union(props, bus.model.location.neighborhoods, bus.model.bookmark.tags);
 
         return _.any(props, function (val) {
           return val.toLowerCase().indexOf(filterTerm.toLowerCase())!=-1;
