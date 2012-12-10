@@ -88,13 +88,16 @@ var BookmarksView = Backbone.View.extend({
       });
 
       var filterTerm = self.$el.find('#bookmark-query').val();
-      filtered = _.filter(filtered, function (bus){
-        var values = _.flatten(_.values(bus));
-        return _.any(values, function (val){
-          if(typeof val == 'string'){
-            return val.indexOf(filterTerm)!=-1;
-          }
-          return false;
+      filtered = _.filter(filtered, function (bus) {
+
+        var props = [];
+        _.each(bus.categories, function(c) { props.push(c[0]); });
+        props.push(bus.name);
+        props.push(bus.location.cross_streets);
+        props = _.union(props, bus.location.neighborhoods, bus.bookmark.tags);
+
+        return _.any(props, function (val) {
+          return val.toLowerCase().indexOf(filterTerm.toLowerCase())!=-1;
         });
       });
 
