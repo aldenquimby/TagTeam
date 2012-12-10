@@ -18,6 +18,7 @@ var BookmarksView = Backbone.View.extend({
       dispatcher.on(appEvents.bookmarkAdded, function (business) {
         self.addBookmark(business);
       });
+      
       dispatcher.on(appEvents.persistResultsReturned, function (data) {
         self.displayBookmarks(data);
       });
@@ -171,7 +172,9 @@ var BookmarksView = Backbone.View.extend({
     addBookmark: function(business) {
       var self = this;
       persistApi.set(business.id, business);
-      self.$el.find('.results').append(new BookmarkCardView({model:business}).el);
+      var view = new BookmarkCardView({model:business});
+      self.bookmarkViews.push(view);
+      self.$el.find('.results').append(view.el);
     }
 
 });

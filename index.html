@@ -175,8 +175,14 @@
             </div>
         </div>
     </div>
-    <div class="row-fluid">
-        <div class="span11"><hr></div>
+    <div class="row-fluid remind-me">
+        <div class="span11 lead">
+        {{#bookmark.remindernote}}
+        <blockquote>
+        <p>{{bookmark.remindernote}}</p>
+        </blockquote>
+        {{/bookmark.remindernote}}
+        <hr></div>
     </div>
     <div class="row-fluid prof-details">
         <div class="span7">
