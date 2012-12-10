@@ -304,5 +304,13 @@ ul.typeahead li.active span {
 
 .help-page {
 	display: none;
+	margin-left: 30px;
 }
 
+.help-page .row-fluid {
+	overflow: auto;
+}
+
+.help-content-inner h4 {
+	margin-top: 20px;
+}
