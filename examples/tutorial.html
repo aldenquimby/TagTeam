@@ -78,7 +78,7 @@
     {{content}}
     <div class="btn-wrapper">
         {{#nextTarget}}
-            <button type="button" class="btn btn-primary popover-next" data-target="{{nextTarget}}">Next »</button>
+            <button type="button" class="btn btn-primary popover-next" data-target="{{nextTarget}}" data-tutorial-id="{{id}}">Next »</button>
         {{/nextTarget}}
         {{^nextTarget}}
             <button type="button" class="btn btn-primary popover-done">Get Started »</button>
@@ -95,12 +95,17 @@
 <script type="text/javascript">
     (function () {
 
+
+
         var exampleTutorial = [
         {
             title:'Explore Images', 
             target:'#explore', 
             content:'Browse through your images and select one to start editing.',
-            placement:'bottom'
+            placement:'bottom',
+            nextCallback: function() {
+                alert('bam');
+            }
         },
         {
             title:'Filter Search Results', 

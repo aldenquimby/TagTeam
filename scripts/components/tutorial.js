@@ -18,6 +18,10 @@ function Tutorial(tutorial) {
 
         $('.popover-next').live('click', function() {
             var closePopover = $($(this).parents('.popover').find('.popover-close').data('target'));
+            var tutorialId = $(this).data('tutorial-id');
+            if (_t[tutorialId].nextCallback) {
+                _t[tutorialId].nextCallback();
+            }
             var showPopover = $($(this).data('target'));
             var oldOffset = closePopover.parent().find('.popover').offset().top;
             closePopover.popover('destroy');
@@ -55,7 +59,7 @@ function Tutorial(tutorial) {
 
         for (var i = 0; i < _t.length; i++) {
             var titleData = {number:i+1, title:_t[i].title, target:_t[i].target};
-            var contentData = {content:_t[i].content};
+            var contentData = {content:_t[i].content, id:i};
             if (i < _t.length - 1) {
                 contentData['nextTarget'] = _t[i+1].target;
             }
