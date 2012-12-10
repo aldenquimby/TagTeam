@@ -133,11 +133,6 @@
             {{/bookmark}}
         </dl>
     </div>
-    <div class="result-bookmark">
-        <a href="#modal-bookmark-{{id}}" data-toggle="modal">
-            
-        </a>
-    </div>
 </script>
 
 <script id="results-message" type="text/html">
@@ -275,7 +270,7 @@
                     </div>
                 </div>
                 <div class="form-actions">
-                    <button class="btn btn-primary" id="bookmark-submit-{{id}}" onclick="return false;">Save</button>
+                    <button type="submit" class="btn btn-primary" id="bookmark-submit-{{id}}">Save</button>
                     or
                     <a href="" onclick="return false;" data-dismiss="modal">Cancel</a>
                     {{#bookmark}}

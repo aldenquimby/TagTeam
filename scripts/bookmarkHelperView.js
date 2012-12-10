@@ -122,6 +122,8 @@ var BookmarkHelperView = Backbone.View.extend({
         } else {
           dispatcher.trigger(appEvents.bookmarkUpdated, self.model);          
         }
+
+        return false;
       });
 
       $('#bookmark-delete-' + self.model.id).click(function(e) {
@@ -133,5 +135,4 @@ var BookmarkHelperView = Backbone.View.extend({
         }
       });
     }
-
 });
