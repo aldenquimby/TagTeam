@@ -80,18 +80,22 @@ var SearchView = Backbone.View.extend({
       var self = this;
       console.log(data);
       self.$el.find('.results').html('');
-      self.lastSearch.results = data;
+      self.lastSearch.results = [];
       self.displayMessage(data.businesses.length, self.lastSearch.query, self.lastSearch.location);
+      var html = "";
       _.each(data.businesses, function(result){
-        self.$el.find('.results').append(new SearchResultView({model:result}).el);
+        var view = new SearchResultView({model:result})
+        self.lastSearch.results.push(view);
+        self.$el.find('.results').append(view.el);
       });
+      
       self.$el.find('.results').show().height(window.innerHeight-200);
       self.showFilterView(data.businesses);
     },
 
-    showFilterView: function (){
+    showFilterView: function (data){
       var self = this;
-      cats = _.uniq(_.flatten(_.map(self.lastSearch.results.businesses, function(bus){
+      cats = _.uniq(_.flatten(_.map(data, function(bus){
         return _.pluck(bus.categories, 0);
       })));
 
@@ -105,18 +109,18 @@ var SearchView = Backbone.View.extend({
     filterResults: function () {
       var self = this;
       var sort = $('.filter form').find("select").val();
-      var filtered = self.lastSearch.results.businesses;
+      var filtered = self.lastSearch.results;
       if(sort=="alphabetical"){
-        filtered = _.sortBy(filtered, function(bus){ return bus.name; });
+        filtered = _.sortBy(filtered, function(bus){ return bus.model.name; });
       }
       else if(sort=="# reviews"){
-        filtered = _.sortBy(filtered, function(bus){ return -1*bus.review_count; });
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.model.review_count; });
       }
       else if(sort=="rating"){
-        filtered = _.sortBy(filtered, function(bus){ return -1*bus.rating; });
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.model.rating; });
       }
       else if(sort=="bookmarked"){
-        filtered = _.sortBy(filtered, function(bus){ return allBookmarks[bus.id] == null;});
+        filtered = _.sortBy(filtered, function(bus){ return allBookmarks[bus.model.id] == null;});
       }
       else{
         //leave it yo
@@ -130,15 +134,16 @@ var SearchView = Backbone.View.extend({
       console.log(categoryHash);
 
       filtered = _.filter(filtered, function (bus){
-        return _.any(bus.categories, function (cat){
+        return _.any(bus.model.categories, function (cat){
           return categoryHash[cat[0]];
         });
       });
 
-      console.log(filtered);
-      self.$el.find('.results').html('');
-      _.each(filtered, function(result){
-        self.$el.find('.results').append(new SearchResultView({model:result}).el);
+      _.each(self.lastSearch.results, function (view){
+        view.$el.remove();
+      });
+      _.each(filtered, function(view){
+        self.$el.find('.results').append(view.render().el);
       });
     },
 

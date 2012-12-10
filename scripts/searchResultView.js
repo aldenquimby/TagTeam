@@ -29,12 +29,13 @@ var SearchResultView = BookmarkHelperView.extend({
       });
       self.model.fixed_cat = cats.join(', ');
       self.render();
+      self.setupBookmark();
     },
 
     render: function() {
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
-      self.setupBookmark();
+      
       self.delegateEvents();
       return self;
     },
