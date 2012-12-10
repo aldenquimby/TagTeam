@@ -23,6 +23,7 @@ var BookmarkCardView = Backbone.View.extend({
     render: function() {
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
+      self.delegateEvents();
       return self;
     },
 

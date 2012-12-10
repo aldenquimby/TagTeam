@@ -82,7 +82,6 @@ var SearchView = Backbone.View.extend({
       self.$el.find('.results').html('');
       self.lastSearch.results = [];
       self.displayMessage(data.businesses.length, self.lastSearch.query, self.lastSearch.location);
-      var html = "";
       _.each(data.businesses, function(result){
         var view = new SearchResultView({model:result})
         self.lastSearch.results.push(view);

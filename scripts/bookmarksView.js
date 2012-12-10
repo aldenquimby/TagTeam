@@ -43,7 +43,10 @@ var BookmarksView = Backbone.View.extend({
 
     showFilterView: function (){
       var self = this;
-      cats = _.uniq(_.flatten(_.map(self.bookmarks, function(bus){
+      var models = _.map(self.bookmarkViews, function (view){
+        return view.model;
+      })
+      cats = _.uniq(_.flatten(_.map(models, function(bus){
         return _.pluck(bus.categories, 0);
       })));
 
@@ -58,18 +61,18 @@ var BookmarksView = Backbone.View.extend({
       e.stopPropagation();
       var self = this;
       var sort = $('.filter form').find("select").val();
-      var filtered = self.bookmarks;
+      var filtered = self.bookmarkViews;
       if(sort=="alphabetical"){
-        filtered = _.sortBy(filtered, function(bus){ return bus.name; });
+        filtered = _.sortBy(filtered, function(bus){ return bus.model.name; });
       }
       else if(sort=="# reviews"){
-        filtered = _.sortBy(filtered, function(bus){ return -1*bus.review_count; });
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.model.review_count; });
       }
       else if(sort=="rating"){
-        filtered = _.sortBy(filtered, function(bus){ return -1*bus.rating; });
+        filtered = _.sortBy(filtered, function(bus){ return -1*bus.model.rating; });
       }
       else if(sort=="bookmarked"){
-        filtered = _.sortBy(filtered, function(bus){ return allBookmarks[bus.id] == null;});
+        filtered = _.sortBy(filtered, function(bus){ return allBookmarks[bus.model.id] == null;});
       }
       else{
         //leave it yo
@@ -82,7 +85,7 @@ var BookmarksView = Backbone.View.extend({
       });
 
       filtered = _.filter(filtered, function (bus){
-        return _.any(bus.categories, function (cat){
+        return _.any(bus.model.categories, function (cat){
           return categoryHash[cat[0]];
         });
       });
@@ -101,9 +104,11 @@ var BookmarksView = Backbone.View.extend({
         });
       });
 
-      self.$el.find('.results').html('');
-      _.each(filtered, function(result){
-        self.$el.find('.results').append(new BookmarkCardView({model:result}).el);
+      _.each(self.bookmarkViews, function (view){
+        view.$el.remove();
+      });
+      _.each(filtered, function(view){
+        self.$el.find('.results').append(view.render().el);
       });
 
       return false;
@@ -111,11 +116,13 @@ var BookmarksView = Backbone.View.extend({
 
     displayBookmarks: function (data) {
       var self = this;
-      self.bookmarks = [];
+      self.bookmarkViews = [];
       self.$el.find('.results').html('');
       _.each(data, function(persistItem){
-        self.$el.find('.results').append(new BookmarkCardView({model:persistItem.data}).el);
-        self.bookmarks.push(persistItem.data);
+        var result = persistItem.data;
+        var view = new BookmarkCardView({model:result})
+        self.bookmarkViews.push(view);
+        self.$el.find('.results').append(view.el);
       });
       if (data.length > 0) {
         self.$el.find('.results').show();
