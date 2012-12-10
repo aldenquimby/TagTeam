@@ -43,7 +43,7 @@ var BookmarkHelperView = Backbone.View.extend({
                   tmp.push(label);
               });
           });
-          return _.uniq(_.difference(tmp, self.appliedTags));
+          return _.uniq(_.difference(_.union(tmp, appDefaults.tags), self.appliedTags));
         },
         items: 5,
         updater: function(item) {
