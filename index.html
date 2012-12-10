@@ -99,9 +99,21 @@
         <img src="{{image_url}}" class="result-image" />
     </div>
     <div class="result-name">
-        <a href="" onclick="return false;">{{name}}</a>
+        <a href="#">{{name}}</a>
+        {{#bookmark}}
+            <span data-target="#modal-bookmark-{{id}}" data-toggle="modal" class="book">
+                <i class="icon-edit"></i>
+                edit bookmark
+            </span>
+        {{/bookmark}}
+        {{^bookmark}}
+            <span data-target="#modal-bookmark-{{id}}" data-toggle="modal" class="book">
+                <i class="icon-bookmark"></i>
+                add bookmark
+            </span>
+        {{/bookmark}}
     </div>
-    <div class="result-details">
+    <div class="result-details-2"> 
         <dl class="dl-horizontal resultList">
             <dt>phone</dt>
             <dd>{{display_phone}}</dd>
@@ -110,22 +122,20 @@
             <dt>categories</dt>
             <dd>{{fixed_cat}}</dd>
         </dl>
-        <div class="result-location">
-            {{#location.neighborhoods}}{{.}}, {{/location.neighborhoods}} at {{location.cross_streets}}
-        </div>
+    </div>
+    <div class="result-details-2">
+        <dl class="dl-horizontal resultList">
+            <dt>location</dt>
+            <dd>{{#location.neighborhoods}}{{.}} {{/location.neighborhoods}}</dd>
+            {{#bookmark}}
+            <dt>tags</dt>
+            <dd>{{>bookmark-tags-noremove}}</dd>
+            {{/bookmark}}
+        </dl>
     </div>
     <div class="result-bookmark">
-        {{> bookmark-tags-noremove}}
-        <div>
-            {{bookmark.notes}}
-        </div>
         <a href="#modal-bookmark-{{id}}" data-toggle="modal">
-            {{#bookmark}}
-                Edit Bookmark
-            {{/bookmark}}
-            {{^bookmark}}
-                Add Bookmark
-            {{/bookmark}}
+            
         </a>
     </div>
 </script>

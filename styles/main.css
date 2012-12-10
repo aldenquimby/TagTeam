@@ -177,10 +177,11 @@ ul.typeahead li.active span {
 .result {
 	width: 98%;
 	float:left;
-	height: 100px;
+	height: 120px;
 	padding: 10px;
 	margin: 5px 0;
 	background-color: #fff;
+	position:relative;
 }
 .resultList dt{
 	width: 80px;
@@ -202,14 +203,31 @@ ul.typeahead li.active span {
 .result-name a:hover {
 	color: #333;
 }
+.result-name .book{
+	font-size: 15px;
+	cursor: pointer;
+	margin-left: 10px;
+	color:blue;
+	position:absolute;
+	top: 10px;
+	right: 20px;
+}
+.result-name .book:hover{
+	background-color: #ddd;
+}
 .result-details {
 	width: 350px;
+	float:left;
+}
+.result-details-2 {
+	width: 300px;
 	float:left;
 }
 .result-details div {
 	float:left;
 	margin-right: 10px;
 }
+
 .result-location {
 	float: left;
 	width: 340px;
