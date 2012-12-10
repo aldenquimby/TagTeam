@@ -207,12 +207,14 @@ ul.typeahead li.active span {
 	font-size: 15px;
 	cursor: pointer;
 	margin-left: 10px;
-	color:blue;
 	position:absolute;
 	top: 10px;
 	right: 20px;
 }
-.result-name .book:hover{
+.book {
+	color:blue;
+}
+.book:hover{
 	background-color: #ddd;
 }
 .result-details {
@@ -247,6 +249,10 @@ ul.typeahead li.active span {
 	margin-bottom: 20px;
 	overflow: auto;
 	width: 98%;
+}
+
+.edit-bookmark div{
+	margin-top: -15px;
 }
 
 .big-img {
