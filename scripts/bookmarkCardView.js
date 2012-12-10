@@ -5,7 +5,6 @@ var BookmarkCardView = BookmarkHelperView.extend({
     template: 'result-card',
 
     events: {
-      "click .remove": "remove",
       "click .result-name a": "showProfilePage",
       "click .result-image-wrapper": "showProfilePage"
     },
@@ -31,16 +30,6 @@ var BookmarkCardView = BookmarkHelperView.extend({
       return self;
     },
 
-    remove: function() {
-      if (confirm('Are you sure you want to delete this bookmark?')) {
-        var self = this;
-        delete self.model.bookmark;
-        persistApi.remove(self.model.id);
-        dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
-        self.$el.remove();
-      }
-    },
-
     updated: function(business) {
       var self = this;
       self.model = business;
@@ -49,6 +38,7 @@ var BookmarkCardView = BookmarkHelperView.extend({
       }
       else {
         persistApi.remove(self.model.id);
+        self.$el.remove();
       }
       self.render();
     },
