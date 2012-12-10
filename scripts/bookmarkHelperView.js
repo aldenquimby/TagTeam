@@ -46,6 +46,7 @@ var BookmarkHelperView = Backbone.View.extend({
           return _.uniq(_.difference(_.union(tmp, appDefaults.tags), self.appliedTags));
         },
         items: 5,
+        minLength: 0,
         updater: function(item) {
           applyTag(item);
           return '';
@@ -54,6 +55,8 @@ var BookmarkHelperView = Backbone.View.extend({
             return '<span>' + item + '</span>';
         }
       }); 
+
+      typeaheadInput.on('focus', typeaheadInput.typeahead.bind(typeaheadInput, 'lookup'));
 
       typeaheadInput.keypress(function (e) {
         if (e.which == 13) {
