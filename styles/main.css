@@ -208,6 +208,14 @@ ul.typeahead li.active span {
 .result-name a:hover {
 	color: #333;
 }
+.dismiss {
+	font-size: 15px;
+	cursor: pointer;
+	margin-left: 10px;
+	position:absolute;
+	bottom: 10px;
+	right: 20px;
+}
 .result-name .book{
 	font-size: 15px;
 	cursor: pointer;
@@ -216,10 +224,10 @@ ul.typeahead li.active span {
 	top: 10px;
 	right: 20px;
 }
-.book {
+.book, .dismiss{
 	color:blue;
 }
-.book:hover{
+.book:hover, .dismiss:hover{
 	background-color: #ddd;
 }
 .result-details {

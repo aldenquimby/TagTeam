@@ -116,8 +116,6 @@ var ProfileView = BookmarkHelperView.extend({
       //do some object cleanup
 
       //like setting the reminder note if there is one...
-      
-      console.log(self.model.bookmark);
       var cats = [];
       _.each(fullBusiness.categories, function(cat){
         cats.push(cat[0]);

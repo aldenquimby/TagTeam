@@ -168,9 +168,9 @@ var BookmarksView = Backbone.View.extend({
       });
       if (data.length > 0) {
         self.$el.find('.results').show();
-        self.showFilterView();
+        self.reminderSort();
       }
-      self.reminderSort();
+      
     },
 
     addBookmark: function(business) {
@@ -186,6 +186,7 @@ var BookmarksView = Backbone.View.extend({
     reminderSort: function (){
       console.log('reminder sort');
       var self = this;
+      self.showFilterView();
       _.each(self.bookmarkViews, function (view) {
         var shouldRemind = false;
         if(view.model.bookmark && view.model.bookmark.reminder) {

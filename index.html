@@ -124,6 +124,12 @@
                 <i class="icon-edit"></i>
                 edit bookmark
             </span>
+            {{#remindnow}}
+                <span class="dismiss">
+                    <i class="icon-calendar"></i>
+                    dismiss reminder
+                </span>
+            {{/remindnow}}
         {{/bookmark}}
         {{^bookmark}}
             <span data-target="#modal-bookmark-{{id}}" data-toggle="modal" class="book">

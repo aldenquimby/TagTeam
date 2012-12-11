@@ -8,13 +8,13 @@ var BookmarkCardView = BookmarkHelperView.extend({
       "click .result-name a": "showProfilePage",
       "click .result-image-wrapper": "showProfilePage",
       "mouseenter": "triggerToolTip",
-      'mouseleave': 'untriggerToolTip'
+      'mouseleave': 'untriggerToolTip',
+      "click .dismiss": "removeReminder"
     },
 
     triggerToolTip: function (){
       this.$el.find('.result-image-wrapper').tooltip('show');
     },
-
     untriggerToolTip: function (){
       this.$el.find('.result-image-wrapper').tooltip('hide');
     },
@@ -64,6 +64,14 @@ var BookmarkCardView = BookmarkHelperView.extend({
     showProfilePage: function () {
       var self = this;
       dispatcher.trigger(appEvents.viewProfilePage, self.model);
+    },
+    removeReminder: function (){
+      var self = this;
+      self.model.bookmark.remindnow = false;
+      delete self.model.bookmark.reminder;
+      delete self.model.bookmark.remindernote;
+      dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
+      alert("succesfully removed!");
     }
 
 });
