@@ -29,24 +29,48 @@ function Tutorial(tutorial) {
                 _t[tutorialId].transistionNextCallback();
             }
 
-            // add next popover
             var nextTrgt = _t[tutorialId + 1];
             var nextTrgtObj = getTarget(nextTrgt.target);
-            nextTrgtObj.popover({
-                title:nextTrgt.renderedTitle, 
-                content:nextTrgt.renderedContent, 
-                html:true, 
-                trigger:'manual', 
-                placement:nextTrgt.placement
-            }); 
 
-            var closePopover = getTarget($(this).parents('.popover').find('.popover-close').data('target'));
-            var oldOffset = closePopover.parent().find('.popover').offset().top;
-            closePopover.popover('destroy');
-            nextTrgtObj.popover('show');
-            var newOffset = nextTrgtObj.parent().find('.popover').offset().top;
-            var scroll =  (newOffset - oldOffset)*0.5;
-            $("html, body").animate({ scrollTop: $(document).scrollTop() + scroll }, "slow");
+            if (nextTrgtObj) {
+                nextTrgtObj.popover({
+                    title:nextTrgt.renderedTitle, 
+                    content:nextTrgt.renderedContent, 
+                    html:true, 
+                    trigger:'manual', 
+                    placement:nextTrgt.placement
+                }); 
+
+                var closePopover = getTarget($(this).parents('.popover').find('.popover-close').data('target'));
+                var oldOffset = closePopover.parent().find('.popover').offset().top;
+                closePopover.popover('destroy');
+                nextTrgtObj.popover('show');
+                var newOffset = nextTrgtObj.parent().find('.popover').offset().top;
+                var scroll =  (newOffset - oldOffset)*0.5;
+                $("html, body").animate({ scrollTop: $(document).scrollTop() + scroll }, "slow");
+            }
+            else {
+                setTimeout(function() {
+                    nextTrgtObj = getTarget(nextTrgt.target);
+                    
+                    nextTrgtObj.popover({
+                        title:nextTrgt.renderedTitle, 
+                        content:nextTrgt.renderedContent, 
+                        html:true, 
+                        trigger:'manual', 
+                        placement:nextTrgt.placement
+                    }); 
+
+                    var closePopover = getTarget($(this).parents('.popover').find('.popover-close').data('target'));
+                    var oldOffset = closePopover.parent().find('.popover').offset().top;
+                    closePopover.popover('destroy');
+                    nextTrgtObj.popover('show');
+                    var newOffset = nextTrgtObj.parent().find('.popover').offset().top;
+                    var scroll =  (newOffset - oldOffset)*0.5;
+                    $("html, body").animate({ scrollTop: $(document).scrollTop() + scroll }, "slow");
+
+                }, 500);
+            }
         });
 
         $('.popover-done').live('click', function() {

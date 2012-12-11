@@ -160,7 +160,6 @@ var BookmarksView = Backbone.View.extend({
 
     displayBookmarks: function (data) {
       var self = this;
-      console.log('display marks');
       self.bookmarkViews = [];
       self.$el.find('.results').html('');
       _.each(data, function(persistItem){
@@ -172,12 +171,10 @@ var BookmarksView = Backbone.View.extend({
         self.$el.find('.results').show();
         self.reminderSort();
       }
-      
     },
 
     addBookmark: function(business) {
       var self = this;
-      console.log('add bookmark');
       persistApi.set(business.id, business);
       var view = new BookmarkCardView({model:business});
       self.bookmarkViews.push(view);
@@ -185,13 +182,17 @@ var BookmarksView = Backbone.View.extend({
       self.reminderSort();
     },
 
-    reminderSort: function (){
-      console.log('reminder sort');
+    reminderSort: function () {
       var self = this;
       self.showFilterView();
+
+      self.bookmarkViews = _.filter(self.bookmarkViews, function(view) {
+        return view.model.bookmark;
+      });
+
       _.each(self.bookmarkViews, function (view) {
         var shouldRemind = false;
-        if(view.model.bookmark && view.model.bookmark.reminder) {
+        if(view.model.bookmark.reminder) {
             if(view.model.bookmark.reminder.end) {
                 var start = moment(view.model.bookmark.reminder.start);
                 var end = moment(view.model.bookmark.reminder.end);
@@ -216,13 +217,12 @@ var BookmarksView = Backbone.View.extend({
         }
       });
       self.bookmarkViews = _.sortBy(self.bookmarkViews, function (view) {
-        return !view.model.bookmark || !view.model.bookmark.remindnow;
+        return !view.model.bookmark.remindnow;
       });
       self.$el.find('.results').html('');
       _.each(self.bookmarkViews, function (v){
         self.$el.find('.results').append(v.render().el);
       });
-      console.log(self.bookmarkViews);
     }
 
 
