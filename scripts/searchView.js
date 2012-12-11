@@ -46,6 +46,7 @@ var SearchView = Backbone.View.extend({
     },
 
     search: function (e) {
+      $('#searchAlertContainer').html('');
       var self = this;
       e.preventDefault();
       var query = self.$el.find('#search-query').val();
