@@ -37,7 +37,7 @@ var HelpView = Backbone.View.extend({
     redoTutorial: function() {
       // go to search page and start tutorial
       dispatcher.trigger(appEvents.showSearchPage);
-      tutorial.kickoff();
+      tagTeamTutorial.kickoff();
     }
 
 });

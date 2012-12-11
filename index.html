@@ -51,12 +51,12 @@
     <div class="row-fluid">
         <div class="span10 search-header">
             <form class="search-form-wrapper">
-                <div class="search-form">
+                <div id="search-form">
                     <span class="search-header-text">find</span>
                     <input id="search-query" type="text" placeholder="i.e. dive bars..."/>
                     <span class="search-header-text">near</span>
                     <input id="search-location" type="text" value="New York"/>
-                    <input type="submit" class="btn" value="Search"/>
+                    <input id="search-submit" type="submit" class="btn" value="Search"/>
                 </div>
             </form>
         </div>
@@ -64,10 +64,10 @@
         </div>
     </div>
     <div class="row-fluid">
-        <div class="span9">
-            <div class="results well"></div>
+        <div class="span9" id="search-results-span">
+            <div class="results well" id="search-results-well"></div>
         </div>
-        <div class="span3 filter">
+        <div class="span3 filter" id="search-filter">
             
         </div>
     </div>
@@ -150,7 +150,7 @@
         </div>
     </div>
     <div class="row-fluid edit-bookmark">
-        <div class="span2">
+        <div class="span2 blah">
             {{#bookmark}}
             <span data-target="#modal-bookmark-{{id}}" data-toggle="modal" class="book">
                 <i class="icon-edit"></i>
@@ -164,11 +164,11 @@
             </span>
             {{/bookmark}}
         </div>
-        <div class="span5">
+        <div class="span5 blah">
             {{> bookmark-tags-noremove}}
         </div>
-        <div class="span4">
-            <div style="padding-top:10px;">
+        <div class="span4 blah">
+            <div style="padding-top:10px;" class="blah">
                 {{#bookmark.notes}}
                     <b>Notes: </b>{{bookmark.notes}}
                 {{/bookmark.notes}}
@@ -442,6 +442,25 @@
         <button class="btn btn-primary" id="redo-tutorial" onclick="return false;">Redo Tutorial</a>
     </div>
 </script>
+
+<script id="tutorial-popover-title" type="text/html">
+    <strong>{{title}}</strong>
+    <button type="button" class="close popover-close" data-target="{{target}}">&times;</button>
+</script>
+
+<script id="tutorial-popover-content" type="text/html">
+    {{content}}
+    <div class="btn-wrapper">
+        <span style="float: left; padding-top: 5px;font-weight: bold;">{{number}} of {{totalNumber}}</span>
+        {{#nextTarget}}
+            <button type="button" class="btn btn-primary popover-next" data-target="{{nextTarget}}" data-tutorial-id="{{id}}">Next »</button>
+        {{/nextTarget}}
+        {{^nextTarget}}
+            <button type="button" class="btn btn-primary popover-done">Get Started »</button>
+        {{/nextTarget}}
+    </div>
+</script>
+
 
 <!-- framework scripts -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>

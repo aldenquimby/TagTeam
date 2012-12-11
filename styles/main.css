@@ -39,11 +39,6 @@ ul.typeahead li.active span {
     color: white;
 }
 
-.popover .typeahead {
-	width:100px;
-}
-
-
 .tabs {
 	position:fixed;
 	left: 0px;
@@ -99,10 +94,6 @@ ul.typeahead li.active span {
 .tab-select {
 	margin-left: 10px;
 	background-color: #f2f2f2;
-}
-
-.add-bookmark-popover {
-	width:320px;
 }
 
 .bookmark-tag {
@@ -256,7 +247,7 @@ ul.typeahead li.active span {
 	width: 98%;
 }
 
-.edit-bookmark div{
+.edit-bookmark .blah {
 	margin-top: -15px;
 }
 
@@ -318,4 +309,18 @@ ul.typeahead li.active span {
 
 .help-content-inner h4 {
 	margin-top: 30px;
+}
+
+
+.popover .btn-wrapper {
+    text-align: right;
+    padding: 10px 10px 0 0;
+}
+
+.popover {
+	font-size: 14px;
+}
+
+.popover-inner {
+	margin-top:0px;
 }

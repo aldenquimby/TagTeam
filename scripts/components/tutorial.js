@@ -9,20 +9,41 @@ function Tutorial(tutorial) {
 
     // private methods
 
+    var getTarget = function(target) {
+        var tmp = $(target);
+        return tmp.length > 1 ? $(tmp[0]) : tmp;
+    };
+
     var setup = function() {
 
         $('.popover-close').live('click', function() {
-            $($(this).data('target')).popover('destroy');
+            getTarget($(this).data('target')).popover('destroy');
             _isTutorialOpen = false;
         });
 
         $('.popover-next').live('click', function() {
-            var closePopover = $($(this).parents('.popover').find('.popover-close').data('target'));
+
+            // do callback if it exists
             var tutorialId = $(this).data('tutorial-id');
-            if (_t[tutorialId].nextCallback) {
-                _t[tutorialId].nextCallback();
+            if (_t[tutorialId].transistionNextCallback) {
+                _t[tutorialId].transistionNextCallback();
             }
-            var showPopover = $($(this).data('target'));
+
+            // add next popover
+            var nextTrgt = _t[tutorialId + 1];
+            if (nextTrgt) {
+                var nextTrgtObj = getTarget(nextTrgt.target);
+                nextTrgtObj.popover({
+                    title:nextTrgt.renderedTitle, 
+                    content:nextTrgt.renderedContent, 
+                    html:true, 
+                    trigger:'manual', 
+                    placement:nextTrgt.placement
+                }); 
+            }
+
+            var closePopover = getTarget($(this).parents('.popover').find('.popover-close').data('target'));
+            var showPopover = getTarget($(this).data('target'));
             var oldOffset = closePopover.parent().find('.popover').offset().top;
             closePopover.popover('destroy');
             showPopover.popover('show');
@@ -33,7 +54,7 @@ function Tutorial(tutorial) {
 
         $('.popover-done').live('click', function() {
             var close = $(this).parents('.popover').find('.popover-close');
-            $(close.data('target')).popover('destroy');
+            getTarget(close.data('target')).popover('destroy');
             $("html, body").animate({ scrollTop: 0 }, "slow");
             _isTutorialOpen = false;
         });
@@ -58,19 +79,26 @@ function Tutorial(tutorial) {
         $('.popover-close').click();
 
         for (var i = 0; i < _t.length; i++) {
-            var titleData = {number:i+1, title:_t[i].title, target:_t[i].target};
-            var contentData = {content:_t[i].content, id:i};
+            var titleData = {title:_t[i].title, target:_t[i].target};
+            var contentData = {number:i+1, totalNumber: _t.length, content:_t[i].content, id:i};
+            
             if (i < _t.length - 1) {
                 contentData['nextTarget'] = _t[i+1].target;
             }
-            var title = $.Mustache.render('popover-title', titleData);
-            var content = $.Mustache.render('popover-content', contentData);
-            $(_t[i].target).popover({
-                title:title, content:content, html:true, trigger:'manual', placement:_t[i].placement
-            });
+            
+            _t[i].renderedTitle = $.Mustache.render('tutorial-popover-title', titleData);
+            _t[i].renderedContent = $.Mustache.render('tutorial-popover-content', contentData);
         }
         
-        $(_t[0].target).popover('show');
+        var firstTrgt = getTarget(_t[0].target);
+        firstTrgt.popover({
+            title:_t[0].renderedTitle, 
+            content:_t[0].renderedContent, 
+            html:true, 
+            trigger:'manual', 
+            placement:_t[0].placement
+        });  
+        firstTrgt.popover('show');
 
         _isTutorialOpen = true;
 

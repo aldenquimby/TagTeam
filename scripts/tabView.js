@@ -44,6 +44,7 @@ var TabView = Backbone.View.extend({
       if(s){
         self.search = true;
         self.name = 'Search';
+        self.$el.addClass('searchTab');
       }
       else if(b){
         self.bookmark = true;

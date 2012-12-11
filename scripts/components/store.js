@@ -74,23 +74,38 @@ function StoreData(onError) {
 
 function StoreDataDebug(onError) {
 
+    var _prefix = "tagteam-";
+    var _tutorialKey = "tutorial";
+
     this.set = function(id, data) {
-        window.localStorage.setItem(id, JSON.stringify(data));
+        window.localStorage.setItem(_prefix + id, JSON.stringify(data));
     };
     
     this.get = function(callback) {
         var data = [];
         for (var i = 0; i < localStorage.length; i++) {
-            data.push({
-                id: localStorage.key(i), 
-                data: JSON.parse(localStorage.getItem(localStorage.key(i)))
-            });
+            var wrappedId = localStorage.key(i);
+            if (wrappedId.indexOf(_prefix) != -1) {
+                var actualId = wrappedId.split(_prefix)[1];
+                data.push({
+                    id: actualId, 
+                    data: JSON.parse(localStorage.getItem(wrappedId))
+                });
+            } 
         }
         callback(data);
     }; 
 
     this.remove = function(id) {
-        window.localStorage.removeItem(id);
+        window.localStorage.removeItem(_prefix + id);
     }; 
+
+    this.setTutorial = function(saw) {
+        window.localStorage.setItem(_tutorialKey, saw);
+    };
+
+    this.sawTutorial = function() {
+        return window.localStorage.getItem(_tutorialKey);
+    };
 
 } 
