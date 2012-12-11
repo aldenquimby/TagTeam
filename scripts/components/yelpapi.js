@@ -13,23 +13,34 @@ function YelpApi(onApiError) {
         }        
     };
 
+    var auth2 = {
+        consumerKey: "7e6axYIUs_mVAX9lA-y4iw",
+        consumerSecret: "MUG9KnNmH368XyKCU8jTk03jw40",
+        accessToken: "lpW0pZiLo8gJIoO2qZQ9UI77DhY-8lZh",
+        accessTokenSecret: "Be5uf2kp8pOlgvULKQ5ragf19K0",
+        serviceProvider: { 
+            signatureMethod: "HMAC-SHA1"
+        }     
+    };
+
     // private methods
 
     var getParamMapForAuth = function(action, method) {
+        var authToUse = auth;
         var message = { 
             action: action,
             method: method,
             parameters: []
         };
         message.parameters.push(['callback', 'cb']);
-        message.parameters.push(['oauth_consumer_key', auth.consumerKey]);
-        message.parameters.push(['oauth_consumer_secret', auth.consumerSecret]);
-        message.parameters.push(['oauth_token', auth.accessToken]);
-        message.parameters.push(['oauth_signature_method', auth.serviceProvider.signatureMethod]);
+        message.parameters.push(['oauth_consumer_key', authToUse.consumerKey]);
+        message.parameters.push(['oauth_consumer_secret', authToUse.consumerSecret]);
+        message.parameters.push(['oauth_token', authToUse.accessToken]);
+        message.parameters.push(['oauth_signature_method', authToUse.serviceProvider.signatureMethod]);
 
         var accessor = {
-            consumerSecret: auth.consumerSecret,
-            tokenSecret: auth.accessTokenSecret
+            consumerSecret: authToUse.consumerSecret,
+            tokenSecret: authToUse.accessTokenSecret
         };
         
         OAuth.setTimestampAndNonce(message);
