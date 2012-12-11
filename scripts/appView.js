@@ -77,14 +77,6 @@ var AppView = Backbone.View.extend({
       });
 
       dispatcher.trigger(appEvents.showSearchPage);
-
-      setTimeout(function () {
-        // shouldn't need to delay here, but it makes shit work...
-        if (!persistApi.sawTutorial()) {
-          persistApi.setTutorial(true);
-          tagTeamTutorial.kickoff();
-        }
-      }, 300);
     },
 
     render: function() {

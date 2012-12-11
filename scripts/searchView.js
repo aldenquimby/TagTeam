@@ -5,7 +5,8 @@ var SearchView = Backbone.View.extend({
     template: 'search-view',
     events: {
       "submit form": "search",
-      "change .filter form": "filterResults"
+      "change .filter form": "filterResults",
+      "click #asdfstarttut": "startTut"
     },
 
     lastSearch: {},
@@ -38,6 +39,7 @@ var SearchView = Backbone.View.extend({
       self.$el.mustache(self.template, {
           results: self.results 
       }, { method:'html' });
+      self.$el.find('.results').mustache('welcome', {}, {method: 'html'});
       //i just... i just don't understand
       self.$el.find('.filter').hide();
       return self;
@@ -161,6 +163,10 @@ var SearchView = Backbone.View.extend({
           search: search,
           location: location 
       }, { method:'prepend' });
+    },
+
+    startTut: function (){
+      tagTeamTutorial.kickoff();
     }
 
 

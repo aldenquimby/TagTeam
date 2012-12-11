@@ -157,7 +157,6 @@ ul.typeahead li.active span {
 	float:left;
 	position:relative;
 	overflow: auto;
-	display: none;
 	width: 95%;
 }
 .result-message {
