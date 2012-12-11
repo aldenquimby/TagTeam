@@ -51,7 +51,6 @@ var BookmarksView = Backbone.View.extend({
       var self = this;
       self.$el.mustache(self.template, { }, { method:'html' });
       self.$el.find('.results').show().height(window.innerHeight-200);
-      console.log('marks render');
       return self;
     },
 
@@ -189,32 +188,32 @@ var BookmarksView = Backbone.View.extend({
       var self = this;
       _.each(self.bookmarkViews, function (view) {
         var shouldRemind = false;
-        if(view.model.bookmark.reminder){
-          if(view.model.bookmark.reminder.end){
-            var start = moment(view.model.bookmark.reminder.start);
-            var end = moment(view.model.bookmark.reminder.end);
-            if(start < moment() < end){
-              shouldRemind = true;
+        if(view.model.bookmark && view.model.bookmark.reminder) {
+            if(view.model.bookmark.reminder.end) {
+                var start = moment(view.model.bookmark.reminder.start);
+                var end = moment(view.model.bookmark.reminder.end);
+                if(start < moment() < end){
+                    shouldRemind = true;
+                }
             }
-          }
-          else {
-            var start = moment(view.model.bookmark.reminder.start);
-            if(start < moment()){
-              shouldRemind = true;
+            else {
+                var start = moment(view.model.bookmark.reminder.start);
+                if(start < moment()){
+                    shouldRemind = true;
+                }
             }
-          }
-          if(shouldRemind){
-            view.model.bookmark.remindnow = true;
-            view.$el.addClass("remindnow");
-          }
-          else{
-            view.model.bookmark.remindnow = false;
-            view.$el.removeClass("remindnow");
-          }
+            if(shouldRemind) {
+                view.model.bookmark.remindnow = true;
+                view.$el.addClass("remindnow");
+            }
+            else {
+                view.model.bookmark.remindnow = false;
+                view.$el.removeClass("remindnow");
+            }
         }
       });
       self.bookmarkViews = _.sortBy(self.bookmarkViews, function (view) {
-        return !view.model.remindnow;
+        return !view.model.bookmark || !view.model.bookmark.remindnow;
       });
       self.$el.find('.results').html('');
       _.each(self.bookmarkViews, function (v){

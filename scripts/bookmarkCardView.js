@@ -22,9 +22,7 @@ var BookmarkCardView = BookmarkHelperView.extend({
       var self = this;
 
       dispatcher.on(appEvents.bookmarkUpdated, function (business) {
-        if (business.id == self.model.id) {
           self.updated(business);
-        }
       });
 
       self.render();
@@ -37,7 +35,7 @@ var BookmarkCardView = BookmarkHelperView.extend({
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
       self.delegateEvents();
-      if(self.model.bookmark.remindnow) {
+      if(self.model.bookmark && self.model.bookmark.remindnow) {
           self.$el.addClass('remindnow');
           self.$el.find('.result-image-wrapper').tooltip({placement: 'bottom', title: 'remember to visit!', trigger: 'manual'});
       }
@@ -49,17 +47,18 @@ var BookmarkCardView = BookmarkHelperView.extend({
     },
 
     updated: function(business) {
-      var self = this;
-      console.log("updated");
-      self.model = business;
-      if (self.model.bookmark) {
-        persistApi.set(self.model.id, self.model);        
+      if (business.id == self.model.id) {
+        var self = this;
+        self.model = business;
+        if (self.model.bookmark) {
+          persistApi.set(self.model.id, self.model);        
+        }
+        else {
+          persistApi.remove(self.model.id);
+          self.$el.remove();
+        }
+        self.render();
       }
-      else {
-        persistApi.remove(self.model.id);
-        self.$el.remove();
-      }
-      self.render();
     },
 
     showProfilePage: function () {
