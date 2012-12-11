@@ -11,10 +11,6 @@
             .row { 
                 padding-bottom: 150px; 
             }
-            .popover .btn-wrapper {
-                text-align: right;
-                padding: 10px 10px 0 0;
-            }
             .help-wrapper {
                 float:right;
                 padding-top:50px;
@@ -70,21 +66,23 @@
 
 <!-- mustache templates -->
 <script id="tutorial-popover-title" type="text/html">
-    <strong>{{number}}. {{title}}</strong>
+    <strong>{{title}}</strong>
     <button type="button" class="close popover-close" data-target="{{target}}">&times;</button>
 </script>
 
 <script id="tutorial-popover-content" type="text/html">
     {{content}}
-    <div class="btn-wrapper">
-        {{#nextTarget}}
-            <button type="button" class="btn btn-primary popover-next" data-target="{{nextTarget}}" data-tutorial-id="{{id}}">Next »</button>
-        {{/nextTarget}}
-        {{^nextTarget}}
+    <div style="text-align:right;padding:10px 10px 0 0;">
+        <span style="float: left; padding-top: 5px;font-weight: bold;">{{number}} of {{totalNumber}}</span>
+        {{#hasNextTarget}}
+            <button type="button" class="btn btn-primary popover-next" data-tutorial-id="{{id}}">Next »</button>
+        {{/hasNextTarget}}
+        {{^hasNextTarget}}
             <button type="button" class="btn btn-primary popover-done">Get Started »</button>
-        {{/nextTarget}}
+        {{/hasNextTarget}}
     </div>
 </script>
+
 
 <!-- scripts -->
 <script type="text/javascript" src="../scripts/framework/jquery-1.8.3.min.js"></script>

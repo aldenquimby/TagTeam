@@ -31,23 +31,20 @@ function Tutorial(tutorial) {
 
             // add next popover
             var nextTrgt = _t[tutorialId + 1];
-            if (nextTrgt) {
-                var nextTrgtObj = getTarget(nextTrgt.target);
-                nextTrgtObj.popover({
-                    title:nextTrgt.renderedTitle, 
-                    content:nextTrgt.renderedContent, 
-                    html:true, 
-                    trigger:'manual', 
-                    placement:nextTrgt.placement
-                }); 
-            }
+            var nextTrgtObj = getTarget(nextTrgt.target);
+            nextTrgtObj.popover({
+                title:nextTrgt.renderedTitle, 
+                content:nextTrgt.renderedContent, 
+                html:true, 
+                trigger:'manual', 
+                placement:nextTrgt.placement
+            }); 
 
             var closePopover = getTarget($(this).parents('.popover').find('.popover-close').data('target'));
-            var showPopover = getTarget($(this).data('target'));
             var oldOffset = closePopover.parent().find('.popover').offset().top;
             closePopover.popover('destroy');
-            showPopover.popover('show');
-            var newOffset = showPopover.parent().find('.popover').offset().top;
+            nextTrgtObj.popover('show');
+            var newOffset = nextTrgtObj.parent().find('.popover').offset().top;
             var scroll =  (newOffset - oldOffset)*0.5;
             $("html, body").animate({ scrollTop: $(document).scrollTop() + scroll }, "slow");
         });
@@ -83,7 +80,7 @@ function Tutorial(tutorial) {
             var contentData = {number:i+1, totalNumber: _t.length, content:_t[i].content, id:i};
             
             if (i < _t.length - 1) {
-                contentData['nextTarget'] = _t[i+1].target;
+                contentData['hasNextTarget'] = true;
             }
             
             _t[i].renderedTitle = $.Mustache.render('tutorial-popover-title', titleData);

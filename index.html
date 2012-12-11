@@ -470,12 +470,12 @@
     {{content}}
     <div style="text-align:right;padding:10px 10px 0 0;">
         <span style="float: left; padding-top: 5px;font-weight: bold;">{{number}} of {{totalNumber}}</span>
-        {{#nextTarget}}
-            <button type="button" class="btn btn-primary popover-next" data-target="{{nextTarget}}" data-tutorial-id="{{id}}">Next »</button>
-        {{/nextTarget}}
-        {{^nextTarget}}
+        {{#hasNextTarget}}
+            <button type="button" class="btn btn-primary popover-next" data-tutorial-id="{{id}}">Next »</button>
+        {{/hasNextTarget}}
+        {{^hasNextTarget}}
             <button type="button" class="btn btn-primary popover-done">Get Started »</button>
-        {{/nextTarget}}
+        {{/hasNextTarget}}
     </div>
 </script>
 
