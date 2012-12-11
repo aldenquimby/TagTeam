@@ -5,11 +5,6 @@
 	left:0px;
 	right:0px;
 }
-#alertContainer {
-	width: 100%;
-	padding: 0 20%;
-	display: none;
-}
 
 #banner {
 	width: 100%;
@@ -333,16 +328,10 @@ ul.typeahead li.active span {
 	margin-top: 30px;
 }
 
-
-.popover .btn-wrapper {
-    text-align: right;
-    padding: 10px 10px 0 0;
-}
-
 .popover {
 	font-size: 14px;
 }
 
 .popover-inner {
-	margin-top:0px;
+	margin-top: 0px;
 }

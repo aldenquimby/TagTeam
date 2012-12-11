@@ -68,9 +68,7 @@ var SearchView = Backbone.View.extend({
 
       yelpApi.search(function(data){
         self.yelpSearchComplete(data);
-      }, location, query);
-      
-      
+      }, location, query);  
     },
 
     yelpSearchComplete: function(data) {
@@ -82,11 +80,16 @@ var SearchView = Backbone.View.extend({
       });
       // trigger AFTER setting bookmarks
       dispatcher.trigger(appEvents.yelpResultsReturned, data);
-      
     },
 
     displayResults: function (data) {
       var self = this;
+
+      if (data.businesses.length == 0) {
+        dispatcher.trigger(appEvents.searchError, 'Your search returned 0 results. Try searching for something less specific.');
+        return;
+      }
+
       self.$el.find('.results').html('');
       self.lastSearch.results = [];
       self.displayMessage(data.businesses.length, self.lastSearch.query, self.lastSearch.location);

@@ -11,6 +11,7 @@ var appEvents = {
     persistResultsReturned: 'returned-persist-results', //mongo results returned succesfully
 	yelpResultsReturned: 'returned-yelp-results', //yelp results returned succesfully
 	apiError: 'api-error',
+    searchError: 'search-error',
 
 	search: 'yelp-search', //someone searches (we could show loading gif)
 	bookmarkPopOver: 'bookmark-bringup-popover', //someone should be shown the popover

@@ -54,11 +54,14 @@ var ProfileView = BookmarkHelperView.extend({
       if(self.model.bookmark) {
         var shouldRemind = false;
         if(self.model.bookmark.reminder) {
+          var shouldRemindText = "Remember to to visit!"
           if(self.model.bookmark.reminder.end) {
             var start = moment(self.model.bookmark.reminder.start);
             var end = moment(self.model.bookmark.reminder.end);
             if(start < moment() && moment() < end){
               shouldRemind = true;
+               shouldRemindText += " (between " + self.model.bookmark.reminder.start 
+                 + " and " + self.model.bookmark.reminder.end + ")";
             }
             else {
                self.model.bookmark.remindernote = "Remind me to visit between " + self.model.bookmark.reminder.start
@@ -69,13 +72,14 @@ var ProfileView = BookmarkHelperView.extend({
             var start = moment(self.model.bookmark.reminder.start);
             if(start < moment()){
               shouldRemind = true;
+              shouldRemindText += " (after " + self.model.bookmark.reminder.start + ")";
             }
             else {
                self.model.bookmark.remindernote = "Remind me to visit after " + self.model.bookmark.reminder.start;
             }
           }
           if(shouldRemind){
-            self.model.bookmark.remindernote = "Don't forget to visit!"
+            self.model.bookmark.remindernote = shouldRemindText;
           }
         }
       }

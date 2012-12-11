@@ -29,7 +29,11 @@ var AppView = Backbone.View.extend({
       });
 
       dispatcher.on(appEvents.apiError, function(msg) {
-        onApiError(msg);
+        self.onSearchError(msg);
+      });
+
+      dispatcher.on(appEvents.searchError, function(msg) {
+        self.onSearchError(msg);
       });
 
       dispatcher.on(appEvents.persistResultsReturned, function(data){
@@ -94,11 +98,11 @@ var AppView = Backbone.View.extend({
       return this;
     },
     
-    onApiError: function(message) {
-        $('#alertContainer').mustache('alert', {
+    onSearchError: function(message) {
+        $('#searchAlertContainer').mustache('alert', {
             type:'error', 
             message: message
-        }, { method:'html' });  
-    },
+        }, { method:'html' }); 
+    }
 
   });

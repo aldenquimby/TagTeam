@@ -45,20 +45,25 @@ function YelpApi(onApiError) {
         var method = 'GET';
         var paramMap = getParamMapForAuth(url, method);
 
-        $.ajax({
-            type: method,
-            url: url,
-            data: paramMap,
-            cache: true,
-            dataType: 'jsonp',
-            jsonpCallback: 'cb',
-            success: function(data, statusText, XMLHttpRequest) {
-                successCallback(data);
-            },
-            error: function(data, statusText, XMLHttpRequest) {
-                onApiError();
-            }
-        });  
+        try {
+            $.ajax({
+                type: method,
+                url: url,
+                data: paramMap,
+                cache: true,
+                dataType: 'jsonp',
+                jsonpCallback: 'cb',
+                success: function(data, statusText, XMLHttpRequest) {
+                    successCallback(data);
+                },
+                error: function(data, statusText, XMLHttpRequest) {
+                    onApiError();
+                }
+            });              
+        }
+        catch (e) {
+            onApiError();
+        }
     };
 
     // public methods
