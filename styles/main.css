@@ -237,6 +237,9 @@ ul.typeahead li.active span {
 	-webkit-box-shadow: 0px 0px 10px 0px #FFFF3A; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
           box-shadow: 0px 0px 10px 0px #FFFF3A; /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
+.control-group.error input::-webkit-input-placeholder {
+	color:#B94A48;
+}
 .profile {
 	margin-left:20px;
 }

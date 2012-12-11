@@ -52,7 +52,13 @@ var SearchView = Backbone.View.extend({
         location = appDefaults.location;
       }
       if(query==""){
-        query = appDefaults.query;
+        self.$el.find('#search-query').parent().addClass('error');
+        self.$el.find('#search-query').attr('placeholder', 'Please enter a keyword to search.');
+        return;
+      }
+      else {
+        self.$el.find('#search-query').parent().removeClass('error');
+        self.$el.find('#search-query').attr('placeholder', 'type a keyword to search (i.e. dive bars)');
       }
       self.lastSearch.location = location;
       self.lastSearch.query = query;
