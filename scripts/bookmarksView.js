@@ -18,6 +18,9 @@ var BookmarksView = Backbone.View.extend({
       dispatcher.on(appEvents.bookmarkAdded, function (business) {
         self.addBookmark(business);
       });
+      dispatcher.on(appEvents.bookmarkUpdated, function (business) {
+        self.reminderSort();
+      });
       
       dispatcher.on(appEvents.persistResultsReturned, function (data) {
         self.displayBookmarks(data);
@@ -48,6 +51,7 @@ var BookmarksView = Backbone.View.extend({
       var self = this;
       self.$el.mustache(self.template, { }, { method:'html' });
       self.$el.find('.results').show().height(window.innerHeight-200);
+      console.log('marks render');
       return self;
     },
 
@@ -155,6 +159,7 @@ var BookmarksView = Backbone.View.extend({
 
     displayBookmarks: function (data) {
       var self = this;
+      console.log('display marks');
       self.bookmarkViews = [];
       self.$el.find('.results').html('');
       _.each(data, function(persistItem){
@@ -171,6 +176,7 @@ var BookmarksView = Backbone.View.extend({
 
     addBookmark: function(business) {
       var self = this;
+      console.log('add bookmark');
       persistApi.set(business.id, business);
       var view = new BookmarkCardView({model:business});
       self.bookmarkViews.push(view);
@@ -179,6 +185,7 @@ var BookmarksView = Backbone.View.extend({
     },
 
     reminderSort: function (){
+      console.log('reminder sort');
       var self = this;
       _.each(self.bookmarkViews, function (view) {
         var shouldRemind = false;
@@ -197,11 +204,11 @@ var BookmarksView = Backbone.View.extend({
             }
           }
           if(shouldRemind){
-            view.model.remindnow = true;
+            view.model.bookmark.remindnow = true;
             view.$el.addClass("remindnow");
           }
           else{
-            view.model.remindnow = false;
+            view.model.bookmark.remindnow = false;
             view.$el.removeClass("remindnow");
           }
         }
@@ -213,6 +220,7 @@ var BookmarksView = Backbone.View.extend({
       _.each(self.bookmarkViews, function (v){
         self.$el.find('.results').append(v.render().el);
       });
+      console.log(self.bookmarkViews);
     }
 
 

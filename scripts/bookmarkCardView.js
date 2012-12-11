@@ -33,10 +33,11 @@ var BookmarkCardView = BookmarkHelperView.extend({
     },
 
     render: function() {
+      console.log("individual render");
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
       self.delegateEvents();
-      if(self.model.remindnow) {
+      if(self.model.bookmark.remindnow) {
           self.$el.addClass('remindnow');
           self.$el.find('.result-image-wrapper').tooltip({placement: 'bottom', title: 'remember to visit!', trigger: 'manual'});
       }
@@ -49,6 +50,7 @@ var BookmarkCardView = BookmarkHelperView.extend({
 
     updated: function(business) {
       var self = this;
+      console.log("updated");
       self.model = business;
       if (self.model.bookmark) {
         persistApi.set(self.model.id, self.model);        
