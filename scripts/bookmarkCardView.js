@@ -22,7 +22,9 @@ var BookmarkCardView = BookmarkHelperView.extend({
       var self = this;
 
       dispatcher.on(appEvents.bookmarkUpdated, function (business) {
+        if (business.id == self.model.id) {
           self.updated(business);
+        }
       });
 
       self.render();
@@ -47,18 +49,16 @@ var BookmarkCardView = BookmarkHelperView.extend({
     },
 
     updated: function(business) {
-      if (business.id == self.model.id) {
-        var self = this;
-        self.model = business;
-        if (self.model.bookmark) {
-          persistApi.set(self.model.id, self.model);        
-        }
-        else {
-          persistApi.remove(self.model.id);
-          self.$el.remove();
-        }
-        self.render();
+      var self = this;
+      self.model = business;
+      if (self.model.bookmark) {
+        persistApi.set(self.model.id, self.model);        
       }
+      else {
+        persistApi.remove(self.model.id);
+        self.$el.remove();
+      }
+      self.render();
     },
 
     showProfilePage: function () {

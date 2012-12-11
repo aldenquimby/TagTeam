@@ -53,11 +53,11 @@ var ProfileView = BookmarkHelperView.extend({
       var self = this;
       if(self.model.bookmark) {
         var shouldRemind = false;
-        if(self.model.bookmark.reminder){
-          if(self.model.bookmark.reminder.end){
+        if(self.model.bookmark.reminder) {
+          if(self.model.bookmark.reminder.end) {
             var start = moment(self.model.bookmark.reminder.start);
             var end = moment(self.model.bookmark.reminder.end);
-            if(start < moment() < end){
+            if(start < moment() && moment() < end){
               shouldRemind = true;
             }
             else {

@@ -192,7 +192,7 @@ var BookmarksView = Backbone.View.extend({
             if(view.model.bookmark.reminder.end) {
                 var start = moment(view.model.bookmark.reminder.start);
                 var end = moment(view.model.bookmark.reminder.end);
-                if(start < moment() < end){
+                if(start < moment() && moment() < end){
                     shouldRemind = true;
                 }
             }
