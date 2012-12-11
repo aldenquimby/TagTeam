@@ -85,7 +85,9 @@ var BookmarksView = Backbone.View.extend({
         props = _.union(props, bus.model.location.neighborhoods, bus.model.bookmark.tags);
 
         return _.any(props, function (val) {
-          return val.toLowerCase().indexOf(filterTerm.toLowerCase())!=-1;
+          if(val){
+            return val.toLowerCase().indexOf(filterTerm.toLowerCase())!=-1;
+          }
         });
       });
 

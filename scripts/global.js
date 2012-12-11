@@ -33,7 +33,7 @@ var appDefaults = {
 // appView maintains this
 var allBookmarks = {};
 
-var yelpApi = new YelpApiDebug(function(){
+var yelpApi = new YelpApi(function(){
     dispatcher.trigger(appEvents.apiError, 'Looks like the Yelp API might be down, please try again later.');
 });
 
