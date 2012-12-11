@@ -71,7 +71,7 @@ var BookmarkCardView = BookmarkHelperView.extend({
       delete self.model.bookmark.reminder;
       delete self.model.bookmark.remindernote;
       dispatcher.trigger(appEvents.bookmarkUpdated, self.model);
-      alert("succesfully removed!");
+      alert("succesfully dismissed reminder!");
     }
 
 });
