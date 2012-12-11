@@ -42,6 +42,8 @@ ul.typeahead li.active span {
     color: white;
 }
 
+
+
 .tabs {
 	position:fixed;
 	left: 0px;
@@ -49,13 +51,11 @@ ul.typeahead li.active span {
 	bottom: 0px;
 	width: 20%;
 }
-
 .tab-wrapper {
 	height: 95%;
 	position:relative;
 	border-right: 1px solid #ddd;
 }
-
 .tab {
 	cursor: pointer;
 	font-size: 25px;
@@ -99,39 +99,38 @@ ul.typeahead li.active span {
 	background-color: #f2f2f2;
 }
 
+
+
+
 .bookmark-tag {
 	margin-right:10px;
 }
-
 .bookmark-remove-tag {
 	padding-left:5px;
 	height:0px;
 	margin-top:-2px;
 }
-
 .typeahead {
 	z-index: 1051;
 }
-
 .modal-body form {
 	margin-bottom: 0px;
 }
-
 .modal-body .form-actions {
 	margin-bottom: 0px;
 }
-
 .fixed-description {
 	position: absolute;width: 160px;right: 25px;border-left: 1px solid #CCC;padding-left: 10px;
 }
-
 .modal-body .form-horizontal .control-label {
 	width:120px;
 }
-
 .modal-body .form-horizontal .controls {
 	margin-left:140px;
 }
+
+
+
 
 .search{
 	position:relative;
@@ -143,12 +142,10 @@ ul.typeahead li.active span {
 	font-size: 30px;
 	margin-top: 20px;
 }
-
 .search-header-text {
 	margin-left: 30px;
 	margin-right: 10px;
 }
-
 .search-form .btn {
 	margin-bottom: 10px;
 	margin-left: 10px;
@@ -164,6 +161,9 @@ ul.typeahead li.active span {
 #search-location {
 	width: 150px;
 	height: 30px;
+}
+.control-group.error input::-webkit-input-placeholder {
+	color:#B94A48;
 }
 .filter {
 	display:none;
@@ -251,9 +251,6 @@ ul.typeahead li.active span {
 	-webkit-box-shadow: 0px 0px 10px 0px #FFFF3A; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
           box-shadow: 0px 0px 10px 0px #FFFF3A; /* Opera 10.5, IE9+, Firefox 4+, Chrome 6+, iOS 5 */
 }
-.control-group.error input::-webkit-input-placeholder {
-	color:#B94A48;
-}
 .profile {
 	margin-left:20px;
 }
@@ -274,8 +271,6 @@ ul.typeahead li.active span {
 .remind-me {
 	margin-top: 10px;
 }
-
-
 
 
 
@@ -319,14 +314,18 @@ ul.typeahead li.active span {
 	display: none;
 	margin-left: 30px;
 }
-
 .help-page .row-fluid {
 	overflow: auto;
 }
-
 .help-content-inner h4 {
 	margin-top: 30px;
 }
+#help-start {
+	margin-top:0px;
+}
+
+
+
 
 .popover {
 	font-size: 14px;
