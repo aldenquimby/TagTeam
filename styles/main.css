@@ -118,6 +118,18 @@ ul.typeahead li.active span {
 	margin-bottom: 0px;
 }
 
+.fixed-description {
+	position: absolute;width: 160px;right: 25px;border-left: 1px solid #CCC;padding-left: 10px;
+}
+
+.modal-body .form-horizontal .control-label {
+	width:120px;
+}
+
+.modal-body .form-horizontal .controls {
+	margin-left:140px;
+}
+
 .search{
 	position:relative;
 	float:left;
