@@ -58,6 +58,7 @@ var AppView = Backbone.View.extend({
         otherSlidey.show();
         slidey.hide();
         $(target).slideDown();
+        $(target).find('.fixed-description').slideDown();
       });
 
       $('.slidey-hide').live('click', function(e) {
@@ -66,6 +67,7 @@ var AppView = Backbone.View.extend({
         var otherSlidey = $('.slidey-show[data-target="' + target + '"]');
         otherSlidey.show();
         slidey.hide();
+        $(target).find('.fixed-description').hide();
         $(target).slideUp();
       });
 
