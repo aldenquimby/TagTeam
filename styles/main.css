@@ -23,6 +23,14 @@
 	margin-right: 2%;
 }
 
+.hero-unit {
+	margin-bottom: 0px;
+}
+
+.hero-unit h1 {
+	margin-bottom: 10px;
+}
+
 .onepage {
 	height: 100%;
 }
