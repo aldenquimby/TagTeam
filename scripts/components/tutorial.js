@@ -32,6 +32,12 @@ function Tutorial(tutorial) {
             // add next popover
             var nextTrgt = _t[tutorialId + 1];
             var nextTrgtObj = getTarget(nextTrgt.target);
+            if (!nextTrgtObj) {
+                setTimeout(function() {
+                    nextTrgtObj = getTarget(nextTrgt.target);
+                }, 500);
+            }
+
             nextTrgtObj.popover({
                 title:nextTrgt.renderedTitle, 
                 content:nextTrgt.renderedContent, 
