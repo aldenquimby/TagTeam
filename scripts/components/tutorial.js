@@ -31,8 +31,8 @@ function Tutorial(tutorial) {
 
             var nextTrgt = _t[tutorialId + 1];
             var nextTrgtObj = getTarget(nextTrgt.target);
-            console.log(nextTrgtObj);
-            if (nextTrgtObj.length>0) {
+
+            if (nextTrgtObj.length > 0) {
                 nextTrgtObj.popover({
                     title:nextTrgt.renderedTitle, 
                     content:nextTrgt.renderedContent, 
@@ -50,9 +50,11 @@ function Tutorial(tutorial) {
                 $("html, body").animate({ scrollTop: $(document).scrollTop() + scroll }, "slow");
             }
             else {
+                var closePopover = getTarget($(this).parents('.popover').find('.popover-close').data('target'));
+                closePopover.popover('destroy');
+
                 setTimeout(function() {
                     nextTrgtObj = getTarget(nextTrgt.target);
-                    
                     nextTrgtObj.popover({
                         title:nextTrgt.renderedTitle, 
                         content:nextTrgt.renderedContent, 
@@ -62,7 +64,6 @@ function Tutorial(tutorial) {
                     }); 
 
                     nextTrgtObj.popover('show');
-
                 }, 500);
             }
         });
