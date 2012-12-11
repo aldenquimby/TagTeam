@@ -49,6 +49,7 @@ var TabView = Backbone.View.extend({
       else if(b){
         self.bookmark = true;
         self.name = 'My Bookmarks';
+        self.$el.addClass('bookmarkTab');
       }
       else if(h){
         self.help = true;

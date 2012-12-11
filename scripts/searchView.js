@@ -50,6 +50,7 @@ var SearchView = Backbone.View.extend({
       var location = self.$el.find('#search-location').val();
       if(location==""){
         location = appDefaults.location;
+        self.$el.find('#search-location').val(appDefaults.location);
       }
       if(query==""){
         self.$el.find('#search-query').parent().addClass('error');

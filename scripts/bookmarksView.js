@@ -202,6 +202,7 @@ var BookmarksView = Backbone.View.extend({
           }
           else{
             view.model.remindnow = false;
+            view.$el.removeClass("remindnow");
           }
         }
       });

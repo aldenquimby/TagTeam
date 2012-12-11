@@ -36,9 +36,14 @@ var BookmarkCardView = BookmarkHelperView.extend({
       var self = this;
       self.$el.mustache(self.template, self.model, { method:'html' });
       self.delegateEvents();
-      if(self.model.remindnow){
+      if(self.model.remindnow) {
+          self.$el.addClass('remindnow');
           self.$el.find('.result-image-wrapper').tooltip({placement: 'bottom', title: 'remember to visit!', trigger: 'manual'});
-        }
+      }
+      else {
+          self.$el.removeClass('remindnow');  
+          self.$el.find('.result-image-wrapper').tooltip('destroy');      
+      }
       return self;
     },
 

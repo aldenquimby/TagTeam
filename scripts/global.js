@@ -24,7 +24,7 @@ var appEvents = {
 
 var appDefaults = {
 	location: 'New York',
-	query: 'Dive Bars',
+	query: 'dive bars',
     tags: ['check it out', 'must go back', 'stay away', 'group hangout']
 };
 
@@ -47,7 +47,7 @@ var tagTeamTutorial = new Tutorial([{
     placement:'bottom',
     transistionNextCallback: function() {
         if ($('.search .result').length == 0) {
-            $('#search-query').val('dive bars');
+            $('#search-query').val(appDefaults.query);
             $('#search-submit').click();
         }
     }
@@ -67,7 +67,7 @@ var tagTeamTutorial = new Tutorial([{
 {
     title:'Business Profile',
     target:'.search .result-name', 
-    content:'View more detailed information about a business by clicking the name.',
+    content:'View more detailed info about a business by clicking the name.',
     placement:'bottom',
     transistionNextCallback: function() {
         $($('.search .result-name')[0]).find('a').click();
@@ -80,20 +80,17 @@ var tagTeamTutorial = new Tutorial([{
     placement:'left'
 },
 {
-    title:'Add a Bookmark',
+    title:'Bookmark',
     target:'.profile .edit-bookmark .book', 
     content:'Bookmark this place for later by clicking here.',
-    placement:'bottom'/*,
-    transistionNextCallback: function() {
-        dispatcher.trigger(appEvents.showSearchPage);
-    }*/
+    placement:'bottom'
 },
-/*{
-    title:'Add a Bookmark',
-    target:'.search .result-name .book', 
-    content:'You can also add a bookmark directly from the search page.',
-    placement:'left'
-},*/
+{
+    title:'My Bookmarks',
+    target:'.tab.bookmarkTab', 
+    content:'Browse your existing bookmarks here.',
+    placement:'right'
+},
 {
     title:'Help and Documentation',
     target:'.tab.helpTab', 
